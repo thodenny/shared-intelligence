@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Library — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <div class="text-center mb-10">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Ready to Use</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Prompt Library</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">Copy, customize, and use. Each prompt includes a template with [PLACEHOLDERS] and a sample output so you know what to expect.</p>
+    </div>
+
+    <!-- Search + Filter -->
+    <div class="bg-parchment retro-border p-5 mb-8">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search prompts..."
+        class="w-full font-mono text-sm border-2 border-navy bg-cream px-4 py-3 mb-4 focus:outline-none focus:border-rust placeholder-charcoal/50"
+        oninput="filterPrompts()"
+      />
+      <div class="flex flex-wrap gap-2" id="filterPills">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter(this)">All</button>
+        <button class="filter-btn" data-filter="productivity" onclick="setFilter(this)">Productivity</button>
+        <button class="filter-btn" data-filter="operations" onclick="setFilter(this)">Operations</button>
+        <button class="filter-btn" data-filter="learning" onclick="setFilter(this)">Learning</button>
+        <button class="filter-btn" data-filter="personal" onclick="setFilter(this)">Personal</button>
+      </div>
+    </div>
+
+    <!-- Prompt Grid -->
+    <div id="promptGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <!-- 1 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="productivity" data-title="weekly report generator" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust">Productivity</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Weekly Report Generator</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Use this when you need to send a weekly update to leadership or stakeholders. Takes your bullet notes and turns them into a polished, professional summary they'll actually read.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a skilled executive communications specialist. Help me write a clear, polished weekly status report for [AUDIENCE: e.g., my VP, my team, leadership].
+
+Here are my notes from this week:
+[PASTE YOUR BULLET NOTES HERE]
+
+Please write a professional weekly report with these sections:
+- Key Accomplishments (3–5 bullets)
+- In Progress (what's actively being worked on)
+- Blockers or Risks (if any)
+- Next Week's Priorities (2–3 items)
+
+Tone should be [TONE: concise and direct / warm and collaborative / formal]. Keep the total length under 300 words.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Key Accomplishments:</strong> Finalized Q3 project charter and received sign-off from all stakeholders. Completed vendor evaluation and selected final partner. Reduced ticket backlog by 34% through process changes.<br /><br />
+            <strong>In Progress:</strong> Onboarding new vendor; kickoff scheduled for Tuesday. Drafting team OKRs for Q4.<br /><br />
+            <strong>Blockers:</strong> Awaiting legal review on contract — targeting resolution by EOW.<br /><br />
+            <strong>Next Week:</strong> Vendor kickoff, OKR draft review, monthly ops review prep.
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="productivity" data-title="status update writer" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust">Productivity</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Status Update Writer</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Turn messy project notes into a clean, confident status update for Slack, email, or a project management tool. Great when you know what's happening but struggle to frame it clearly.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a senior project manager who writes clear, confident status updates. Help me write a status update for [PROJECT NAME] to share with [AUDIENCE].
+
+Current situation: [DESCRIBE WHERE THINGS STAND — 2-4 sentences]
+Recent progress: [WHAT GOT DONE]
+Current blockers or concerns: [ANY ISSUES]
+Overall health: [Green / Yellow / Red] because [REASON]
+
+Write a clear, confident status update in [FORMAT: Slack message / email / 3 bullet points]. Keep it under [WORD COUNT: 150 / 200] words. Avoid jargon.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Project Atlas — Status: 🟡 Yellow</strong><br /><br />
+            We're on track for the core deliverable but one dependency is at risk. Engineering completed the backend integration ahead of schedule, and UAT kicked off Monday. However, we're still waiting on legal sign-off for the data processing agreement — if this slips past Friday, it pushes our go-live by one week. Actively escalating through procurement. No other blockers at this time.
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="productivity" data-title="meeting agenda builder" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust">Productivity</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Meeting Agenda Builder</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Use this before any meeting you're running. Give it the goal and the attendees, and it builds a focused agenda with time allocations that keep things on track.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a professional meeting facilitator who designs tight, outcome-focused agendas. Help me build an agenda for the following meeting:
+
+Meeting purpose: [WHAT IS THIS MEETING FOR?]
+Duration: [30 / 45 / 60 minutes]
+Attendees: [LIST ROLES OR NAMES]
+Key decisions or outcomes needed: [WHAT MUST BE DECIDED OR RESOLVED]
+Topics to cover: [LIST ANY SPECIFIC TOPICS]
+
+Create a timed agenda with clear section headings. Include a 5-minute buffer for intros/closes. Flag which agenda items are discussion vs. decision vs. information-only.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed font-mono">
+            Q4 Planning Meeting — 60 min<br /><br />
+            0:00–0:05 — Welcome &amp; framing (Info)<br />
+            0:05–0:20 — Q3 recap: what worked, what didn't (Discussion)<br />
+            0:20–0:40 — Q4 priorities: rank and align top 3 (Decision)<br />
+            0:40–0:50 — Resource &amp; capacity check (Discussion)<br />
+            0:50–0:57 — Owner assignments &amp; next steps (Decision)<br />
+            0:57–1:00 — Wrap &amp; close
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="productivity" data-title="email drafting assistant" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust">Productivity</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Email Drafting Assistant</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">For those emails you keep rewriting. Paste in what you want to say — messy, casual, incomplete — and it produces a polished draft in the tone you choose.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a professional business writer who knows how to adapt tone and style for any audience. Draft a professional email based on the following:
+
+To: [RECIPIENT NAME / ROLE]
+My relationship to them: [e.g., skip-level manager, vendor, peer]
+Purpose of the email: [WHAT DO YOU NEED TO COMMUNICATE OR ASK?]
+Key points to include: [LIST THEM ROUGHLY]
+Tone: [Direct / Warm / Formal / Assertive but respectful]
+Length: [Short (under 100 words) / Medium (100–200 words)]
+
+Here are my rough notes: [PASTE YOUR ROUGH THOUGHTS]
+
+Write the subject line and full email body.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Subject:</strong> Requesting Decision on Vendor Selection by Friday<br /><br />
+            Hi Sarah,<br /><br />
+            I wanted to flag that we're at a decision point on the vendor selection for the Atlas integration. Our team has completed the evaluation and has a clear recommendation ready — we just need your sign-off to move forward with procurement.<br /><br />
+            Could you block 20 minutes this week to review our recommendation, or let me know if an async summary would work better? We're targeting a Friday decision to stay on timeline.<br /><br />
+            Thanks, Tom
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="operations" data-title="process improvement analysis" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-mustard">Operations</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Process Improvement Analysis</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Describe a process that feels slow, messy, or broken. This prompt helps you think through root causes, identify waste, and generate concrete improvement options.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as an operations consultant with expertise in lean process improvement. Help me analyze and improve the following process:
+
+Process name: [WHAT IS THIS PROCESS CALLED?]
+Current steps: [DESCRIBE WHAT HAPPENS NOW, IN ORDER]
+Who's involved: [ROLES OR TEAMS]
+What's broken or slow: [DESCRIBE THE PAIN POINTS]
+Desired outcome: [WHAT DOES "BETTER" LOOK LIKE?]
+Constraints: [BUDGET, TECH, HEADCOUNT, TIMELINE]
+
+Analyze this process and provide:
+1. Root causes of the identified problems
+2. Three improvement options (quick win, medium-term, long-term)
+3. Recommended first step</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Root Causes:</strong> Approval bottleneck at manager layer (avg. 3-day delay); lack of standardized request format causing rework; no visibility into request status post-submission.<br /><br />
+            <strong>Quick Win:</strong> Create a standardized intake form to cut rework by ~40%.<br /><br />
+            <strong>Medium-term:</strong> Implement a shared tracker (Asana/Notion) with status visibility for all stakeholders.<br /><br />
+            <strong>Long-term:</strong> Automate approval routing using existing tools; target sub-24hr turnaround.<br /><br />
+            <strong>Start Here:</strong> Build the intake form this week and pilot with one team.
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="operations" data-title="budget tracker with insights" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-mustard">Operations</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Budget Tracker with Insights</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Paste in your budget data and this prompt helps you surface insights, flag variances, and draft a budget narrative for leadership — no finance background required.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a sharp business analyst who translates financial data into clear leadership narratives. Here is my budget data for [TIME PERIOD]:
+
+[PASTE BUDGET TABLE OR NUMBERS HERE]
+Format: Category | Budget | Actual | Variance
+
+Context: [DESCRIBE WHAT THIS BUDGET IS FOR]
+Audience: [WHO WILL SEE THIS ANALYSIS?]
+
+Please:
+1. Identify the top 3 variances (positive and negative)
+2. Flag any categories that are significantly over or under budget
+3. Draft a 150-word narrative summary suitable for a leadership report
+4. Suggest one question I should be prepared to answer</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Top Variances:</strong> Contractor spend is 22% over budget ($44K vs $36K planned); travel came in 38% under ($12K vs $19K); software licenses at budget.<br /><br />
+            <strong>Narrative:</strong> Q3 spending finished at 103% of plan, driven primarily by higher-than-anticipated contractor utilization during the Atlas project sprint. Travel savings partially offset this overage. Excluding contractor costs, the department finished 5% under budget. No single line item poses a material risk heading into Q4, though contractor spend should be actively managed as headcount gaps are filled.<br /><br />
+            <strong>Prepare to answer:</strong> "What's driving the contractor overage and will it continue into Q4?"
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="operations" data-title="workflow automation scoping" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-mustard">Operations</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Workflow Automation Scoping</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Before you ask engineering to build something, use this to scope whether automation makes sense, what you'd actually need, and what it would cost in rough terms.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a process automation consultant who helps non-technical managers figure out what's worth automating and how. Help me scope an automation for the following workflow:
+
+Current manual process: [DESCRIBE STEP BY STEP]
+Frequency: [HOW OFTEN DOES THIS HAPPEN?]
+Time it takes now: [HOURS PER WEEK / MONTH]
+Tools currently used: [LIST SYSTEMS AND SOFTWARE]
+Desired outcome: [WHAT SHOULD BE AUTOMATED?]
+Team: [WHO WOULD BUILD OR MAINTAIN THIS?]
+
+Please provide:
+1. An assessment of whether this is worth automating
+2. A plain-English description of what the automation would do
+3. Tools or platforms that could handle this
+4. Rough effort estimate (low/medium/high complexity)
+5. Biggest risk or dependency to watch for</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Worth automating?</strong> Yes — at 6 hours/week, even a partial automation paying back 4 hours saves 200 hours annually.<br /><br />
+            <strong>What it does:</strong> When a form is submitted, automatically create a task in Asana, send a confirmation email, and notify the ops Slack channel.<br /><br />
+            <strong>Tools:</strong> Zapier or Make (no-code), or native Asana + Gmail integrations.<br /><br />
+            <strong>Complexity:</strong> Low — buildable in an afternoon with Zapier.<br /><br />
+            <strong>Risk:</strong> Form field names need to stay consistent; any restructuring will break the zap.
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="operations" data-title="data summarization" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-mustard">Operations</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Data Summarization</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">You have a data table or export. You need insights for a meeting in 20 minutes. This prompt turns raw data into a concise narrative with the key takeaways front and center.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a business analyst who specializes in turning raw data into concise, decision-ready executive summaries. Here is a data set I need to summarize:
+
+[PASTE TABLE, CSV DATA, OR NUMBERS HERE]
+
+Context: [WHAT IS THIS DATA MEASURING? WHAT BUSINESS QUESTION ARE WE TRYING TO ANSWER?]
+Audience: [WHO IS THIS FOR AND WHAT DO THEY CARE ABOUT?]
+Time period: [WHAT DATES DOES THIS COVER?]
+
+Please:
+1. Identify the 3 most significant findings
+2. Note any surprising or counter-intuitive results
+3. Write a 100-word executive summary
+4. Suggest one follow-up question worth investigating</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Top Findings:</strong> Response rate dropped 18% in Week 3, correlating with the policy change announcement. High-tenure employees (5+ years) show 2x higher satisfaction scores than &lt;2-year tenure. Weekend submissions are 40% lower quality by completion rate.<br /><br />
+            <strong>Surprising:</strong> The West region outperformed all others despite lowest headcount.<br /><br />
+            <strong>Summary:</strong> Overall engagement is stable at 72%, but the Week 3 dip warrants attention. Tenure and engagement are strongly correlated — retention efforts may have an outsized satisfaction ROI.<br /><br />
+            <strong>Follow-up:</strong> What changed in Week 3 specifically, and for which teams?
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="learning" data-title="course curriculum builder" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-navy" style="border-color:#1B2A4A; color:#1B2A4A;">Learning</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Course Curriculum Builder</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Building training for your team or creating a self-study plan? This prompt builds a structured curriculum with modules, learning objectives, and a suggested sequence.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as an instructional designer with experience building practical, outcome-focused workplace training. Help me build a curriculum for [TOPIC OR SKILL].
+
+Audience: [WHO IS THIS FOR? ROLE, EXPERIENCE LEVEL]
+Goal: [WHAT SHOULD LEARNERS BE ABLE TO DO AFTER COMPLETING THIS?]
+Format: [Self-paced / Instructor-led / Hybrid]
+Time available: [TOTAL HOURS OR WEEKS]
+Prior knowledge assumed: [WHAT DO THEY ALREADY KNOW?]
+
+Create a curriculum with:
+- 4–6 modules with clear titles and learning objectives
+- Suggested format for each module (video, reading, exercise, etc.)
+- A logical sequence with rationale
+- One practical exercise per module</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Module 1:</strong> AI Fundamentals — What it is and how it works (Reading + Q&amp;A, 45 min)<br />
+            <strong>Module 2:</strong> Prompting Basics — How to get useful outputs (Interactive exercise, 60 min)<br />
+            <strong>Module 3:</strong> Tool Selection — Which AI fits which job (Guided comparison, 45 min)<br />
+            <strong>Module 4:</strong> Your First Use Case — Apply to a real work task (Hands-on project, 90 min)<br />
+            <strong>Module 5:</strong> Building a Habit — Making AI part of your workflow (Reflection + plan, 30 min)
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="learning" data-title="study schedule generator" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-navy" style="border-color:#1B2A4A; color:#1B2A4A;">Learning</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Study Schedule Generator</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Learning something new while working full-time? This generates a realistic weekly schedule that fits around your actual constraints — not an idealized plan you'll abandon by day three.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a personal learning coach who builds realistic, sustainable study plans for busy working professionals. I want to learn [TOPIC/SKILL] by [DEADLINE OR TIMEFRAME].
+
+My current level: [BEGINNER / SOME FAMILIARITY / INTERMEDIATE]
+Time available per week: [HOURS PER WEEK]
+Best times to study: [MORNINGS / EVENINGS / WEEKENDS / COMMUTE]
+Learning style: [I prefer [videos / reading / doing / mix]]
+Goal: [WHAT DO YOU WANT TO BE ABLE TO DO?]
+
+Create a week-by-week study schedule with:
+- Daily time blocks (realistic, not aspirational)
+- Specific resources or activity types for each session
+- One practical exercise per week
+- Built-in review and rest days</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed font-mono text-xs">
+            Week 1: Foundations — Mon 7am (30min: intro reading), Wed 7am (30min: tool setup + first prompt), Sat (60min: hands-on practice + reflection)<br /><br />
+            Week 2: Applied Skills — Tue/Thu 7am (30min each: targeted exercises), Sun (60min: real work task using AI)<br /><br />
+            Week 3: Depth — Mon/Wed/Fri (30min each: advanced techniques), Sat (90min: build something real)<br /><br />
+            Week 4: Review + Ship — Daily 20min review, Fri: share what you built
+          </div>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="learning" data-title="skill roadmap creator" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-navy" style="border-color:#1B2A4A; color:#1B2A4A;">Learning</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Skill Roadmap Creator</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">When you want to get from "beginner" to "competent" in a skill and need a clear path — not a list of everything you could ever learn. This builds a focused, sequenced roadmap.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a career development coach who builds focused, no-fluff skill roadmaps. Help me build a roadmap for becoming competent in [SKILL].
+
+My current level: [DESCRIBE HONESTLY]
+My goal: [WHAT DOES "COMPETENT" LOOK LIKE FOR YOU? BE SPECIFIC]
+Context: [WHY ARE YOU LEARNING THIS? WORK? CAREER CHANGE? CURIOSITY?]
+Timeline: [HOW LONG DO YOU HAVE?]
+
+Build a skill roadmap with:
+- 3–4 stages (Foundation → Applied → Proficient → Advanced)
+- 2–3 specific skills or concepts per stage
+- What "done" looks like for each stage
+- One project idea per stage to prove the skill
+- What to skip (i.e., what's not worth learning at this stage)</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Stage 1 — Foundation:</strong> Understand how AI works, run your first 10 prompts, pick one tool. Done when: you've used AI on a real task. Skip: model architecture, APIs, fine-tuning.<br /><br />
+            <strong>Stage 2 — Applied:</strong> Prompt frameworks, use cases for your job, iterating on outputs. Done when: you save 2+ hours/week with AI.<br /><br />
+            <strong>Stage 3 — Proficient:</strong> Custom instructions, multi-step workflows, evaluating quality. Done when: AI is in your regular workflow.<br /><br />
+            <strong>Project:</strong> Build a "personal AI playbook" documenting your top 5 use cases.
+          </div>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="learning" data-title="just in time learning prompt" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-navy" style="border-color:#1B2A4A; color:#1B2A4A;">Learning</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Just-in-Time Learning Prompt</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">You have a task. You don't know how to do it. Use this to get a targeted explanation of only what you need — and nothing you don't — so you can move forward right now.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a patient, expert teacher who gives people exactly what they need to solve the immediate problem — nothing more, nothing less. I need to [SPECIFIC TASK] right now and I don't know how.
+
+My role: [YOUR ROLE]
+My current knowledge: [WHAT YOU KNOW ABOUT THIS TOPIC]
+What I need to do: [DESCRIBE THE SPECIFIC TASK]
+My tools/resources: [WHAT I HAVE ACCESS TO]
+Time I have: [HOW LONG TO COMPLETE THIS]
+
+Explain only what I need to know to complete this specific task. Don't explain the broader topic — just enough to get this done well. Then give me a step-by-step action plan I can follow in the next [TIME AVAILABLE].</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>What you need to know:</strong> A VLOOKUP matches a value in one column against a reference table and returns data from another column. That's it.<br /><br />
+            <strong>Steps:</strong><br />
+            1. In column D, type: =VLOOKUP(A2, Sheet2!A:B, 2, FALSE)<br />
+            2. A2 = the value you're looking up<br />
+            3. Sheet2!A:B = the reference table<br />
+            4. 2 = return the 2nd column from that table<br />
+            5. FALSE = exact match only<br />
+            6. Drag the formula down. Done.
+          </div>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="personal" data-title="personal coaching prompt" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust" style="border-color:#B94A2C; color:#B94A2C;">Personal</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Personal Coaching Prompt</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Use AI as a sounding board for a challenge you're working through — a tough decision, a career question, a goal that feels stuck. It asks the right questions and helps you think clearly.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a thoughtful executive coach. Don't give advice immediately — ask clarifying questions first, then help me think through the problem.
+
+The challenge I'm working through: [DESCRIBE THE SITUATION]
+What I've already tried or considered: [YOUR CURRENT THINKING]
+What I want to get out of this conversation: [CLARITY / A DECISION / A PLAN / EMOTIONAL PROCESSING]
+
+Start by asking me 2–3 focused questions that will help you understand the real issue. Then, once I've answered, offer a reframe or perspective I may not have considered. Keep each response concise.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <em>Before I offer a perspective, let me understand this better:</em><br /><br />
+            1. When you say you feel "stuck" — is it that you don't know what to do, or that you know what to do but something is stopping you?<br />
+            2. What's the cost of making no decision at all?<br />
+            3. If a trusted mentor gave you permission to do the thing you're considering — what would you do?<br /><br />
+            <em>[After you answer, I'll offer a reframe on what I think the real decision is.]</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="personal" data-title="style guide builder" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust" style="border-color:#B94A2C; color:#B94A2C;">Personal</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Style Guide Builder</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Build a personal writing style guide that you paste at the start of any AI conversation. Trained on your actual writing, it teaches the AI to match your voice — not sound like a robot wrote it.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a writing coach and editor who specializes in helping people identify and articulate their authentic voice. Here are three examples of my writing:
+
+Example 1: [PASTE A SAMPLE — email, Slack message, report section]
+Example 2: [PASTE ANOTHER SAMPLE]
+Example 3: [PASTE ANOTHER SAMPLE]
+
+Analyze these samples and create a "Personal Style Guide" with the following sections:
+- Tone and voice (3–5 descriptors)
+- Sentence structure tendencies
+- What I do that I should keep
+- What I avoid (punctuation, jargon, filler phrases)
+- A short "write like me" instruction I can paste into any AI prompt</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Tone:</strong> Direct, warm, plainspoken, mildly conversational, credible without being formal.<br /><br />
+            <strong>Structure:</strong> Short sentences. Paragraphs rarely exceed 3 lines. Uses dashes — like this — for asides. Lists for clarity, not decoration.<br /><br />
+            <strong>Keep:</strong> Confident declarative statements. Starting with the point, not the context.<br /><br />
+            <strong>Avoid:</strong> "Leverage," "synergy," "circle back," filler openers like "Great question!"<br /><br />
+            <strong>Write like me:</strong> Direct and warm. Short sentences. Start with the point. Avoid corporate filler.
+          </div>
+        </div>
+      </div>
+
+      <!-- 15 -->
+      <div class="prompt-card bg-parchment retro-border p-5" data-category="personal" data-title="goal setting and tracking" onclick="toggleCard(this)">
+        <div class="flex justify-between items-start mb-3">
+          <span class="category-pill text-rust" style="border-color:#B94A2C; color:#B94A2C;">Personal</span>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none">+</span>
+        </div>
+        <h3 class="font-display font-bold text-navy text-xl mb-2">Goal Setting and Tracking</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-3">Turn vague aspirations into a concrete 90-day plan with milestones and accountability checkpoints. Useful at the start of a quarter or whenever you feel like you're drifting.</p>
+        <div class="prompt-expand mt-4 border-t-2 border-dashed border-navy pt-4">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Prompt Template</p>
+          <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed mb-4">Act as a focused accountability coach who helps people turn vague aspirations into concrete, measurable plans. Help me build a clear 90-day goal plan.
+
+My big goal: [DESCRIBE THE GOAL]
+Why it matters: [WHY DO YOU WANT THIS?]
+Current state: [WHERE ARE YOU NOW?]
+Resources I have: [TIME, TOOLS, SUPPORT]
+Obstacles I anticipate: [WHAT MIGHT GET IN THE WAY?]
+
+Create a 90-day plan with:
+- 3 monthly milestones (what "on track" looks like at day 30, 60, 90)
+- 3 weekly habits or actions that drive toward the goal
+- A simple weekly check-in question to track progress
+- One thing to stop doing that is working against this goal</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Example Output</p>
+          <div class="bg-cream border-2 border-mustard p-4 text-sm leading-relaxed">
+            <strong>Day 30:</strong> Have completed first draft of personal website; published one piece of writing publicly.<br />
+            <strong>Day 60:</strong> Received feedback from 5 people; revised based on input; established weekly writing habit.<br />
+            <strong>Day 90:</strong> Website live; 3 pieces published; at least one professional opportunity initiated from it.<br /><br />
+            <strong>Weekly habits:</strong> Write for 30min on Tuesday/Thursday mornings; share one thing weekly; review progress Sunday.<br /><br />
+            <strong>Weekly check-in:</strong> "Did I create something this week, or just consume?"<br /><br />
+            <strong>Stop doing:</strong> Saving articles to "read later" instead of acting on what you already know.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end promptGrid -->
+
+    <!-- No results message -->
+    <div id="noResults" class="hidden text-center py-16">
+      <p class="font-display font-bold text-navy text-xl">No prompts match your search.</p>
+      <p class="text-charcoal mt-2">Try a different keyword or clear the filter.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-3xl mx-auto px-4 py-16">
+    <div class="text-center mb-10">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Plain English Definitions</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Glossary</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">Every term you'll encounter when reading about AI — defined without jargon, with the context that makes them actually useful to know.</p>
+    </div>
+
+    <!-- Search -->
+    <div class="bg-parchment retro-border p-5 mb-8">
+      <input id="glossarySearch" type="text" placeholder="Search terms..." oninput="filterGlossary()"
+        class="w-full font-mono text-sm border-2 border-navy bg-cream px-4 py-3 focus:outline-none focus:border-rust placeholder-charcoal/50" />
+    </div>
+
+    <!-- Letter jump nav -->
+    <div id="letterNav" class="flex flex-nowrap gap-1 mb-8 overflow-x-auto pb-1">
+      <span class="font-mono text-xs text-charcoal uppercase tracking-widest mr-2 self-center">Jump to:</span>
+      <script>
+        ['A','B','C','E','F','G','H','I','L','M','N','P','R','S','T','V','W'].forEach(l => {
+          document.write(`<button onclick="jumpToLetter('${l}')" class="filter-btn px-3 py-1 text-xs">${l}</button>`);
+        });
+      </script>
+    </div>
+
+    <!-- Terms -->
+    <div id="glossaryTerms" class="space-y-1">
+
+      <!-- A -->
+      <div class="letter-group" data-letter="A">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">A</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="agent ai agent">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Agent <span class="font-body font-normal text-sm text-charcoal">/ AI Agent</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Takes actions, not just answers</p>
+          <p class="text-sm leading-relaxed">An AI system that can execute a sequence of actions to complete a goal — browsing the web, running code, sending emails, filling out forms — rather than just generating a response. You give it an objective; it figures out the steps. Still early but rapidly improving.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="api application programming interface">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">API <span class="font-body font-normal text-sm text-charcoal">/ Application Programming Interface</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How software talks to software</p>
+          <p class="text-sm leading-relaxed">The connection point that lets one piece of software send requests to another. When developers "build with AI," they're usually calling a model through its API — sending a prompt and receiving a response programmatically, without using the chat interface.</p>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="letter-group" data-letter="B">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">B</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="benchmark">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Benchmark</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">A standardized test for model performance</p>
+          <p class="text-sm leading-relaxed">A test used to measure and compare AI model capabilities — reasoning, math, coding, language understanding. Labs publish benchmark scores to show progress, but take them with skepticism. A model can score well on benchmarks and still be frustrating to use in practice. Real-world utility matters more.</p>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="letter-group" data-letter="C">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">C</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="context window">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Context Window</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The model's working memory</p>
+          <p class="text-sm leading-relaxed">The total amount of text a model can "see" and reason over at once — your messages, any documents you've shared, and the conversation history. Everything outside the context window is invisible to the model. Larger context windows let you work with longer documents and more complex tasks.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="corpus">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Corpus</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The text a model learned from</p>
+          <p class="text-sm leading-relaxed">The large collection of text data used to train a language model — books, websites, code, articles, and more. When people say a model was "trained on the internet," they're loosely describing its corpus. The size and composition of the corpus heavily shapes what a model knows, what it's good at, and what biases it might carry.</p>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="letter-group" data-letter="D">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">D</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="deep learning">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Deep Learning</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The engine under most modern AI</p>
+          <p class="text-sm leading-relaxed">A type of machine learning that uses layered neural networks to find patterns in data. "Deep" refers to the many layers in those networks, not to any philosophical depth. Most modern AI — image recognition, voice assistants, LLMs — is built on deep learning. You don't need to understand how it works to use these tools well, but it's the technique that made the current wave of AI possible.</p>
+        </div>
+      </div>
+
+      <!-- E -->
+      <div class="letter-group" data-letter="E">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">E</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="embeddings">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Embeddings</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Turning meaning into numbers</p>
+          <p class="text-sm leading-relaxed">A way of representing text (or images or audio) as a list of numbers that captures meaning and relationships. "Dog" and "puppy" would have similar embeddings; "dog" and "democracy" wouldn't. Used in search, recommendations, and RAG systems to find semantically related content even when the exact words don't match.</p>
+        </div>
+      </div>
+
+      <!-- F -->
+      <div class="letter-group" data-letter="F">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">F</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="fine-tuning fine tuning">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Fine-tuning</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Teaching an existing model new tricks</p>
+          <p class="text-sm leading-relaxed">Further training a pre-existing model on a smaller, curated dataset to specialize its behavior — making it better at a specific task, domain, or style. Fine-tuning changes the model itself. It's different from RAG, which leaves the model unchanged and injects relevant documents at query time.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="foundation model">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Foundation Model</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The base layer everything else builds on</p>
+          <p class="text-sm leading-relaxed">A large model trained on broad, general data that can be adapted to many different tasks. Claude, GPT-4, and Gemini are all foundation models. Most AI products and tools are built on top of a foundation model rather than trained from scratch — the cost of training from scratch is too high for most organizations.</p>
+        </div>
+      </div>
+
+      <!-- G -->
+      <div class="letter-group" data-letter="G">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">G</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="generative ai generative artificial intelligence">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Generative AI</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI that creates, not just classifies</p>
+          <p class="text-sm leading-relaxed">AI that produces new content — text, images, video, audio, code — rather than only analyzing or categorizing existing content. ChatGPT, Midjourney, and Suno are all generative AI. The term became mainstream around 2022–2023 with the rise of tools that anyone could use to generate original content.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="gpt generative pre-trained transformer">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">GPT <span class="font-body font-normal text-sm text-charcoal">/ Generative Pre-trained Transformer</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The architecture that sparked the AI wave</p>
+          <p class="text-sm leading-relaxed">The model architecture behind OpenAI's products and the technical breakthrough that triggered the current generation of AI tools. "Pre-trained" means trained on enormous amounts of text before being specialized. GPT-4 and its successors are the models powering ChatGPT — but "GPT" is often used loosely to mean any large language model.</p>
+        </div>
+      </div>
+
+      <!-- H -->
+      <div class="letter-group" data-letter="H">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">H</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="hallucination">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Hallucination</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Confident and wrong</p>
+          <p class="text-sm leading-relaxed">When an AI generates something false while presenting it as fact — a made-up citation, a wrong date, a plausible-sounding statistic that doesn't exist. The model isn't lying; it's producing fluent, probable-seeming text that happens to be incorrect. The most important AI limitation to internalize. Always verify factual claims on anything that matters.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="human in the loop human-in-the-loop">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Human-in-the-Loop</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI acts, humans approve</p>
+          <p class="text-sm leading-relaxed">A design pattern where a person reviews or approves AI outputs before they're acted upon. Best practice for any high-stakes or consequential workflow — not a sign of distrust, but sound process design. As agents become more capable, knowing when to keep humans in the loop is an increasingly important judgment call.</p>
+        </div>
+      </div>
+
+      <!-- I -->
+      <div class="letter-group" data-letter="I">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">I</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="inference">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Inference</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The model generating an output</p>
+          <p class="text-sm leading-relaxed">The process of running a trained model to produce a response. When you send a message to Claude, inference is what's happening on the server — the model processing your input and generating tokens one by one. Inference speed (how fast you get a response) and inference cost (what it costs to run) are key factors in AI product design.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="instruction tuning instruction-tuning">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Instruction Tuning</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">From text predictor to assistant</p>
+          <p class="text-sm leading-relaxed">A training phase where a model is fine-tuned on examples of instruction-following to make it behave like a helpful assistant rather than just continuing text. A raw pre-trained model would complete your sentence; an instruction-tuned model answers your question. Often combined with RLHF to shape safe, helpful behavior.</p>
+        </div>
+      </div>
+
+      <!-- L -->
+      <div class="letter-group" data-letter="L">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">L</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="large language model llm">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Large Language Model <span class="font-body font-normal text-sm text-charcoal">/ LLM</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The engine inside most AI tools</p>
+          <p class="text-sm leading-relaxed">A type of AI model trained on massive amounts of text to understand and generate language. Claude, ChatGPT, Gemini, and Grok are all LLMs. "Large" refers to the number of parameters — typically billions — learned during training. Most of the AI tools you use for writing, analysis, and conversation are built on LLMs.</p>
+        </div>
+      </div>
+
+      <!-- M -->
+      <div class="letter-group" data-letter="M">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">M</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="machine learning ml">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Machine Learning <span class="font-body font-normal text-sm text-charcoal">/ ML</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Systems that learn from data</p>
+          <p class="text-sm leading-relaxed">The broader field of AI where systems learn patterns from data rather than following explicitly programmed rules. Deep learning and large language models are subsets of machine learning. When someone says they "work in ML," they're probably doing something more technical than prompt engineering — building or training models, not just using them.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="multimodal multi-modal">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Multimodal</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Beyond text — images, audio, video</p>
+          <p class="text-sm leading-relaxed">A model that can process and generate multiple types of data — text, images, audio, video — rather than text alone. GPT-4o and Gemini are multimodal. Practically: you can show the model a chart, a screenshot, or a whiteboard photo and ask questions about it. This capability is expanding rapidly.</p>
+        </div>
+      </div>
+
+      <!-- N -->
+      <div class="letter-group" data-letter="N">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">N</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="neural network">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Neural Network</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The architecture under the hood</p>
+          <p class="text-sm leading-relaxed">The computational structure that underlies modern AI — loosely inspired by how neurons connect in the brain, though the analogy only goes so far. Consists of layers of interconnected nodes that transform inputs into outputs through billions of learned numerical weights. You don't need to understand how it works to use AI well, but knowing it exists helps explain why models behave the way they do.</p>
+        </div>
+      </div>
+
+      <!-- P -->
+      <div class="letter-group" data-letter="P">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">P</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="parameters weights">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Parameters <span class="font-body font-normal text-sm text-charcoal">/ Weights</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The numbers that encode what a model learned</p>
+          <p class="text-sm leading-relaxed">The numerical values inside a model that encode everything it learned during training. "A 70 billion parameter model" has 70 billion of these values. More parameters generally means more capability — and more compute required to run it. When you hear about "model weights," it's the same thing: the file you'd download to run an open-source model locally.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="prompt">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Prompt</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Your input to the model</p>
+          <p class="text-sm leading-relaxed">The text you give an AI model — your question, instruction, context, or example. Everything you type in a chat interface is a prompt. The quality of your prompt has an outsized effect on the quality of the output, which is why prompt engineering became a skill worth developing.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="prompt engineering">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Prompt Engineering</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Getting better outputs through better inputs</p>
+          <p class="text-sm leading-relaxed">The practice of crafting prompts to reliably get useful outputs from AI models. Less about engineering, more about clear communication — giving the model the right role, context, format instructions, and examples. Anyone who uses AI effectively is doing some version of prompt engineering, whether they call it that or not.</p>
+        </div>
+      </div>
+
+      <!-- R -->
+      <div class="letter-group" data-letter="R">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">R</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="rag retrieval augmented generation retrieval-augmented">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">RAG <span class="font-body font-normal text-sm text-charcoal">/ Retrieval-Augmented Generation</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI grounded in your documents</p>
+          <p class="text-sm leading-relaxed">An architecture where the model retrieves relevant content from an external database and uses it when generating a response, rather than relying solely on training data. Makes AI dramatically more accurate for domain-specific questions. NotebookLM is essentially a no-code RAG tool. Most enterprise "AI that knows your company's data" is built on RAG.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="reasoning model">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Reasoning Model</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Think first, then answer</p>
+          <p class="text-sm leading-relaxed">A model trained to work through problems step by step — generating an internal chain of reasoning — before producing a final answer. OpenAI's o1 and o3 are examples. Better at complex logic, math, and multi-step problems than standard chat models. Trade-off: they're slower and more expensive to run.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="rlhf reinforcement learning from human feedback">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">RLHF <span class="font-body font-normal text-sm text-charcoal">/ Reinforcement Learning from Human Feedback</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How models learn to be helpful</p>
+          <p class="text-sm leading-relaxed">A training technique where human raters compare and score model outputs, and the model is fine-tuned to produce higher-rated responses. The key process behind making models helpful, honest, and safe rather than just fluent. Most leading AI assistants use some version of RLHF or its successors to shape model behavior.</p>
+        </div>
+      </div>
+
+      <!-- S -->
+      <div class="letter-group" data-letter="S">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">S</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="system prompt">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">System Prompt</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The hidden instructions shaping every response</p>
+          <p class="text-sm leading-relaxed">Instructions given to a model before a conversation begins — setting its role, tone, constraints, and context. You often don't see it, but it shapes every response. When a product built on Claude behaves differently than Claude.ai, a system prompt is usually why. You can write your own in tools like Claude's Projects to customize behavior for recurring tasks.</p>
+        </div>
+      </div>
+
+      <!-- T -->
+      <div class="letter-group" data-letter="T">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">T</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="temperature">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Temperature</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Creativity vs. consistency</p>
+          <p class="text-sm leading-relaxed">A setting that controls how random or creative a model's outputs are. Low temperature = predictable, consistent, conservative. High temperature = more varied, surprising, occasionally weird. Most chat interfaces set this automatically. It matters most when you're using the API directly or building a product on top of a model.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="token tokens">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Token</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The basic unit of text a model processes</p>
+          <p class="text-sm leading-relaxed">The chunk of text a model reads and generates — roughly ¾ of a word in English. "Unbelievable" might be two tokens; "AI" is one. Model limits, pricing, and context windows are all measured in tokens rather than words or characters. For most users this is invisible, but it becomes relevant when working with long documents or building on the API.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="training data training">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Training Data</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">What the model learned from</p>
+          <p class="text-sm leading-relaxed">The text (and other content) a model was trained on. The quality, diversity, and recency of training data heavily shapes what a model knows, how it reasons, and what biases it carries. Models have a knowledge cutoff — a date after which they have no information — because training data is collected up to a point and then the model is frozen.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="transformer">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Transformer</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The architecture that changed everything</p>
+          <p class="text-sm leading-relaxed">The neural network architecture that powers virtually every modern LLM. Introduced by Google in 2017 in the paper "Attention Is All You Need." The "T" in GPT. Before transformers, language models were far less capable. You don't need to understand how it works — just know that when someone says "transformer model," they mean the same family of technology as Claude and ChatGPT.</p>
+        </div>
+      </div>
+
+      <!-- V -->
+      <div class="letter-group" data-letter="V">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">V</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="vector database vector db">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Vector Database</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Storage built for semantic search</p>
+          <p class="text-sm leading-relaxed">A type of database optimized for storing embeddings and finding similar content quickly based on meaning rather than exact keyword matches. The storage layer in most RAG systems — your documents get converted to embeddings, stored in a vector database, and retrieved by semantic similarity when you ask a question. Pinecone and Weaviate are common examples.</p>
+        </div>
+      </div>
+
+      <!-- W -->
+      <div class="letter-group" data-letter="W">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">W</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="weights parameters model weights">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Weights</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">See: Parameters</p>
+          <p class="text-sm leading-relaxed">The numerical values inside a model that encode its learned knowledge and behaviors. Often used interchangeably with "parameters." "Downloading model weights" means getting the file that contains everything a model learned — which is what you do when running open-source models like Llama locally rather than accessing a hosted API.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- No results -->
+    <div id="glossaryNoResults" class="hidden text-center py-16">
+      <p class="font-display font-bold text-navy text-xl">No terms match your search.</p>
+      <p class="text-charcoal mt-2">Try a different keyword.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

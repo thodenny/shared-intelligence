@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-2xl mx-auto px-4 py-16">
+    <div class="text-center mb-10">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Real Questions</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">FAQ</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">The questions everyone has but doesn't always ask. Straight answers, no hedging.</p>
+    </div>
+
+    <div class="space-y-3" id="faqList">
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">Is my data private when I use these tools?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>The honest answer: it depends on the tool and your plan. By default, most free-tier AI tools use your conversations to improve their models. That means what you type can, in principle, be reviewed by humans at the company.</p>
+            <p><strong>What to do:</strong> Go into your account settings and disable training data sharing — most tools offer this. Claude, ChatGPT, and Gemini all have this option. On paid plans, data retention and training opt-outs are typically more explicit.</p>
+            <p><strong>Rule of thumb:</strong> Don't paste genuinely sensitive information — customer data, confidential strategy, personal health details — into a free consumer AI tool. Use your judgment the same way you would with any cloud software you don't fully control.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">Which tool should I pay for first?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>Start free on two or three tools, find the one you actually open every day, then pay for that one. Don't subscribe to anything until you've built a habit with the free tier.</p>
+            <p>That said, if you're doing a lot of writing and analysis at work: <strong>Claude Pro ($20/month)</strong> is where most knowledge workers get the most consistent value. Longer context window, priority access, and better performance on complex tasks.</p>
+            <p>If you need image generation or want one tool that does everything: <strong>ChatGPT Plus ($20/month)</strong> gives you GPT-4o, DALL·E, web search, and the broadest plugin support.</p>
+            <p>If research and fact-checking is your main use case: <strong>Perplexity Pro ($20/month)</strong> is worth it for the source quality and unlimited searches.</p>
+            <p>Pick one. You don't need all three.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">Will AI replace my job?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>Probably not your job — but it will likely change it. The more honest framing: AI is already replacing specific <em>tasks</em>, not whole roles. First drafts, data summarization, research synthesis, scheduling, formatting — these are tasks AI handles well. That frees up time, but it also raises expectations.</p>
+            <p>The professionals most at risk aren't people who use AI tools — it's people who refuse to. The gap between someone who uses AI well and someone who doesn't is widening fast.</p>
+            <p>The work that stays human: judgment calls with real stakes, relationships that require trust, accountability for outcomes, work that requires understanding context that isn't written down anywhere. Focus on developing those things. Use AI for everything else.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">Can I trust what AI tells me?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>Trust it the same way you'd trust a very smart colleague who reads a lot but sometimes misremembers details. Useful, often right, occasionally confidently wrong.</p>
+            <p>AI models can hallucinate — generating plausible-sounding facts, citations, statistics, or quotes that don't exist. The output always sounds fluent and confident, which makes errors harder to spot than a Google result that just says "no results."</p>
+            <p><strong>When to verify:</strong> Any specific fact, number, date, name, or citation that you'll act on or share publicly. Run it through Perplexity or a quick Google check.</p>
+            <p><strong>When to trust it:</strong> Writing, structure, brainstorming, summarizing content you already understand, explaining concepts, drafting communications. These are lower-risk uses where fluency matters more than factual precision.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">Do I need to know how to code to use AI effectively?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>No. The entire premise of this site is that you don't. The most valuable AI skills for most professionals have nothing to do with code — they're about knowing what to ask, how to give useful context, and how to evaluate what comes back.</p>
+            <p>That said, having a basic familiarity with how to read (not write) simple code is increasingly useful — not to build software, but to understand and verify what AI builds for you in tools like Replit or Zapier. But it's not a prerequisite to getting enormous value from AI right now.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">What's the difference between free and paid plans?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>Usually three things: <strong>model quality</strong>, <strong>usage limits</strong>, and <strong>features</strong>.</p>
+            <p>Free plans give you access to a capable but older or smaller model, with daily usage caps that cut you off when you hit them. Paid plans give you the latest, most capable model with higher (or unlimited) message limits and access to extras like image generation, web search, or longer context windows.</p>
+            <p>For light or occasional use, free tiers are genuinely useful. If AI becomes a daily work tool — and it should — the $20/month for a paid plan pays for itself quickly. One hour of saved work per week at any professional salary justifies the cost.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">Is there one "best" AI tool I should use?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>No, and anyone who tells you otherwise is either selling something or hasn't used them all. Different tools genuinely excel at different things — Claude for writing and analysis, Perplexity for research, NotebookLM for your own documents, Gemini for Google Workspace users.</p>
+            <p>That said, if you could only pick one to start: <strong>Claude</strong> for most knowledge workers, <strong>ChatGPT</strong> if you want the broadest ecosystem, <strong>Perplexity</strong> if research is your primary use case.</p>
+            <p>The "best" tool is the one you actually use. Start with one, build a habit, then add a second when you hit a gap the first one can't fill.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-card bg-parchment retro-border cursor-pointer" onclick="toggleFaq(this)">
+        <div class="flex justify-between items-center p-5">
+          <h4 class="font-display font-bold text-navy text-lg pr-4">How much time does AI actually save?</h4>
+          <span class="expand-icon font-mono text-navy font-bold text-xl leading-none shrink-0">+</span>
+        </div>
+        <div class="faq-answer px-5 pb-5 hidden">
+          <div class="border-t-2 border-dashed border-navy pt-4 leading-relaxed space-y-3 text-sm">
+            <p>It varies enormously by how you use it — but for professionals who build AI into their actual workflow, 2–5 hours per week is a reasonable expectation once you're past the learning curve. Some people save more.</p>
+            <p>The savings tend to cluster in a few places: first drafts (writing that used to take an hour takes 10 minutes), research synthesis (summarizing documents you'd have skimmed), and prep work (agendas, talking points, status updates that pile up).</p>
+            <p>The catch: early on, AI doesn't save time — it costs time. You're learning prompts, evaluating outputs, building judgment about what it's good at. Expect 2–4 weeks before you're genuinely faster. That investment is worth it.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

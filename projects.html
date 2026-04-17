@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Learn by Doing</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Milestone Projects</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">Real projects. Real outputs. Each one builds on the last. Pick the tier that matches where you are and work your way up — by the time you finish Advanced, AI is a genuine part of how you work.</p>
+    </div>
+
+    <!-- BEGINNER -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="stamp text-rust text-base px-4 py-1">Beginner</div>
+        <div class="h-px bg-navy flex-1"></div>
+        <p class="font-mono text-xs text-charcoal uppercase tracking-widest">Start Here</p>
+      </div>
+      <p class="text-charcoal leading-relaxed mb-6 max-w-2xl">No experience needed. These two projects take under 30 minutes each and produce something real you can use at work today.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- B1 -->
+        <div class="bg-parchment retro-border p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="font-display font-black text-rust text-4xl leading-none">01</span>
+            <span class="stamp text-rust">~20 min</span>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">Your First AI-Assisted Email</h3>
+          <p class="text-sm leading-relaxed text-charcoal mb-4">Write a real work email you've been putting off — using AI to draft it. Not a practice email. An actual one you'll send.</p>
+          <hr class="border-dashed border-navy mb-4" />
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Goal</p>
+          <p class="text-sm mb-4">Send one AI-drafted email (edited and approved by you) to a real recipient.</p>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Steps</p>
+          <ol class="text-sm space-y-2 list-none pl-0">
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span>Pick an email you need to write — a follow-up, a request, an update.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span>Open Claude or ChatGPT. Use the Email Drafting Assistant prompt from the library.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span>Paste in your rough notes and fill in the brackets.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span>Edit the output so it sounds like you. Send it.</li>
+          </ol>
+          <div class="mt-4 bg-cream border-2 border-dashed border-navy p-3">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">You did it when...</p>
+            <p class="text-xs">A real email goes out with AI-drafted copy you edited and approved.</p>
+          </div>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-4 mb-1">Recommended Tool</p>
+          <p class="text-xs text-charcoal">Claude or ChatGPT</p>
+        </div>
+
+        <!-- B2 -->
+        <div class="bg-parchment retro-border p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="font-display font-black text-rust text-4xl leading-none">02</span>
+            <span class="stamp text-rust">~15 min</span>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">Summarize a Document in 5 Minutes</h3>
+          <p class="text-sm leading-relaxed text-charcoal mb-4">Take a report, article, or document you've been avoiding and get a plain-English summary with the key takeaways in under 5 minutes.</p>
+          <hr class="border-dashed border-navy mb-4" />
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Goal</p>
+          <p class="text-sm mb-4">Produce a 150-word summary of a real document that you can share or act on immediately.</p>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Steps</p>
+          <ol class="text-sm space-y-2 list-none pl-0">
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span>Pick a document you actually need to read — a report, a policy, a long email thread.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span>Open NotebookLM (best for PDFs) or Claude. Paste or upload the document.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span>Ask: "Summarize this in plain English. What are the 3 most important takeaways?"</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span>Ask one follow-up question about something that wasn't clear.</li>
+          </ol>
+          <div class="mt-4 bg-cream border-2 border-dashed border-navy p-3">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">You did it when...</p>
+            <p class="text-xs">You can explain the document's key points to someone else without re-reading it.</p>
+          </div>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-4 mb-1">Recommended Tool</p>
+          <p class="text-xs text-charcoal">NotebookLM (for PDFs) or Claude</p>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- INTERMEDIATE -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="stamp text-mustard text-base px-4 py-1" style="border-color:#D4A017;">Intermediate</div>
+        <div class="h-px bg-navy flex-1"></div>
+        <p class="font-mono text-xs text-charcoal uppercase tracking-widest">Build the Habit</p>
+      </div>
+      <p class="text-charcoal leading-relaxed mb-6 max-w-2xl">You've tried AI once or twice. These projects make it a real part of how you work — not a one-off experiment.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- I1 -->
+        <div class="bg-parchment retro-border-mustard p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="font-display font-black text-mustard text-4xl leading-none">03</span>
+            <span class="stamp text-mustard" style="border-color:#D4A017;">~60 min</span>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">Build Your Personal Prompt Library</h3>
+          <p class="text-sm leading-relaxed text-charcoal mb-4">Create 5 custom prompts tailored to your specific job — not generic templates, but prompts written for your exact role, team, and recurring tasks.</p>
+          <hr class="border-dashed border-navy mb-4" />
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Goal</p>
+          <p class="text-sm mb-4">A saved, personal prompt library you'll actually reuse — stored somewhere you can access it in 10 seconds.</p>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Steps</p>
+          <ol class="text-sm space-y-2 list-none pl-0">
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">1.</span>List the 5 most repetitive writing or thinking tasks in your job.</li>
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">2.</span>For each, start with the closest prompt from this library and customize it — swap in your actual role, your team's terminology, your typical audience.</li>
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">3.</span>Test each prompt on a real task. Refine until the first output is 80% usable.</li>
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">4.</span>Save them in a Notion page, a Google Doc, or a plain text file — somewhere fast.</li>
+          </ol>
+          <div class="mt-4 bg-cream border-2 border-dashed border-navy p-3">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">You did it when...</p>
+            <p class="text-xs">You have 5 tested, saved prompts and used at least 3 of them on real work this week.</p>
+          </div>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-4 mb-1">Recommended Tool</p>
+          <p class="text-xs text-charcoal">Claude or ChatGPT + Notion or Google Docs</p>
+        </div>
+
+        <!-- I2 -->
+        <div class="bg-parchment retro-border-mustard p-6">
+          <div class="flex items-start justify-between mb-4">
+            <span class="font-display font-black text-mustard text-4xl leading-none">04</span>
+            <span class="stamp text-mustard" style="border-color:#D4A017;">4 weeks</span>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">The One-Month Weekly Report Challenge</h3>
+          <p class="text-sm leading-relaxed text-charcoal mb-4">Use AI to write your weekly status report every week for a month. Track how long it takes and how the quality changes. By week four, this will feel effortless.</p>
+          <hr class="border-dashed border-navy mb-4" />
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Goal</p>
+          <p class="text-sm mb-4">Four AI-assisted weekly reports sent. A repeatable process you can run in under 10 minutes.</p>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Steps</p>
+          <ol class="text-sm space-y-2 list-none pl-0">
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">1.</span>Week 1: Use the Weekly Report Generator prompt. Note how long it takes and what you had to fix.</li>
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">2.</span>Week 2: Refine the prompt based on last week's edits. Make your notes more structured going in.</li>
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">3.</span>Week 3: Time yourself. Can you go from notes to sent report in under 15 minutes?</li>
+            <li class="flex gap-2"><span class="font-bold text-mustard shrink-0">4.</span>Week 4: Under 10 minutes. Write down what you learned. That's your process now.</li>
+          </ol>
+          <div class="mt-4 bg-cream border-2 border-dashed border-navy p-3">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">You did it when...</p>
+            <p class="text-xs">Four reports sent. Week 4 takes under 10 minutes start to finish.</p>
+          </div>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-4 mb-1">Recommended Tool</p>
+          <p class="text-xs text-charcoal">Claude or ChatGPT</p>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- ADVANCED -->
+    <div class="mb-8">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="stamp text-navy text-base px-4 py-1">Advanced</div>
+        <div class="h-px bg-navy flex-1"></div>
+        <p class="font-mono text-xs text-charcoal uppercase tracking-widest">Ship Something Real</p>
+      </div>
+      <p class="text-charcoal leading-relaxed mb-6 max-w-2xl">AI is already saving you time. These projects go further — you're building systems and sharing knowledge. Others will notice.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- A1 -->
+        <div class="bg-parchment retro-border p-6" style="box-shadow: 4px 4px 0 #1B2A4A;">
+          <div class="flex items-start justify-between mb-4">
+            <span class="font-display font-black text-navy text-4xl leading-none">05</span>
+            <span class="stamp text-navy">2–3 hrs</span>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">Design a Full AI Workflow</h3>
+          <p class="text-sm leading-relaxed text-charcoal mb-4">Pick one recurring, multi-step work task and rebuild it with AI assistance at every stage. Document the workflow so someone else could run it.</p>
+          <hr class="border-dashed border-navy mb-4" />
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Goal</p>
+          <p class="text-sm mb-4">A documented, repeatable AI workflow for one recurring task — ready to hand off or present.</p>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Steps</p>
+          <ol class="text-sm space-y-2 list-none pl-0">
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span>Choose a task you do at least monthly: a report, a review, a planning cycle, an ops process.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span>Map every step currently. Then identify where AI can help — drafting, summarizing, analyzing, formatting.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span>Build a custom prompt (or set of prompts) for each AI touchpoint. Test them on a real cycle.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span>Write a one-page "workflow doc": inputs, AI steps, human review points, final output.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">5.</span>Run it twice. Refine. Share with one teammate.</li>
+          </ol>
+          <div class="mt-4 bg-cream border-2 border-dashed border-navy p-3">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">You did it when...</p>
+            <p class="text-xs">The workflow doc exists, you've run it twice, and one other person has used it or reviewed it.</p>
+          </div>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-4 mb-1">Recommended Tools</p>
+          <p class="text-xs text-charcoal">Claude + Notion or Google Docs for the workflow doc</p>
+        </div>
+
+        <!-- A2 -->
+        <div class="bg-parchment retro-border p-6" style="box-shadow: 4px 4px 0 #1B2A4A;">
+          <div class="flex items-start justify-between mb-4">
+            <span class="font-display font-black text-navy text-4xl leading-none">06</span>
+            <span class="stamp text-navy">3–4 hrs</span>
+          </div>
+          <h3 class="font-display font-bold text-navy text-xl mb-2">Build a Team Onboarding Guide with AI</h3>
+          <p class="text-sm leading-relaxed text-charcoal mb-4">Create a complete onboarding document for someone new to your team or role — the kind of guide you wish existed when you started. Build it with AI as your writing partner.</p>
+          <hr class="border-dashed border-navy mb-4" />
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Goal</p>
+          <p class="text-sm mb-4">A real, shareable onboarding guide your team actually uses — not a skeleton that sits in a drawer.</p>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Steps</p>
+          <ol class="text-sm space-y-2 list-none pl-0">
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span>Brain-dump everything a new person needs to know: tools, processes, key people, unwritten rules, common mistakes.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span>Paste your notes into Claude. Ask it to organize them into a structured onboarding guide with sections and clear headings.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span>Have AI draft the prose for each section based on your notes. Edit for accuracy and voice.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span>Add a "30/60/90 day" section: what to learn, do, and own in the first three months.</li>
+            <li class="flex gap-2"><span class="font-bold text-rust shrink-0">5.</span>Share it with one current team member for feedback. Publish it somewhere your team can find it.</li>
+          </ol>
+          <div class="mt-4 bg-cream border-2 border-dashed border-navy p-3">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">You did it when...</p>
+            <p class="text-xs">The guide is published, reviewed by a teammate, and ready for the next person who joins.</p>
+          </div>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-4 mb-1">Recommended Tools</p>
+          <p class="text-xs text-charcoal">Claude + Notion, Confluence, or Google Docs</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-10">
+      <p class="font-display font-bold text-navy text-lg mb-4">Ready to start? Pick up the right prompt.</p>
+      <a href="prompt-library.html" class="cta-btn-secondary">Browse the Prompt Library →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

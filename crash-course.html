@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crash Course — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-3xl mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Short Version</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">AI Crash Course</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">The eight things worth knowing before anything else. Simplified on purpose. The goal is to understand. I stripped the parts that don't help you immediately. Read it once and you'll know more than most people in your office.</p>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">01</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">What AI Actually Is</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Plain English Edition</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>Tools like ChatGPT and Claude are a subset of AI called <strong>Generative AI</strong> — more specifically, they're <b><a href = "http://ibm.com/think/topics/large-language-models">Large Language Models</a></b>, or <b>LLMs</b>. They're very good autocomplete engines (simplified on purpose) trained on an enormous amount of text. They predict what a helpful, knowledgeable response would look like, based on patterns in billions of documents, books, and websites.</p>
+        <p>They don't "think." They don't "know" things the way you know things. But they've "read" so much that they can sound fluent on almost any topic, draft almost any document, and explain almost anything in plain language.</p>
+        <p>The practical: treat AI like a smart, fast, tireless collaborator who has read everything but needs you to tell it what actually matters in your specific situation. You bring the judgment. It brings the output.</p>
+        <p class="text-sm text-charcoal italic">Note: while LLMs are trained primarily on text, many modern models are <strong>multimodal</strong>, meaning they also "understand" images, code, and audio. The text-trained framing is still accurate enough for most purposes, but worth knowing.</p>
+        <p>One important caveat: they get things wrong. Sometimes confidently wrong. This is called a <strong>hallucination</strong> - when a model generates something false but presents it as fact. A made-up statistic, a citation that doesn't exist, a date that's off. It doesn't happen constantly, but it happens.</p>
+        <p>Always verify anything you plan to act on or share.</p>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 2 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">02</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">How to Think About Prompting</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Context is Everything</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>The biggest mistake beginners make is treating AI like a search engine — typing a few keywords and expecting magic. Better prompts get dramatically better results. Here's the framework:</p>
+        <div class="space-y-3">
+          <div class="border-l-4 border-rust pl-4">
+            <strong class="text-navy">Give context.</strong> Who are you? What's your role? What are you trying to accomplish? "I'm a program manager preparing a quarterly business review for senior leadership" is infinitely more useful than "write a QBR."
+          </div>
+          <div class="border-l-4 border-mustard pl-4">
+            <strong class="text-navy">Be specific about the output.</strong> Format, length, tone, audience. "Write three bullet points, each under 20 words, in a professional but direct tone" gets you something usable.
+          </div>
+          <div class="border-l-4 border-rust pl-4">
+            <strong class="text-navy">Iterate, don't give up.</strong> The first response is a draft. Ask it to revise, reframe, shorten, or go deeper. The best results come from a back-and-forth conversation, not a single prompt.
+          </div>
+        </div>
+        <div class="border-2 border-mustard bg-white p-4 mt-2">
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">Pro Tip</p>
+          <p>Instead of trying to front-load all the context yourself, let the model gather it. Try: <em>"Before you help me with this, interview me one question at a time until you have everything you need."</em> It'll ask what matters, you answer, and by the end it has exactly the context to do the job well.</p>
+        </div>
+        <p class="text-sm text-charcoal italic">Note: while the above is excellent for text-based work, for highly technical tasks — data analysis, coding, logic-heavy problems — consider adding <strong>Chain of Thought</strong> instructions. Simply adding <em>"Let's think through this step-by-step"</em> encourages the model to work through its reasoning before giving a final answer, which significantly reduces errors in logic.</p>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 3 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">03</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Which Tools to Start With</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Five Tools Worth Your Time</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b-2 border-navy">
+              <th class="font-display font-bold text-navy text-left pb-2 pr-4">Tool</th>
+              <th class="font-display font-bold text-navy text-left pb-2 pr-4">Best For</th>
+              <th class="font-display font-bold text-navy text-left pb-2">The "Killer Feature"</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-navy">
+            <tr>
+              <td class="py-3 pr-4"><a href="https://claude.ai" target="_blank" class="stamp text-rust">Claude</a></td>
+              <td class="py-3 pr-4">Deep work, nuanced writing, and complex coding.</td>
+              <td class="py-3">The most "human" and logical reasoning.</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://chatgpt.com" target="_blank" class="stamp text-mustard">ChatGPT</a></td>
+              <td class="py-3 pr-4">General tasks and voice.</td>
+              <td class="py-3">The most versatile "Swiss Army Knife."</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://perplexity.ai" target="_blank" class="stamp text-rust">Perplexity</a></td>
+              <td class="py-3 pr-4">Research, fact-checking, and current events.</td>
+              <td class="py-3">Transparent, clickable citations for every claim.</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://notebooklm.google.com" target="_blank" class="stamp text-mustard">NotebookLM</a></td>
+              <td class="py-3 pr-4">Analyzing your own PDFs, notes, and data.</td>
+              <td class="py-3">"Audio Overviews" that turn your docs into podcasts.</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://gemini.google.com" target="_blank" class="stamp text-rust">Gemini</a></td>
+              <td class="py-3 pr-4">Speed, image generation, and Google ecosystem integration.</td>
+              <td class="py-3">Works inside Gmail and Drive — and generates images via Imagen.</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://wisprflow.com" target="_blank" class="stamp text-mustard">Wispr Flow</a></td>
+              <td class="py-3 pr-4">Dictation anywhere on your computer.</td>
+              <td class="py-3">Speaks into any text field — no special app needed.</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://gamma.app" target="_blank" class="stamp text-rust">Gamma</a></td>
+              <td class="py-3 pr-4">Creating presentations and documents fast.</td>
+              <td class="py-3">Turns a prompt into a full, designed deck in seconds.</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4"><a href="https://n8n.io" target="_blank" class="stamp text-mustard">n8n</a></td>
+              <td class="py-3 pr-4">Automating workflows between apps.</td>
+              <td class="py-3">Open-source, self-hostable alternative to Zapier with AI nodes built in.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 4 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">04</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Finding Your First Use Case</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Look at Your Actual Work Week</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>Don't start by asking "how can I use AI?" Start by asking: <strong>what do I do every week that is repetitive, time-consuming, and mostly text?</strong></p>
+        <p>For most professionals, that's one of these:</p>
+        <ul class="list-none space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> Writing status updates, reports, or summaries</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> Drafting emails you've written a hundred times</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> Preparing for meetings or creating agendas</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> Summarizing long documents or meeting notes</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> Explaining something complex to a non-expert audience</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> Analyzing a messy spreadsheet — upload a CSV and ask: <em>"What are the top three root causes appearing in this data?"</em> This moves AI from writing assistant to strategic thinking partner.</li>
+        </ul>
+        <p>Pick <em>one</em> of these. Do it with AI this week. That's your start.</p>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 5 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">05</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Just-in-Time vs Just-in-Case Learning</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Smarter Way to Learn</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>Most people try to learn AI the wrong way: they consume tutorials, watch YouTube videos, and read newsletters — all before they have an actual problem to solve. That's <strong>just-in-case learning</strong>. It feels productive. It rarely sticks.</p>
+        <p><strong>Just-in-time learning</strong> is different. You have a task. You don't know how to do it with AI. So you figure out exactly what you need — nothing more. You use it. It works. It sticks.</p>
+        <p>Example: "I need to write a performance review for someone on my team. Let me figure out how to prompt AI to help me do that." That's it. That's the whole assignment. You'll learn more in 20 minutes of doing than in 5 hours of watching.</p>
+        <div class="bg-cream border-2 border-dashed border-navy p-4 mt-2">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">The Rule</p>
+          <p class="text-sm">Learn what you need to solve the problem in front of you. Not everything at once. The field changes too fast anyway.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 6 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">06</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Build Confidence by Shipping Small</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Start. Ship. Learn. Repeat.</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>The best way to build confidence with AI isn't to master it — it's to use it on something real and see it work. Even if the first output needs editing. Even if you're not sure you did it "right."</p>
+        <p>Start with something low-stakes: use AI to draft an email you'd have written anyway. Summarize a document you needed to read. Generate a first draft of a slide deck you'd have stared at for an hour. Then ship it — edited, improved, with your judgment added on top.</p>
+        <p>That's the loop: <strong>Start → Use AI → Edit with your judgment → Ship → Notice what worked.</strong></p>
+        <p>Do that five times and you'll have a genuine feel for where AI accelerates your work and where it falls flat. There's no shortcut to that knowledge — it just comes from using it.</p>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 7 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">07</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Data Privacy & Security</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Is It Safe to Use at Work?</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>The most common reason professionals hesitate to use AI at work isn't skepticism — it's a reasonable question: <strong>"Is my data training the model?"</strong></p>
+        <p>The answer depends on which account you're using:</p>
+        <div class="space-y-3">
+          <div class="border-l-4 border-rust pl-4">
+            <strong class="text-navy">Consumer accounts (free or personal plans)</strong> — data may be used to improve the model depending on the provider's settings. Read the terms, and turn off training in your privacy settings if the option exists.
+          </div>
+          <div class="border-l-4 border-mustard pl-4">
+            <strong class="text-navy">Enterprise / work accounts</strong> — data is contractually protected. Providers like Anthropic, OpenAI, and Google offer enterprise tiers where your inputs are not used for training, and data handling meets compliance standards. If your company has set up an enterprise account, you're covered.
+          </div>
+        </div>
+        <p>When in doubt: don't paste anything into a consumer tool that you wouldn't put in an email to a stranger. Names, financials, unreleased product details — keep those out of personal-plan tools. Use your company's provisioned account for anything sensitive.</p>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 8 -->
+    <div class="mb-12">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">08</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">You're the Manager. AI Is the Intern.</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Human-in-the-Loop</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-4">
+        <p>The right mental model for working with AI: <strong>AI drafts, you verify.</strong> It does the bulk work — generating, summarizing, structuring, calculating. You bring the judgment, the context, and the accountability for the final output.</p>
+        <p>Think of it like managing a brilliant intern. They're fast, widely-read, eager to help, and can produce impressive first drafts. But they don't know your organization, your stakeholders, or what "good" looks like in your specific context. You wouldn't send their first draft to the CEO without reading it. Same rule applies here.</p>
+        <p>That said, the workflow isn't one-size-fits-all. Personally, I often prefer to write my first draft myself — then hand it to AI to edit, tighten, or stress-test. It keeps my voice intact while still getting the speed benefit. Try both directions and see what fits your style.</p>
+        <div class="bg-cream border-2 border-dashed border-navy p-4 mt-2">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">The Rule</p>
+          <p class="text-sm">Never let the output leave your hands without your judgment applied to it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="deep-dive.html" class="cta-btn-primary">Ready to go deeper? Read the Deep Dive →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tools — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Landscape</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">AI Tools Directory</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">The tools worth knowing, organized by what they actually do. Every link opens the real thing — no referral codes, no affiliation.</p>
+      <p class="font-mono text-xs text-charcoal/50 uppercase tracking-widest mt-3">Last updated: April 2026</p>
+    </div>
+
+    <!-- Chat & Writing -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Chat &amp; Writing</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://claude.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Claude</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Anthropic</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Best for writing, analysis, and thinking through complex problems. The most nuanced and thoughtful of the major chat models.</p>
+        </a>
+        <a href="https://chatgpt.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">ChatGPT</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">OpenAI</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">The most widely used AI assistant. Strong general-purpose tool with the largest plugin and integration ecosystem.</p>
+        </a>
+        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Gemini</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Google</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Google's AI assistant, deeply integrated with Gmail, Docs, and Google Workspace. The obvious choice if you live in Google's ecosystem.</p>
+        </a>
+        <a href="https://copilot.microsoft.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Microsoft Copilot</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Microsoft</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI built into Microsoft 365. Best if your work lives in Word, Excel, Outlook, and Teams — it works inside those apps natively.</p>
+        </a>
+        <a href="https://grok.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Grok</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">xAI</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Less filtered and more direct than most assistants. Integrated with X and trained on real-time posts. Good for current events and unvarnished takes.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Search & Research -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Search &amp; Research</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://perplexity.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Perplexity</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Perplexity AI</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI-powered search that cites its sources. The go-to for research, fact-checking, and any question where accuracy and attribution matter.</p>
+        </a>
+        <a href="https://notebooklm.google.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">NotebookLM</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Google</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Upload your own documents and ask questions about them. Answers are grounded in your sources only — dramatically less hallucination for your own material.</p>
+        </a>
+        <a href="https://you.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">You.com</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">You.com</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI search engine with source citations and a customizable interface. A solid Perplexity alternative with strong research and coding modes.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Presentations & Docs -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Presentations &amp; Docs</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://gamma.app" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Gamma</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Gamma</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Generate polished presentations, documents, and webpages from a text prompt in seconds. Cuts deck-building time dramatically.</p>
+        </a>
+        <a href="https://tome.app" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Tome</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Tome</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI-powered presentation tool focused on narrative and storytelling. Great for pitches and decks where the arc of the story matters.</p>
+        </a>
+        <a href="https://www.beautiful.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Beautiful.ai</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Beautiful.ai</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Smart slide design that auto-formats your content as you add it. Less generative than Gamma, more design-assist — good for polished professional decks.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Voice & Dictation -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Voice &amp; Dictation</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://wisprflow.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">WisprFlow</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Wispr</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Dictate anywhere on your computer with AI cleanup. Write emails, Slack messages, and documents by speaking — works in every app.</p>
+        </a>
+        <a href="https://otter.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Otter.ai</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Otter.ai</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Real-time meeting transcription and AI summaries. Joins your Zoom, Teams, or Meet calls automatically and produces searchable notes.</p>
+        </a>
+        <a href="https://fireflies.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Fireflies.ai</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Fireflies</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI meeting assistant that records, transcribes, and summarizes calls. Strong on action item extraction and CRM integrations.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Autonomous Agents -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Autonomous Agents</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <p class="text-sm text-charcoal mb-5 max-w-2xl italic">These tools don't just respond — they take action. Give them a goal and they figure out the steps. Still early, but genuinely capable.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://manus.im" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Manus</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Manus</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Fully autonomous AI agent that can browse the web, write code, manage files, and complete complex multi-step tasks independently with minimal hand-holding.</p>
+        </a>
+        <a href="https://operator.chatgpt.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Operator</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">OpenAI</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">OpenAI's browser-based agent. Can navigate websites, fill out forms, make reservations, and complete web-based tasks on your behalf.</p>
+        </a>
+        <a href="https://www.anthropic.com/news/claude-computer-use" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Claude Computer Use</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Anthropic</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Lets Claude control a computer — clicking, typing, navigating apps — to complete tasks end-to-end. The most capable general computer agent available today.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Image Generation -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Image Generation</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://midjourney.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Midjourney</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Midjourney</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">The gold standard for high-quality AI image generation. Stunning artistic results and a passionate creative community. Accessed via Discord or web.</p>
+        </a>
+        <a href="https://chatgpt.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">DALL·E</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">OpenAI</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">OpenAI's image generator, available directly inside ChatGPT. Fast, easy to use, and good for quick visuals without leaving your workflow.</p>
+        </a>
+        <a href="https://firefly.adobe.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Adobe Firefly</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Adobe</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Adobe's AI image suite, trained on licensed content. The safest choice for commercial use — built into Photoshop, Illustrator, and Express.</p>
+        </a>
+        <a href="https://ideogram.ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Ideogram</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Ideogram</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Exceptional at generating images with accurate, readable text — a major weakness of most image generators. Great for social graphics and anything with typography.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Video Generation -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Video Generation</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://runwayml.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Runway</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Runway</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Professional-grade AI video generation and editing. Widely used by filmmakers and content creators. The most mature video AI platform available.</p>
+        </a>
+        <a href="https://pika.art" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Pika</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Pika Labs</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Easy-to-use AI video generation for short clips and social content. Lower barrier to entry than Runway, good starting point for video generation beginners.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Coding -->
+    <div class="mb-12">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Coding &amp; Development</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://github.com/features/copilot" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">GitHub Copilot</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">GitHub</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">The most widely used AI coding assistant. Autocompletes code, explains errors, and suggests entire functions inside VS Code and other IDEs.</p>
+        </a>
+        <a href="https://cursor.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Cursor</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Cursor</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI-first code editor that understands your entire codebase. Faster than Copilot for complex refactors and multi-file changes. Preferred by many engineers.</p>
+        </a>
+        <a href="https://replit.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Replit</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Replit</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Browser-based coding environment with built-in AI. The best entry point for non-developers who want to build simple tools, automations, or apps without setup.</p>
+        </a>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Productivity & Workflow -->
+    <div class="mb-8">
+      <div class="flex items-center gap-4 mb-5">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Productivity &amp; Workflow</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="https://notion.com/product/ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Notion AI</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Notion</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">AI built into Notion. Summarize meeting notes, draft documents, query your workspace, and generate content without leaving your knowledge base.</p>
+        </a>
+        <a href="https://zapier.com/ai" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Zapier AI</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Zapier</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Connect apps and automate workflows using plain English. Describe what you want to automate — Zapier's AI builds the workflow. No code required.</p>
+        </a>
+        <a href="https://make.com" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">Make</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">Make</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Visual automation platform with AI capabilities. More powerful than Zapier for complex, branching workflows. Steeper learning curve, higher ceiling.</p>
+        </a>
+        <a href="https://n8n.io" target="_blank" rel="noopener" class="tool-card bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+          <div class="flex items-start justify-between mb-2">
+            <h4 class="font-display font-bold text-navy text-lg">n8n</h4>
+            <span class="font-mono text-xs text-rust uppercase tracking-widest">n8n</span>
+          </div>
+          <p class="text-sm leading-relaxed text-charcoal">Open-source workflow automation with native AI nodes. Self-hostable, highly flexible, and free to start — the power user's alternative to Zapier for teams that want full control.</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

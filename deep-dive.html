@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Dive — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="glossary.html" class="nav-link">Glossary</a>
+        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="tools.html" class="nav-link">Tools</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-3xl mx-auto px-4 py-16">
+    <div class="text-center mb-10">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Beyond the Basics</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Deep Dive</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">The crash course gets you started. This gets you fluent. Five articles that explain what's happening under the hood.</p>
+    </div>
+
+    <!-- Table of contents -->
+    <div class="bg-parchment retro-border p-6 mb-12">
+      <p class="font-mono text-xs text-rust uppercase tracking-widest mb-4">In This Section</p>
+      <ol class="space-y-2">
+        <li><a href="#dd1" onclick="scrollToArticle('dd1')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">01 — How Large Language Models Actually Work</a></li>
+        <li><a href="#dd2" onclick="scrollToArticle('dd2')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">02 — Tokens, Context Windows & Why They Matter</a></li>
+        <li><a href="#dd3" onclick="scrollToArticle('dd3')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">03 — The Difference Between AI Tools</a></li>
+        <li><a href="#dd4" onclick="scrollToArticle('dd4')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">04 — What Is RAG and Why Should You Care?</a></li>
+        <li><a href="#dd5" onclick="scrollToArticle('dd5')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">05 — Agents, Automation & What's Coming Next</a></li>
+      </ol>
+    </div>
+
+    <!-- Article 1 -->
+    <div id="dd1" class="mb-16">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">01</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">How Large Language Models Actually Work</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Mental Model That Makes Everything Else Click</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
+        <p>When you type a message to Claude or ChatGPT, something specific is happening on the other end. It's not a search engine. It's not a database lookup. And it's not a human. Understanding what it actually is changes how you use it — and why it sometimes gets things wrong.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">It Started with Prediction</h4>
+        <p>At the core, a large language model is trained to do one thing: predict the next word. Or more precisely, the next <em>token</em> — a chunk of text that might be a word, part of a word, or a punctuation mark. Given "The capital of France is," the model predicts "Paris" because that sequence appeared countless times in its training data.</p>
+        <p>That sounds trivial. But when you train a model on hundreds of billions of words — books, websites, academic papers, code, conversations — the model has to develop an extraordinarily sophisticated internal understanding of language, facts, reasoning patterns, and context in order to predict well. The prediction task forces the model to actually "understand" the material it's predicting from.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">What Training Actually Means</h4>
+        <p>Training a language model involves feeding it enormous amounts of text and having it repeatedly guess the next token. Every time it gets it wrong, the model's internal parameters — billions of numerical weights — are adjusted slightly. Over trillions of these adjustments, the model gets better and better at prediction.</p>
+        <p>Those weights are the model. They're a compressed, mathematical representation of everything the model "learned" from the training data. When you ask Claude a question, you're not querying a database — you're activating a complex web of numerical relationships that, together, produce a probable next sequence of tokens that constitutes a useful answer.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">The Key Insight</p>
+          <p class="text-sm">LLMs don't retrieve facts — they generate text that is statistically likely to be correct based on patterns in training data. This is why they're so fluent, and why they can confidently be wrong. They're always producing plausible-sounding output. Whether it's accurate is a separate question.</p>
+        </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">Then Came Instruction Tuning</h4>
+        <p>A raw pre-trained model is a powerful text predictor, but it won't helpfully answer your questions — it'll just continue your text as if it were a document. The models you use today have been through a second phase called instruction tuning (or RLHF — Reinforcement Learning from Human Feedback), where human raters score outputs and the model is fine-tuned to produce responses that are helpful, honest, and safe.</p>
+        <p>This is why Claude and ChatGPT feel like assistants rather than autocomplete engines. The underlying mechanism is still prediction — but the model has been shaped to predict responses that a helpful, knowledgeable assistant would give.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">What This Means for How You Use It</h4>
+        <p>This mental model has practical implications:</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Confidence ≠ accuracy.</strong> The model generates fluent text. Fluency and correctness are not the same thing. Always verify factual claims on anything that matters.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Context shapes output.</strong> The model is predicting what a good response looks like given everything in the conversation. More context = better prediction = better output.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>It doesn't "know" things the way you do.</strong> Its knowledge is frozen at its training cutoff. It has no access to your company's internal data, recent news, or anything not in its training set — unless you explicitly provide it.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Article 2 -->
+    <div id="dd2" class="mb-16">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">02</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Tokens, Context Windows & Why They Matter</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Invisible Limits That Shape Every Interaction</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
+        <p>Every time you interact with an AI, two invisible constraints are at work: the size of a token and the size of the context window. Most users never think about either — until something goes wrong. Understanding both makes you a significantly more effective user.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">What Is a Token?</h4>
+        <p>Models don't process text word by word — they process it in chunks called tokens. A token is roughly 3–4 characters of English text, which works out to about ¾ of a word on average. "Unbelievable" might be two tokens. "AI" is one. "GPT-4" is three.</p>
+        <p>Why does this matter? Because AI pricing, speed, and limits are all measured in tokens — not words or characters. When a model has a "200,000 token context window," that's roughly 150,000 words, or about 600 pages of text. When you're billed for API usage, you're billed per token in and out.</p>
+        <p>For most everyday users, tokens are invisible. But if you're doing large-scale document analysis or building on top of AI APIs, they become very relevant very fast.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">What Is a Context Window?</h4>
+        <p>The context window is the amount of text a model can "see" at once — your full conversation, any documents you've uploaded, the system instructions, and the response it's generating. Think of it as the model's working memory.</p>
+        <p>Everything inside the context window is active and available. Everything outside it simply doesn't exist to the model. This has a counterintuitive implication: in a very long conversation, early messages may eventually get pushed out of context — and the model will genuinely have no memory of them.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Context Window Sizes (Approx., 2025)</p>
+          <div class="font-mono text-xs space-y-1 mt-2">
+            <div class="flex justify-between"><span>Claude (Sonnet/Opus)</span><span class="text-rust">200,000 tokens (~150K words)</span></div>
+            <div class="flex justify-between"><span>ChatGPT (GPT-4o)</span><span class="text-rust">128,000 tokens (~96K words)</span></div>
+            <div class="flex justify-between"><span>Gemini 1.5 Pro</span><span class="text-rust">1,000,000 tokens (~750K words)</span></div>
+            <div class="flex justify-between"><span>Perplexity</span><span class="text-rust">Varies by model</span></div>
+          </div>
+        </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">Practical Implications</h4>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>For document work:</strong> Claude's 200K context window means you can paste an entire book, a full contract, or months of meeting notes and ask questions about all of it at once. This is genuinely useful.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>For long conversations:</strong> If a chat session drags on for hours, the model may start to "forget" early context. Starting a fresh conversation with a summary is sometimes more effective than continuing indefinitely.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>For quality:</strong> Research suggests that models pay more attention to content at the beginning and end of a long context than in the middle. If you're feeding in a long document and want the model to focus on a specific section, consider putting that section first.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Article 3 -->
+    <div id="dd3" class="mb-16">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">03</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">The Difference Between AI Tools</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Why They're Not All the Same — and When to Use Each</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
+        <p>The AI tools available today aren't interchangeable. They're built on different architectures, trained with different objectives, and optimized for different tasks. Knowing the difference means you stop using a hammer when you need a scalpel.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Type 1: Chat Models (Claude, ChatGPT)</h4>
+        <p>These are general-purpose large language models trained to be helpful assistants. Their knowledge comes entirely from training data — they have a knowledge cutoff date and no ability to browse the web or access your files unless you explicitly provide them.</p>
+        <p><strong>Best for:</strong> Writing, analysis, reasoning, brainstorming, drafting, explaining complex topics, working through a problem conversationally. Anything that benefits from a capable, responsive thinking partner.</p>
+        <p><strong>Limitation:</strong> No live information. No awareness of your internal data. Will hallucinate on specific facts if not grounded with provided context.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Type 2: Search-Augmented Models (Perplexity, ChatGPT with Search)</h4>
+        <p>These tools combine a language model with a live web search. When you ask a question, the system first searches the web, retrieves relevant pages, and feeds that content into the model's context before generating a response. The model cites its sources.</p>
+        <p><strong>Best for:</strong> Research, fact-checking, current events, anything where you need up-to-date or source-verifiable information. "What are the latest guidelines on X?" "What did the Fed announce this week?" These belong here, not in a pure chat model.</p>
+        <p><strong>Limitation:</strong> Web search quality varies. The model still interprets the sources, which means it can still err. But having citations makes errors much easier to catch.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Type 3: Document-Grounded Tools (NotebookLM, Claude with Files)</h4>
+        <p>These tools let you upload your own documents — PDFs, reports, transcripts, spreadsheets — and ask questions about them. The model answers only from what you've provided, which dramatically reduces hallucination risk for that material.</p>
+        <p><strong>Best for:</strong> Making sense of your own content. Summarizing a 60-page report. Asking questions across multiple documents. Extracting key data from messy files. NotebookLM is purpose-built for this; Claude also handles large document uploads well.</p>
+        <p><strong>Limitation:</strong> Only knows what you give it. No broader knowledge unless the base model contributes.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Type 4: Multimodal Models (GPT-4o, Gemini)</h4>
+        <p>These models can process not just text, but images, audio, and video. Ask GPT-4o to describe what's in a chart. Have Gemini transcribe and summarize a meeting recording. Upload a photo of a whiteboard and ask for the content to be turned into a structured document.</p>
+        <p><strong>Best for:</strong> Any workflow involving non-text inputs. This capability is still maturing but already practically useful for visual content analysis, audio transcription, and mixed-media documents.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4 mt-2">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-2">Quick Decision Guide</p>
+          <div class="text-xs space-y-1 font-mono">
+            <div><span class="text-rust font-bold">Writing / analysis / reasoning</span> → Claude or ChatGPT</div>
+            <div><span class="text-rust font-bold">Current events / research</span> → Perplexity</div>
+            <div><span class="text-rust font-bold">Your documents / PDFs</span> → NotebookLM or Claude</div>
+            <div><span class="text-rust font-bold">Images / audio / visual inputs</span> → GPT-4o or Gemini</div>
+            <div><span class="text-rust font-bold">Google Workspace integration</span> → Gemini</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Article 4 -->
+    <div id="dd4" class="mb-16">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">04</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">What Is RAG and Why Should You Care?</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Architecture Behind AI That Actually Knows Your Business</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
+        <p>You've probably heard "RAG" thrown around in AI conversations. It sounds technical — and it is, under the hood — but the core idea is simple and important, especially if you're thinking about how AI could work with your company's internal information.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">The Problem RAG Solves</h4>
+        <p>A standard language model is trained once, then deployed. Its knowledge is frozen at the training cutoff. It knows nothing about your company's internal documents, your proprietary processes, your customer data, or anything that happened after it was trained.</p>
+        <p>You could retrain the model on your data — but that's enormously expensive and slow. You could fine-tune it — but fine-tuning teaches behavior patterns, not specific facts. Neither approach is practical for most organizations that want AI to "know" their internal knowledge base.</p>
+        <p>RAG — Retrieval-Augmented Generation — is the practical solution.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">How RAG Works</h4>
+        <p>Instead of baking knowledge into the model, RAG keeps knowledge in an external database and retrieves it at query time. When you ask a question, the system:</p>
+        <ol class="space-y-2 pl-2 list-none">
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span>Searches a vector database of your documents for content relevant to your question.</li>
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span>Retrieves the most relevant chunks of text.</li>
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span>Injects that retrieved content into the model's context window along with your question.</li>
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span>The model generates a response grounded in that retrieved content — and can cite it.</li>
+        </ol>
+        <p>The model's job is no longer to remember facts — it's to reason over facts you hand it in real time. This makes the output far more accurate and verifiable for domain-specific questions.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Analogy</p>
+          <p class="text-sm">Think of the model as a brilliant analyst and the RAG system as a research assistant who pulls the right documents before the analyst speaks. The analyst doesn't need to have memorized everything — they just need to reason well over what's in front of them.</p>
+        </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">Why This Matters for Non-Engineers</h4>
+        <p>You're unlikely to build a RAG system yourself. But you'll increasingly encounter enterprise AI tools — internal chatbots, knowledge base assistants, document search tools — that are built on this architecture. Understanding RAG helps you:</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Evaluate vendor claims.</strong> "Our AI knows your company's data" almost always means RAG. Now you can ask smart questions about data freshness, retrieval quality, and citation accuracy.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Understand output quality.</strong> RAG systems are only as good as their underlying document store. If the knowledge base is outdated or poorly organized, the AI answers will reflect that.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Do it yourself, simply.</strong> NotebookLM is essentially a no-code RAG tool. You upload documents; it retrieves and reasons over them. That's RAG at your fingertips today.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Article 5 -->
+    <div id="dd5" class="mb-8">
+      <div class="flex items-start gap-4 mb-4">
+        <span class="font-display font-black text-rust text-5xl leading-none mt-1">05</span>
+        <div>
+          <h3 class="font-display font-bold text-navy text-2xl">Agents, Automation & What's Coming Next</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">From Assistant to Actor — The Shift Already Underway</p>
+        </div>
+      </div>
+      <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
+        <p>So far, every AI tool we've discussed has one thing in common: you give it a prompt, it gives you a response, you decide what to do next. The model is reactive. You're the one taking action in the world.</p>
+        <p>That's changing. The next major shift in how AI is used — already underway — is the move from AI as a <em>responder</em> to AI as an <em>actor</em>.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">What Is an AI Agent?</h4>
+        <p>An AI agent is a model that can take a sequence of actions to accomplish a goal — not just produce a response. It can use tools: browse the web, run code, search databases, send emails, fill out forms, interact with software. You give it a goal; it figures out the steps and executes them.</p>
+        <p>The difference from a chat model is autonomy and action. A chat model tells you how to search for flights. An agent books the flight.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">What Agentic Workflows Look Like Today</h4>
+        <p>You're already seeing early versions of this:</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Perplexity</strong> searches multiple sources, synthesizes them, and presents a cited answer — all without you issuing individual search queries.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Claude's Projects</strong> maintain context across sessions and can work through multi-step tasks with memory.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Zapier AI</strong> and similar tools let AI trigger actions across apps: "When a new form is submitted, summarize it and draft a reply."</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Coding agents</strong> like GitHub Copilot Workspace can read a codebase, understand a bug report, write a fix, run the tests, and open a pull request — without a human in the loop for each step.</li>
+        </ul>
+
+        <h4 class="font-display font-bold text-navy text-lg">What This Means for Knowledge Workers</h4>
+        <p>The honest answer is: a lot, over the next few years. Tasks that currently require a human to orchestrate a sequence of decisions and actions — research synthesis, report generation, scheduling, data processing, operational monitoring — are increasingly automatable with agents.</p>
+        <p>This doesn't mean those jobs disappear. It means the ratio of time spent on routine orchestration vs. judgment and strategy shifts dramatically. The professionals who adapt fastest are the ones who start thinking now about which parts of their work are mechanical sequences and which parts genuinely require human judgment, relationships, and accountability.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">The Practical Move Right Now</p>
+          <p class="text-sm">You don't need to understand agentic frameworks to benefit from this shift. Start by identifying one multi-step, recurring task in your work. Think through which steps are mechanical and which require your judgment. That mapping exercise is the foundation of every AI workflow — and the skill that will matter most as agents become more capable.</p>
+        </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">The Limits Worth Knowing</h4>
+        <p>Agents are powerful and also brittle. They fail in ways that are harder to catch than a single bad response — a chain of plausible-looking steps can lead somewhere wrong. The current best practice is "human in the loop": agents handle the mechanical steps, humans review and approve at key decision points. That's not a temporary workaround; it's a thoughtful design principle for consequential workflows.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="prompt-library.html" class="cta-btn-primary">Put It to Work — Browse Prompts →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
