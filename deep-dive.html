@@ -56,7 +56,7 @@
       <ol class="space-y-2">
         <li><a href="#dd1" onclick="scrollToArticle('dd1')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">01 — How Large Language Models Actually Work</a></li>
         <li><a href="#dd2" onclick="scrollToArticle('dd2')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">02 — Tokens, Context Windows & Why They Matter</a></li>
-        <li><a href="#dd3" onclick="scrollToArticle('dd3')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">03 — The Difference Between AI Tools</a></li>
+        <li><a href="#dd3" onclick="scrollToArticle('dd3')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">03 — Inside the Transformer: How LLMs Actually Think</a></li>
         <li><a href="#dd4" onclick="scrollToArticle('dd4')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">04 — What Is RAG and Why Should You Care?</a></li>
         <li><a href="#dd5" onclick="scrollToArticle('dd5')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">05 — Agents, Automation & What's Coming Next</a></li>
       </ol>
@@ -150,42 +150,92 @@
       <div class="flex items-start gap-4 mb-4">
         <span class="font-display font-black text-rust text-5xl leading-none mt-1">03</span>
         <div>
-          <h3 class="font-display font-bold text-navy text-2xl">The Difference Between AI Tools</h3>
-          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Why They're Not All the Same — and When to Use Each</p>
+          <h3 class="font-display font-bold text-navy text-2xl">Inside the Transformer: How LLMs Actually Think</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">No Math. No PhD. Just the Real Explanation.</p>
         </div>
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
-        <p>The AI tools available today aren't interchangeable. They're built on different architectures, trained with different objectives, and optimized for different tasks. Knowing the difference means you stop using a hammer when you need a scalpel.</p>
 
-        <h4 class="font-display font-bold text-navy text-lg">Type 1: Chat Models (Claude, ChatGPT)</h4>
-        <p>These are general-purpose large language models trained to be helpful assistants. Their knowledge comes entirely from training data — they have a knowledge cutoff date and no ability to browse the web or access your files unless you explicitly provide them.</p>
-        <p><strong>Best for:</strong> Writing, analysis, reasoning, brainstorming, drafting, explaining complex topics, working through a problem conversationally. Anything that benefits from a capable, responsive thinking partner.</p>
-        <p><strong>Limitation:</strong> No live information. No awareness of your internal data. Will hallucinate on specific facts if not grounded with provided context.</p>
+        <p>The word "transformer" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what actually is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language, without the math.</p>
 
-        <h4 class="font-display font-bold text-navy text-lg">Type 2: Search-Augmented Models (Perplexity, ChatGPT with Search)</h4>
-        <p>These tools combine a language model with a live web search. When you ask a question, the system first searches the web, retrieves relevant pages, and feeds that content into the model's context before generating a response. The model cites its sources.</p>
-        <p><strong>Best for:</strong> Research, fact-checking, current events, anything where you need up-to-date or source-verifiable information. "What are the latest guidelines on X?" "What did the Fed announce this week?" These belong here, not in a pure chat model.</p>
-        <p><strong>Limitation:</strong> Web search quality varies. The model still interprets the sources, which means it can still err. But having citations makes errors much easier to catch.</p>
+        <h4 class="font-display font-bold text-navy text-lg">The Paper That Started Everything</h4>
+        <p>In 2017, eight researchers at Google Brain published a paper titled <em>"Attention Is All You Need."</em> It introduced the transformer architecture and quietly made everything that came after it possible — GPT, BERT, Claude, Gemini, all of it.</p>
+        <p>Before transformers, the dominant approach to language modeling used recurrent neural networks (RNNs), which processed text sequentially — one word at a time, left to right. This worked, but it was slow, struggled with long sequences, and had trouble connecting ideas that were far apart in a document. Transformers threw out the sequential constraint entirely. The key insight: instead of reading word by word, the model should be able to look at every word in a sequence simultaneously and dynamically decide which words are most relevant to each other. They called this mechanism <strong>attention</strong>.</p>
 
-        <h4 class="font-display font-bold text-navy text-lg">Type 3: Document-Grounded Tools (NotebookLM, Claude with Files)</h4>
-        <p>These tools let you upload your own documents — PDFs, reports, transcripts, spreadsheets — and ask questions about them. The model answers only from what you've provided, which dramatically reduces hallucination risk for that material.</p>
-        <p><strong>Best for:</strong> Making sense of your own content. Summarizing a 60-page report. Asking questions across multiple documents. Extracting key data from messy files. NotebookLM is purpose-built for this; Claude also handles large document uploads well.</p>
-        <p><strong>Limitation:</strong> Only knows what you give it. No broader knowledge unless the base model contributes.</p>
-
-        <h4 class="font-display font-bold text-navy text-lg">Type 4: Multimodal Models (GPT-4o, Gemini)</h4>
-        <p>These models can process not just text, but images, audio, and video. Ask GPT-4o to describe what's in a chart. Have Gemini transcribe and summarize a meeting recording. Upload a photo of a whiteboard and ask for the content to be turned into a structured document.</p>
-        <p><strong>Best for:</strong> Any workflow involving non-text inputs. This capability is still maturing but already practically useful for visual content analysis, audio transcription, and mixed-media documents.</p>
-
-        <div class="bg-cream border-2 border-dashed border-navy p-4 mt-2">
-          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-2">Quick Decision Guide</p>
-          <div class="text-xs space-y-1 font-mono">
-            <div><span class="text-rust font-bold">Writing / analysis / reasoning</span> → Claude or ChatGPT</div>
-            <div><span class="text-rust font-bold">Current events / research</span> → Perplexity</div>
-            <div><span class="text-rust font-bold">Your documents / PDFs</span> → NotebookLM or Claude</div>
-            <div><span class="text-rust font-bold">Images / audio / visual inputs</span> → GPT-4o or Gemini</div>
-            <div><span class="text-rust font-bold">Google Workspace integration</span> → Gemini</div>
-          </div>
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Why the Title Matters</p>
+          <p class="text-sm">"Attention Is All You Need" was a deliberate provocation. Prior architectures combined attention with recurrence and convolution. The paper's claim was that attention alone — no recurrence, no convolution — was sufficient to build a state-of-the-art language model. They were right.</p>
         </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">Step 1: Turning Words Into Numbers (Embeddings)</h4>
+        <p>Before any attention can happen, the model needs to convert text into something it can compute with. Text gets broken into tokens (see Article 02), and each token is mapped to a high-dimensional vector — a list of hundreds or thousands of numbers. This is called an <strong>embedding</strong>.</p>
+        <p>These numbers aren't arbitrary. Through training, tokens that appear in similar contexts end up with similar embeddings. "Dog" and "puppy" end up close together in the embedding space. "Dog" and "democracy" end up far apart. The geometry of this space encodes meaning — which is why the model can reason about analogies, synonyms, and semantic relationships.</p>
+        <p>The transformer also adds <strong>positional encodings</strong> — another set of numbers layered on top of the embeddings to tell the model where each token sits in the sequence. Without this, the model would have no sense of word order.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Step 2: The Attention Mechanism</h4>
+        <p>This is the core of what makes transformers work. The idea: when processing any given token, the model should be able to "pay attention" to other tokens in the sequence — and the amount of attention should be determined dynamically based on the content, not hardcoded by position.</p>
+        <p>Here's how it works. For each token, the model computes three vectors:</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Query (Q):</strong> "What am I looking for?" — a representation of what this token needs from the others.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Key (K):</strong> "What do I offer?" — a representation of what each token contains.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Value (V):</strong> "What should I actually pass on?" — the content that gets weighted and summed.</li>
+        </ul>
+        <p>The model computes a similarity score between a token's Query and every other token's Key. High similarity = high attention weight. These weights are then used to create a weighted sum of the Values. The result: each token's representation gets updated by pulling in information from the tokens most relevant to it.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Analogy</p>
+          <p class="text-sm">Imagine reading the sentence "The trophy didn't fit in the suitcase because it was too big." When your brain processes "it," it automatically looks back and decides "it" refers to the trophy, not the suitcase. That's exactly what the attention mechanism does — it figures out which other tokens are relevant to resolving the meaning of the current one.</p>
+        </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">Multi-Head Attention</h4>
+        <p>Rather than running attention once, transformers run it in parallel across many "heads" — typically 12, 16, or more in large models. Each head learns to pay attention to different kinds of relationships. One head might learn syntactic structure (subject-verb agreement). Another might track coreferences (what "it" refers to). Another might pick up on semantic relationships (synonyms, opposites).</p>
+        <p>The outputs from all heads are concatenated and projected back into a single representation. The result is a much richer understanding of context than any single attention pass could produce.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Step 3: Feed-Forward Layers & Activation Functions</h4>
+        <p>After the attention mechanism updates each token's representation, that representation passes through a <strong>feed-forward neural network</strong> — a simpler layer applied independently to each token position. This is where a large portion of the model's "knowledge" is thought to be stored: the pattern associations learned during training.</p>
+        <p>Inside these layers, an <strong>activation function</strong> introduces non-linearity — meaning the model can learn complex, curved patterns rather than just straight-line relationships. Without activation functions, stacking layers wouldn't add any expressive power; the whole network would collapse to a single linear transformation.</p>
+        <p>The most common activation functions in modern LLMs:</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>ReLU (Rectified Linear Unit):</strong> The classic. Outputs zero for any negative input, and the value itself for positive inputs. Simple, fast, effective.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>GELU (Gaussian Error Linear Unit):</strong> A smoother version of ReLU. Most modern LLMs — including GPT and Claude — use GELU or variants of it because the smoothness helps with gradient flow during training.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>SwiGLU:</strong> Used in newer architectures like LLaMA. A gated variant that has empirically shown better performance on large models.</li>
+        </ul>
+
+        <h4 class="font-display font-bold text-navy text-lg">Step 4: How the Model Learns — Backpropagation</h4>
+        <p>Training a transformer means adjusting billions of numerical parameters (the weights in the attention and feed-forward layers) so that the model gets better at predicting the next token. The mechanism that makes this work is <strong>backpropagation</strong>.</p>
+        <p>Here's the loop:</p>
+        <ol class="space-y-2 pl-2 list-none">
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span><strong>Forward pass.</strong> The model takes an input sequence and predicts the next token. It produces a probability distribution over the entire vocabulary — e.g., "Paris" has 40% probability, "London" has 12%, "Berlin" has 8%, etc.</li>
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span><strong>Loss calculation.</strong> The model's prediction is compared to the actual next token in the training data. A <em>loss function</em> (typically cross-entropy) measures how wrong the prediction was. A confident wrong answer produces a high loss; a confident correct answer produces a low one.</li>
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span><strong>Backward pass.</strong> The loss is propagated backwards through the network layer by layer, computing the gradient — the direction and magnitude of how each parameter should change to reduce the loss.</li>
+          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span><strong>Weight update.</strong> An optimizer (typically Adam) nudges each parameter slightly in the direction that reduces the loss. Repeat this trillions of times across the training corpus and the model converges toward useful predictions.</li>
+        </ol>
+        <p>The remarkable thing is that no one programs the model to "know" facts or grammar. All of that emerges from this simple training loop applied at scale. The structure of knowledge is an emergent property of learning to predict text well.</p>
+
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Scale is the secret ingredient</p>
+          <p class="text-sm">The transformer architecture was published in 2017. But ChatGPT didn't launch until 2022. The gap isn't explained by new architectural breakthroughs — it's mostly explained by scale: more parameters, more training data, more compute. GPT-3 has 175 billion parameters trained on ~500 billion tokens. That scale is what pushed from "interesting research" to "genuinely useful."</p>
+        </div>
+
+        <h4 class="font-display font-bold text-navy text-lg">Temperature: Controlling Randomness at Inference</h4>
+        <p>When the model generates a response, it doesn't just always pick the highest-probability next token. If it did, responses would be deterministic and repetitive. Instead, a parameter called <strong>temperature</strong> controls how the model samples from its probability distribution.</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Low temperature (close to 0):</strong> The model becomes more deterministic, almost always picking the highest-probability token. Outputs are focused, consistent, and conservative. Good for factual tasks, code generation, and structured outputs where you want precision over creativity.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>High temperature (closer to 1 or above):</strong> The probability distribution is flattened — lower-probability tokens get more of a chance. Outputs become more varied, surprising, and creative. Good for brainstorming, creative writing, and generating diverse options. Also increases the chance of incoherence at extremes.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Temperature = 1:</strong> The model samples proportionally to the raw probabilities — no adjustment. This is typically the default for general use.</li>
+        </ul>
+        <p>If you've ever noticed that asking Claude the same question twice produces slightly different answers, temperature is why. You're not getting a cached lookup — you're getting a fresh sample from the model's probability distribution each time.</p>
+        <p>Most consumer-facing tools don't expose temperature as a setting, but API users can set it directly. It's one of the most practically useful parameters to understand if you're building with LLMs.</p>
+
+        <h4 class="font-display font-bold text-navy text-lg">Why This Matters for How You Use These Tools</h4>
+        <p>You don't need to understand transformer internals to use AI well. But knowing them changes a few things:</p>
+        <ul class="space-y-2 pl-2">
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Hallucinations make sense.</strong> The model is always generating the most statistically plausible next token — not retrieving facts from a database. Plausible and true are not the same thing. Now you know why.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Context window limits make sense.</strong> The attention mechanism operates over the full context window — every token attends to every other token. This is computationally expensive (quadratic in sequence length), which is why context windows are a real constraint, not an arbitrary one.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>Consistency and creativity are a dial.</strong> If you need the model to be precise and consistent, ask for it (or use a low temperature via API). If you want divergent ideas, ask for 10 options instead of one — you're sampling from a distribution, so diversity is achievable.</li>
+          <li class="flex gap-2"><span class="text-rust font-bold">→</span> <strong>More context = better attention.</strong> Because attention is dynamic and content-based, giving the model rich context genuinely helps. It's not just good practice — it's architecturally why better prompts get better results.</li>
+        </ul>
+
       </div>
     </div>
 
