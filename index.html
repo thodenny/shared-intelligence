@@ -309,43 +309,42 @@
           </div>
         </div>
         <div class="bg-parchment retro-border p-6 leading-relaxed">
-          <div class="grid gap-4">
-            <div class="border-b border-navy pb-4">
-              <div class="flex items-center gap-3 mb-1">
-                <span class="stamp text-rust">Claude</span>
-                <span class="font-mono text-xs text-charcoal">by Anthropic</span>
-              </div>
-              <p class="text-sm">Best for: writing, analysis, long documents, thinking through problems. Nuanced and direct. Start here if you want one tool for work.</p>
-            </div>
-            <div class="border-b border-navy pb-4">
-              <div class="flex items-center gap-3 mb-1">
-                <span class="stamp text-mustard">ChatGPT</span>
-                <span class="font-mono text-xs text-charcoal">by OpenAI</span>
-              </div>
-              <p class="text-sm">Best for: general-purpose tasks, image generation (with DALL·E), and the widest plugin ecosystem. The most-used AI tool for a reason.</p>
-            </div>
-            <div class="border-b border-navy pb-4">
-              <div class="flex items-center gap-3 mb-1">
-                <span class="stamp text-rust">Perplexity</span>
-                <span class="font-mono text-xs text-charcoal">Search + AI</span>
-              </div>
-              <p class="text-sm">Best for: research and fact-finding. It cites its sources, which makes it far more trustworthy than plain chatbots for current events.</p>
-            </div>
-            <div class="border-b border-navy pb-4">
-              <div class="flex items-center gap-3 mb-1">
-                <span class="stamp text-mustard">NotebookLM</span>
-                <span class="font-mono text-xs text-charcoal">by Google</span>
-              </div>
-              <p class="text-sm">Best for: making sense of your own documents. Upload a report, a PDF, meeting notes — and ask questions about it. Surprisingly useful.</p>
-            </div>
-            <div>
-              <div class="flex items-center gap-3 mb-1">
-                <span class="stamp text-rust">Gemini</span>
-                <span class="font-mono text-xs text-charcoal">by Google</span>
-              </div>
-              <p class="text-sm">Best for: Google Workspace users. It integrates directly into Gmail, Docs, and Sheets — handy if that's where you already live.</p>
-            </div>
-          </div>
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="border-b-2 border-navy">
+                <th class="font-display font-bold text-navy text-left pb-2 pr-4">Tool</th>
+                <th class="font-display font-bold text-navy text-left pb-2 pr-4">Best For</th>
+                <th class="font-display font-bold text-navy text-left pb-2">The "Killer Feature"</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-navy">
+              <tr>
+                <td class="py-3 pr-4"><span class="stamp text-rust">Claude</span></td>
+                <td class="py-3 pr-4">Deep work, nuanced writing, and complex coding.</td>
+                <td class="py-3">The most "human" and logical reasoning.</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4"><span class="stamp text-mustard">ChatGPT</span></td>
+                <td class="py-3 pr-4">General tasks, image generation, and voice.</td>
+                <td class="py-3">The most versatile "Swiss Army Knife."</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4"><span class="stamp text-rust">Perplexity</span></td>
+                <td class="py-3 pr-4">Research, fact-checking, and current events.</td>
+                <td class="py-3">Transparent, clickable citations for every claim.</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4"><span class="stamp text-mustard">NotebookLM</span></td>
+                <td class="py-3 pr-4">Analyzing your own PDFs, notes, and data.</td>
+                <td class="py-3">"Audio Overviews" that turn your docs into podcasts.</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4"><span class="stamp text-rust">Gemini</span></td>
+                <td class="py-3 pr-4">Speed and Google ecosystem integration.</td>
+                <td class="py-3">Works directly inside your Gmail and Drive.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
