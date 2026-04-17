@@ -205,10 +205,10 @@
         <p>Training a transformer means adjusting billions of numerical parameters (the weights in the attention and feed-forward layers) so that the model gets better at predicting the next token. The mechanism that makes this work is <strong>backpropagation</strong>.</p>
         <p>Here's the loop:</p>
         <ol class="space-y-2 pl-2 list-none">
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span><strong>Forward pass.</strong> The model takes an input sequence and predicts the next token. It produces a probability distribution over the entire vocabulary — e.g., "Paris" has 40% probability, "London" has 12%, "Berlin" has 8%, etc.</li>
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span><strong>Loss calculation.</strong> The model's prediction is compared to the actual next token in the training data. A <em>loss function</em> (typically cross-entropy) measures how wrong the prediction was. A confident wrong answer produces a high loss; a confident correct answer produces a low one.</li>
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span><strong>Backward pass.</strong> The loss is propagated backwards through the network layer by layer, computing the gradient — the direction and magnitude of how each parameter should change to reduce the loss.</li>
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span><strong>Weight update.</strong> An optimizer (typically Adam) nudges each parameter slightly in the direction that reduces the loss. Repeat this trillions of times across the training corpus and the model converges toward useful predictions.</li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">1.</span><div><strong>Forward pass.</strong> The model takes an input sequence and predicts the next token. It produces a probability distribution over the entire vocabulary — e.g., "Paris" has 40% probability, "London" has 12%, "Berlin" has 8%, etc.</div></li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">2.</span><div><strong>Loss calculation.</strong> The model's prediction is compared to the actual next token in the training data. A <em>loss function</em> (typically cross-entropy) measures how wrong the prediction was. A confident wrong answer produces a high loss; a confident correct answer produces a low one.</div></li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">3.</span><div><strong>Backward pass.</strong> The loss is propagated backwards through the network layer by layer, computing the gradient — the direction and magnitude of how each parameter should change to reduce the loss.</div></li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">4.</span><div><strong>Weight update.</strong> An optimizer (typically Adam) nudges each parameter slightly in the direction that reduces the loss. Repeat this trillions of times across the training corpus and the model converges toward useful predictions.</div></li>
         </ol>
         <p>The remarkable thing is that no one programs the model to "know" facts or grammar. All of that emerges from this simple training loop applied at scale. The structure of knowledge is an emergent property of learning to predict text well.</p>
 
@@ -261,10 +261,10 @@
         <h4 class="font-display font-bold text-navy text-lg">How RAG Works</h4>
         <p>Instead of baking knowledge into the model, RAG keeps knowledge in an external database and retrieves it at query time. When you ask a question, the system:</p>
         <ol class="space-y-2 pl-2 list-none">
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">1.</span>Searches a vector database of your documents for content relevant to your question.</li>
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">2.</span>Retrieves the most relevant chunks of text.</li>
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">3.</span>Injects that retrieved content into the model's context window along with your question.</li>
-          <li class="flex gap-2"><span class="font-bold text-rust shrink-0">4.</span>The model generates a response grounded in that retrieved content — and can cite it.</li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">1.</span><div>Searches a vector database of your documents for content relevant to your question.</div></li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">2.</span><div>Retrieves the most relevant chunks of text.</div></li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">3.</span><div>Injects that retrieved content into the model's context window along with your question.</div></li>
+          <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">4.</span><div>The model generates a response grounded in that retrieved content — and can cite it.</div></li>
         </ol>
         <p>The model's job is no longer to remember facts — it's to reason over facts you hand it in real time. This makes the output far more accurate and verifiable for domain-specific questions.</p>
 
