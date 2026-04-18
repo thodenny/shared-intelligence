@@ -87,6 +87,13 @@
           <p class="text-sm">LLMs don't retrieve facts — they generate text that is statistically likely to be correct based on patterns in training data. This is why they're so fluent, and why they can confidently be wrong. They're always producing plausible-sounding output. Whether it's accurate is a separate question.</p>
         </div>
 
+        <!-- Interactive: Next-Token Prediction Playground -->
+        <div class="mt-2">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-3">Interactive Playground</p>
+          <p class="text-sm text-charcoal mb-4">See it in action. Pick a prompt and step through the loop — one token at a time.</p>
+          <div id="llm-token-playground" class="rounded overflow-hidden border border-parchment"></div>
+        </div>
+
         <h4 class="font-display font-bold text-navy text-lg">Then Came Instruction Tuning</h4>
         <p>A raw pre-trained model is a powerful text predictor, but it won't helpfully answer your questions — it'll just continue your text as if it were a document. The models you use today have been through a second phase called instruction tuning (or RLHF — Reinforcement Learning from Human Feedback), where human raters score outputs and the model is fine-tuned to produce responses that are helpful, honest, and safe.</p>
         <p>This is why Claude and ChatGPT feel like assistants rather than autocomplete engines. The underlying mechanism is still prediction — but the model has been shaped to predict responses that a helpful, knowledgeable assistant would give.</p>
@@ -342,5 +349,443 @@
   </footer>
 
   <script src="scripts.js"></script>
+
+  <!-- LLM Token Playground — React + Babel (loaded only when playground container is present) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- Playground fonts (additive — Newsreader + JetBrains Mono) -->
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* Scoped CSS vars for the playground — won't conflict with Tailwind */
+    #llm-token-playground {
+      --pg-bg: #FBFAF7;
+      --pg-bg-2: #F3F0E8;
+      --pg-ink: #1A1915;
+      --pg-ink-2: #413E35;
+      --pg-ink-3: #7A7568;
+      --pg-rule: #E4DFD2;
+      --pg-rule-2: #D1CBB9;
+      --pg-accent: oklch(58% 0.14 38);
+      --pg-accent-soft: oklch(92% 0.045 38);
+      --pg-accent-ink: oklch(42% 0.12 38);
+      --pg-cool: oklch(58% 0.11 230);
+      --pg-cool-soft: oklch(93% 0.035 230);
+      --pg-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+      --pg-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --pg-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--pg-bg);
+      color: var(--pg-ink);
+      font-family: var(--pg-serif);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    #llm-token-playground * { box-sizing: border-box; }
+    #llm-token-playground button { font-family: inherit; }
+    @keyframes pg-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    @keyframes pg-slideIn {
+      0% { transform: translateY(-8px) scale(0.92); opacity: 0; }
+      60% { opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+  </style>
+
+  <script type="text/babel">
+  (function() {
+    const container = document.getElementById('llm-token-playground');
+    if (!container) return;
+
+    const { useState, useEffect, useMemo, useCallback } = React;
+
+    // ── Data ──────────────────────────────────────────────────────────────
+    const PROMPTS = [
+      {
+        id: "fox", label: "The quick brown…",
+        inputTokens: ["The", " quick", " brown"],
+        steps: [
+          { candidates: [{ token: " fox", p: 0.82 },{ token: " dog", p: 0.04 },{ token: " bear", p: 0.03 },{ token: " rabbit", p: 0.02 },{ token: " horse", p: 0.015 },{ token: " cat", p: 0.012 },{ token: " wolf", p: 0.008 }], chosenIndex: 0 },
+          { candidates: [{ token: " jumps", p: 0.58 },{ token: " jumped", p: 0.18 },{ token: " leaps", p: 0.07 },{ token: " runs", p: 0.04 },{ token: " sits", p: 0.02 },{ token: " sat", p: 0.018 },{ token: " is", p: 0.015 }], chosenIndex: 0 },
+          { candidates: [{ token: " over", p: 0.88 },{ token: " across", p: 0.04 },{ token: " onto", p: 0.02 },{ token: " through", p: 0.015 },{ token: " past", p: 0.012 },{ token: " high", p: 0.008 }], chosenIndex: 0 },
+          { candidates: [{ token: " the", p: 0.91 },{ token: " a", p: 0.04 },{ token: " my", p: 0.008 },{ token: " that", p: 0.006 },{ token: " our", p: 0.004 }], chosenIndex: 0 },
+          { candidates: [{ token: " lazy", p: 0.76 },{ token: " sleeping", p: 0.06 },{ token: " tired", p: 0.04 },{ token: " old", p: 0.03 },{ token: " fence", p: 0.02 },{ token: " barking", p: 0.015 },{ token: " brown", p: 0.012 }], chosenIndex: 0 },
+          { candidates: [{ token: " dog", p: 0.94 },{ token: " cat", p: 0.015 },{ token: " hound", p: 0.01 },{ token: " one", p: 0.008 },{ token: " fox", p: 0.005 }], chosenIndex: 0 },
+          { candidates: [{ token: ".", p: 0.68 },{ token: ",", p: 0.12 },{ token: " who", p: 0.06 },{ token: " and", p: 0.04 },{ token: " that", p: 0.03 },{ token: " sleeping", p: 0.02 }], chosenIndex: 0 },
+        ],
+      },
+      {
+        id: "paris", label: "The capital of France is…",
+        inputTokens: ["The", " capital", " of", " France", " is"],
+        steps: [
+          { candidates: [{ token: " Paris", p: 0.86 },{ token: " the", p: 0.06 },{ token: " a", p: 0.02 },{ token: " called", p: 0.015 },{ token: " known", p: 0.012 },{ token: " Lyon", p: 0.004 },{ token: " Marseille", p: 0.003 }], chosenIndex: 0 },
+          { candidates: [{ token: ",", p: 0.42 },{ token: ".", p: 0.31 },{ token: " —", p: 0.08 },{ token: " which", p: 0.05 },{ token: " and", p: 0.03 },{ token: " a", p: 0.02 }], chosenIndex: 0 },
+          { candidates: [{ token: " a", p: 0.38 },{ token: " which", p: 0.22 },{ token: " the", p: 0.14 },{ token: " one", p: 0.06 },{ token: " home", p: 0.04 },{ token: " famous", p: 0.03 }], chosenIndex: 0 },
+          { candidates: [{ token: " city", p: 0.34 },{ token: " global", p: 0.12 },{ token: " cultural", p: 0.09 },{ token: " historic", p: 0.07 },{ token: " bustling", p: 0.05 },{ token: " beautiful", p: 0.04 },{ token: " major", p: 0.03 }], chosenIndex: 0 },
+          { candidates: [{ token: " known", p: 0.28 },{ token: " famous", p: 0.22 },{ token: " of", p: 0.12 },{ token: " renowned", p: 0.08 },{ token: " with", p: 0.05 },{ token: " celebrated", p: 0.04 }], chosenIndex: 0 },
+          { candidates: [{ token: " for", p: 0.92 },{ token: " as", p: 0.04 },{ token: " to", p: 0.015 },{ token: " worldwide", p: 0.008 }], chosenIndex: 0 },
+          { candidates: [{ token: " its", p: 0.74 },{ token: " the", p: 0.08 },{ token: " being", p: 0.05 },{ token: " art", p: 0.03 },{ token: " many", p: 0.02 },{ token: " world", p: 0.015 }], chosenIndex: 0 },
+          { candidates: [{ token: " art", p: 0.22 },{ token: " cuisine", p: 0.16 },{ token: " architecture", p: 0.12 },{ token: " history", p: 0.10 },{ token: " fashion", p: 0.08 },{ token: " museums", p: 0.06 },{ token: " culture", p: 0.05 }], chosenIndex: 0 },
+        ],
+      },
+      {
+        id: "once", label: "Once upon a…",
+        inputTokens: ["Once", " upon", " a"],
+        steps: [
+          { candidates: [{ token: " time", p: 0.94 },{ token: " midnight", p: 0.02 },{ token: " star", p: 0.008 },{ token: " day", p: 0.006 },{ token: " dream", p: 0.004 },{ token: " while", p: 0.003 }], chosenIndex: 0 },
+          { candidates: [{ token: ",", p: 0.62 },{ token: " there", p: 0.18 },{ token: " in", p: 0.08 },{ token: " long", p: 0.04 },{ token: " a", p: 0.02 },{ token: " when", p: 0.015 }], chosenIndex: 0 },
+          { candidates: [{ token: " in", p: 0.28 },{ token: " there", p: 0.24 },{ token: " a", p: 0.12 },{ token: " long", p: 0.09 },{ token: " deep", p: 0.05 },{ token: " far", p: 0.04 }], chosenIndex: 0 },
+          { candidates: [{ token: " a", p: 0.72 },{ token: " the", p: 0.14 },{ token: " an", p: 0.05 },{ token: " days", p: 0.02 },{ token: " old", p: 0.015 }], chosenIndex: 0 },
+          { candidates: [{ token: " land", p: 0.24 },{ token: " kingdom", p: 0.22 },{ token: " faraway", p: 0.14 },{ token: " small", p: 0.08 },{ token: " village", p: 0.06 },{ token: " quiet", p: 0.04 },{ token: " forest", p: 0.03 }], chosenIndex: 0 },
+          { candidates: [{ token: " far", p: 0.48 },{ token: " not", p: 0.18 },{ token: " beyond", p: 0.08 },{ token: " very", p: 0.05 },{ token: " where", p: 0.04 },{ token: " across", p: 0.03 }], chosenIndex: 0 },
+          { candidates: [{ token: ",", p: 0.44 },{ token: " far", p: 0.34 },{ token: " away", p: 0.08 },{ token: " and", p: 0.04 },{ token: " beyond", p: 0.03 }], chosenIndex: 0 },
+          { candidates: [{ token: " far", p: 0.68 },{ token: " very", p: 0.12 },{ token: " there", p: 0.06 },{ token: " in", p: 0.04 },{ token: " beyond", p: 0.03 }], chosenIndex: 0 },
+          { candidates: [{ token: " away", p: 0.92 },{ token: " off", p: 0.03 },{ token: " beyond", p: 0.015 },{ token: " land", p: 0.008 }], chosenIndex: 0 },
+        ],
+      },
+    ];
+
+    // ── Utils ─────────────────────────────────────────────────────────────
+    const C = (v) => `var(${v})`;
+    const renderToken = (tok, showSpace = true) => {
+      if (!tok) return "";
+      return showSpace ? tok.replace(/ /g, "·") : tok.replace(/^ /, "");
+    };
+    const applyTemperature = (candidates, T) => {
+      if (T <= 0.01) return candidates.map((c, i) => ({ ...c, p: i === 0 ? 1 : 0 }));
+      const logits = candidates.map(c => Math.log(Math.max(c.p, 1e-9)) / T);
+      const maxL = Math.max(...logits);
+      const exps = logits.map(l => Math.exp(l - maxL));
+      const sum = exps.reduce((a, b) => a + b, 0);
+      return candidates.map((c, i) => ({ ...c, p: exps[i] / sum }));
+    };
+    const fmtPct = (p) => {
+      if (p >= 0.1) return (p * 100).toFixed(1) + "%";
+      if (p >= 0.01) return (p * 100).toFixed(1) + "%";
+      return (p * 100).toFixed(2) + "%";
+    };
+    const s = (base, extra = {}) => ({ ...base, ...extra });
+
+    // ── Styles (using CSS vars prefixed with --pg-) ────────────────────
+    const V = {
+      bg: "var(--pg-bg)", bg2: "var(--pg-bg-2)", ink: "var(--pg-ink)",
+      ink2: "var(--pg-ink-2)", ink3: "var(--pg-ink-3)", rule: "var(--pg-rule)",
+      rule2: "var(--pg-rule-2)", accent: "var(--pg-accent)", accentSoft: "var(--pg-accent-soft)",
+      accentInk: "var(--pg-accent-ink)", cool: "var(--pg-cool)", coolSoft: "var(--pg-cool-soft)",
+      serif: "var(--pg-serif)", mono: "var(--pg-mono)",
+    };
+
+    // ── Small components ──────────────────────────────────────────────────
+    const Label = ({ children, style }) => (
+      <div style={{ fontFamily: V.mono, fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: V.ink3, ...style }}>{children}</div>
+    );
+
+    const TokenChip = ({ token, variant = "context", showSpace = true, index }) => {
+      const bg = { context: V.bg2, "just-added": V.coolSoft, candidate: V.accentSoft, incoming: V.coolSoft }[variant];
+      const border = { context: V.rule, "just-added": V.cool, candidate: V.accent, incoming: V.cool }[variant];
+      const color = { context: V.ink, "just-added": V.cool, candidate: V.accentInk, incoming: V.cool }[variant];
+      return (
+        <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 9px", marginRight: 4, marginBottom: 4, background: bg, border: `1px solid ${border}`, borderRadius: 4, fontFamily: V.mono, fontSize: 13, fontWeight: variant === "just-added" ? 600 : 500, color, whiteSpace: "pre", transition: "background 220ms, border-color 220ms, color 220ms" }}>
+          {index != null && <sub style={{ fontSize: 8, color: V.ink3, marginRight: 3, fontWeight: 400, position: "relative", bottom: -2 }}>{index}</sub>}
+          {renderToken(token, showSpace)}
+        </span>
+      );
+    };
+
+    const ProbBars = ({ candidates, chosenIndex, depth, showSpace }) => {
+      const maxP = Math.max(...candidates.map(c => c.p), 0.001);
+      return (
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {candidates.map((c, i) => {
+            const isChosen = i === chosenIndex;
+            return (
+              <div key={c.token + i} style={{ display: "grid", gridTemplateColumns: "100px 1fr 68px", alignItems: "center", gap: 10, padding: "5px 7px", borderRadius: 4, background: isChosen ? V.accentSoft : "transparent", transition: "background 220ms" }}>
+                <div style={{ fontFamily: V.mono, fontSize: 13, fontWeight: isChosen ? 600 : 500, color: isChosen ? V.accentInk : V.ink, textAlign: "right", whiteSpace: "pre", overflow: "hidden", textOverflow: "ellipsis" }}>{renderToken(c.token, showSpace)}</div>
+                <div style={{ height: 16, background: V.bg2, borderRadius: 2, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${(c.p / maxP) * 100}%`, background: isChosen ? V.accent : V.rule2, transition: "width 380ms cubic-bezier(0.22,1,0.36,1), background 220ms" }}/>
+                </div>
+                <div style={{ fontFamily: V.mono, fontSize: 11, fontVariantNumeric: "tabular-nums", color: isChosen ? V.accentInk : V.ink3, fontWeight: isChosen ? 600 : 500, textAlign: "right" }}>
+                  {depth === "technical" ? fmtPct(c.p) : (c.p >= 0.5 ? "very likely" : c.p >= 0.2 ? "likely" : c.p >= 0.05 ? "possible" : "unlikely")}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    };
+
+    // ── Section ───────────────────────────────────────────────────────────
+    const Section = ({ num, title, caption, children }) => (
+      <section style={{ marginBottom: 40 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "56px 1fr", gap: 16, marginBottom: 20 }}>
+          <div style={{ fontFamily: V.mono, fontSize: 11, fontWeight: 500, color: V.ink3, letterSpacing: "0.08em", paddingTop: 10, borderTop: `1px solid ${V.ink}` }}>{num}</div>
+          <div>
+            <h2 style={{ fontFamily: V.serif, fontSize: 22, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-0.015em", margin: 0, marginBottom: 8, paddingTop: 6, color: V.ink }}>{title}</h2>
+            <p style={{ fontFamily: V.serif, fontSize: 15, lineHeight: 1.55, color: V.ink2, margin: 0, maxWidth: 560 }}>{caption}</p>
+          </div>
+        </div>
+        <div style={{ marginLeft: 72 }}>{children}</div>
+      </section>
+    );
+
+    // ── Token stream ──────────────────────────────────────────────────────
+    const TokenStream = ({ tokens, accumulated, originalLen, phase, chosenToken, isDone, showSpace }) => {
+      const lastAddedIdx = accumulated.length - 1;
+      const justAdded = accumulated.length > originalLen;
+      return (
+        <div style={{ padding: "20px", background: V.bg, border: `1px solid ${V.rule}`, borderRadius: 6, minHeight: 80 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
+            {accumulated.map((t, i) => (
+              <TokenChip key={i} token={t} variant={i === lastAddedIdx && justAdded && phase === "considering" ? "just-added" : "context"} showSpace={showSpace} index={i}/>
+            ))}
+            {phase === "appending" && chosenToken && !isDone && (
+              <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 9px", marginRight: 4, marginBottom: 4, background: V.coolSoft, border: `1px solid ${V.cool}`, borderRadius: 4, fontFamily: V.mono, fontSize: 13, fontWeight: 600, color: V.cool, whiteSpace: "pre", animation: "pg-slideIn 520ms cubic-bezier(0.22,1,0.36,1)" }}>
+                <sub style={{ fontSize: 8, color: V.ink3, marginRight: 3, fontWeight: 400, position: "relative", bottom: -2 }}>{accumulated.length}</sub>
+                {renderToken(chosenToken, showSpace)}
+              </span>
+            )}
+            {!isDone && phase === "considering" && (
+              <span style={{ display: "inline-block", width: 2, height: 18, background: V.accent, marginLeft: 4, marginBottom: 4, animation: "pg-blink 1.1s ease-in-out infinite", alignSelf: "center" }}/>
+            )}
+          </div>
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${V.rule}`, display: "flex", gap: 20, fontFamily: V.mono, fontSize: 10, color: V.ink3, letterSpacing: "0.04em", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <span style={{ display: "inline-block", width: 11, height: 11, background: V.bg2, border: `1px solid ${V.rule}`, borderRadius: 2 }}/>
+              <span>Context ({accumulated.length - (justAdded && phase === "considering" ? 1 : 0)} tokens)</span>
+            </div>
+            {justAdded && phase === "considering" && (
+              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                <span style={{ display: "inline-block", width: 11, height: 11, background: V.coolSoft, border: `1px solid ${V.cool}`, borderRadius: 2 }}/>
+                <span>Most recently appended</span>
+              </div>
+            )}
+            <div style={{ marginLeft: "auto" }}>Total: {accumulated.length}</div>
+          </div>
+        </div>
+      );
+    };
+
+    // ── Loop diagram ──────────────────────────────────────────────────────
+    const Box = ({ label, sub, active, accent, highlight, dim, monoSub }) => (
+      <div style={{ padding: "11px 12px", background: dim ? V.bg2 : highlight ? V.coolSoft : V.bg, border: `1px solid ${highlight ? V.cool : active ? V.ink : V.rule}`, borderRadius: 4, textAlign: "center", transition: "all 280ms", opacity: dim ? 0.5 : 1 }}>
+        <div style={{ fontFamily: V.mono, fontSize: 9, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: accent ? V.accentInk : V.ink3, marginBottom: 5 }}>{label}</div>
+        <div style={{ fontFamily: monoSub ? V.mono : V.serif, fontSize: monoSub ? 13 : 13, fontWeight: monoSub ? 600 : 500, color: highlight ? V.cool : accent ? V.accent : V.ink, fontStyle: monoSub ? "normal" : "italic", whiteSpace: "pre" }}>{sub}</div>
+      </div>
+    );
+
+    const Arrow = ({ label, active }) => (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, minWidth: 56 }}>
+        <svg width="48" height="12" viewBox="0 0 48 12">
+          <line x1="0" y1="6" x2="40" y2="6" stroke={active ? V.accent : V.ink3} strokeWidth="1.3" style={{ transition: "stroke 240ms" }}/>
+          <path d="M40 1 L48 6 L40 11" fill="none" stroke={active ? V.accent : V.ink3} strokeWidth="1.3" strokeLinejoin="round" strokeLinecap="round" style={{ transition: "stroke 240ms" }}/>
+        </svg>
+        <span style={{ fontFamily: V.mono, fontSize: 9, letterSpacing: "0.08em", textTransform: "uppercase", color: active ? V.accentInk : V.ink3, transition: "color 240ms", fontWeight: 500 }}>{label}</span>
+      </div>
+    );
+
+    const LoopDiagram = ({ accumulated, chosenToken, phase, isDone, showSpace }) => (
+      <div style={{ padding: "20px 24px", background: V.bg2, borderRadius: 6, display: "grid", gridTemplateColumns: "1fr auto 1fr auto 1fr", alignItems: "center", gap: 12, minHeight: 110 }}>
+        <Box label="Context" sub={`${accumulated.length} token${accumulated.length === 1 ? "" : "s"}`} active={phase === "considering"}/>
+        <Arrow label="forward pass" active={phase === "considering"}/>
+        <Box label="Model" sub="probability distribution" accent active={phase === "considering"}/>
+        <Arrow label={isDone ? "stop" : "sample"} active={phase === "appending"}/>
+        <Box label="Next token" sub={isDone ? "—" : (chosenToken != null ? renderToken(chosenToken, showSpace) : "—")} monoSub highlight={phase === "appending"} dim={isDone}/>
+        <div style={{ gridColumn: "1 / -1", marginTop: 4, position: "relative", height: 44 }}>
+          <svg width="100%" height="44" viewBox="0 0 800 44" preserveAspectRatio="none" style={{ overflow: "visible", width: "100%" }}>
+            <defs>
+              <marker id="pg-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill={V.ink3}/></marker>
+              <marker id="pg-arrow-active" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill={V.accent}/></marker>
+            </defs>
+            <path d="M 760 4 Q 800 4 800 26 Q 800 40 760 40 L 40 40 Q 0 40 0 26 Q 0 4 40 4" fill="none" stroke={phase === "appending" ? V.accent : V.ink3} strokeWidth="1.3" strokeDasharray="4 4" markerEnd={phase === "appending" ? "url(#pg-arrow-active)" : "url(#pg-arrow)"} style={{ transition: "stroke 280ms" }}/>
+          </svg>
+          <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", bottom: -2, fontFamily: V.mono, fontSize: 10, color: phase === "appending" ? V.accentInk : V.ink3, letterSpacing: "0.08em", textTransform: "uppercase", background: V.bg2, padding: "2px 8px", transition: "color 280ms", fontWeight: 500 }}>
+            append to context, repeat
+          </div>
+        </div>
+      </div>
+    );
+
+    // ── Temperature knob ──────────────────────────────────────────────────
+    const TemperatureKnob = ({ value, onChange }) => (
+      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 14, alignItems: "center", padding: "12px 16px", background: V.bg2, borderRadius: 4, maxWidth: 500 }}>
+        <Label>Temp</Label>
+        <input type="range" min="0" max="2" step="0.05" value={value} onChange={e => onChange(parseFloat(e.target.value))} style={{ flex: 1, accentColor: "oklch(58% 0.14 38)" }}/>
+        <span style={{ fontFamily: V.mono, fontSize: 12, fontWeight: 500, fontVariantNumeric: "tabular-nums", color: V.ink, minWidth: 36, textAlign: "right" }}>{value.toFixed(2)}</span>
+        <div style={{ gridColumn: "1 / -1", fontFamily: V.serif, fontSize: 12, fontStyle: "italic", color: V.ink3, marginTop: 2 }}>
+          {value < 0.3 ? "Near-greedy: almost always picks the top candidate." : value < 0.8 ? "Sharpened: top candidates dominate." : value < 1.2 ? "Calibrated: as the model produced it." : value < 1.7 ? "Flattened: lower-ranked tokens gain mass." : "Very flat: near-uniform — output drifts."}
+        </div>
+      </div>
+    );
+
+    // ── Controls ──────────────────────────────────────────────────────────
+    const CtrlBtn = ({ children, onClick, disabled }) => {
+      const [h, setH] = useState(false);
+      return (
+        <button onClick={onClick} disabled={disabled} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+          style={{ padding: "6px 12px", fontFamily: V.mono, fontSize: 11, fontWeight: 500, letterSpacing: "0.04em", background: h && !disabled ? V.bg2 : V.bg, color: disabled ? V.ink3 : V.ink, border: `1px solid ${V.rule}`, borderRadius: 4, cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1, transition: "background 140ms" }}>
+          {children}
+        </button>
+      );
+    };
+
+    const PrimaryBtn = ({ children, onClick, disabled }) => {
+      const [h, setH] = useState(false);
+      return (
+        <button onClick={onClick} disabled={disabled} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+          style={{ padding: "6px 16px", fontFamily: V.mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.04em", background: disabled ? V.bg2 : h ? V.accentInk : V.ink, color: disabled ? V.ink3 : V.bg, border: `1px solid ${disabled ? V.rule : V.ink}`, borderRadius: 4, cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1, transition: "background 160ms, color 160ms" }}>
+          {children}
+        </button>
+      );
+    };
+
+    // ── Main App ──────────────────────────────────────────────────────────
+    function Playground() {
+      const [promptId, setPromptId] = useState("fox");
+      const prompt = useMemo(() => PROMPTS.find(p => p.id === promptId) || PROMPTS[0], [promptId]);
+      const [stepIndex, setStepIndex] = useState(0);
+      const [temperature, setTemperature] = useState(1.0);
+      const [depth, setDepth] = useState("simple");
+      const [showSpace] = useState(true);
+      const [phase, setPhase] = useState("considering");
+
+      const totalSteps = prompt.steps.length;
+      const isDone = stepIndex >= totalSteps;
+
+      useEffect(() => { setStepIndex(0); setPhase("considering"); }, [promptId]);
+
+      const accumulated = useMemo(() => {
+        const out = [...prompt.inputTokens];
+        for (let i = 0; i < stepIndex && i < totalSteps; i++) {
+          const step = prompt.steps[i];
+          out.push(step.candidates[step.chosenIndex].token);
+        }
+        return out;
+      }, [prompt, stepIndex, totalSteps]);
+
+      const currentStep = !isDone ? prompt.steps[stepIndex] : null;
+      const adjustedCandidates = useMemo(() => {
+        if (!currentStep) return [];
+        const adj = applyTemperature(currentStep.candidates, temperature);
+        const wi = adj.map((c, i) => ({ ...c, _i: i }));
+        wi.sort((a, b) => b.p - a.p);
+        return wi;
+      }, [currentStep, temperature]);
+
+      const onStep = useCallback(() => {
+        if (isDone) return;
+        setPhase("appending");
+        setTimeout(() => { setStepIndex(s => s + 1); setPhase("considering"); }, 520);
+      }, [isDone]);
+      const onBack = useCallback(() => { setStepIndex(s => Math.max(0, s - 1)); setPhase("considering"); }, []);
+      const onReset = useCallback(() => { setStepIndex(0); setPhase("considering"); }, []);
+
+      useEffect(() => {
+        const onKey = (e) => {
+          if (e.target?.tagName === "INPUT" || e.target?.tagName === "TEXTAREA") return;
+          if (!container.contains(document.activeElement) && document.activeElement !== document.body) return;
+          if (e.key === "ArrowRight") { e.preventDefault(); onStep(); }
+          else if (e.key === "ArrowLeft") { e.preventDefault(); onBack(); }
+          else if (e.key === "r" || e.key === "R") { e.preventDefault(); onReset(); }
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+      }, [onStep, onBack, onReset]);
+
+      const chosenCandidate = adjustedCandidates[0];
+      const pct = (stepIndex / totalSteps) * 100;
+
+      // Simple/Technical toggle
+      const ToggleGroup = () => (
+        <div style={{ display: "inline-flex", background: V.bg2, borderRadius: 4, padding: 2, border: `1px solid ${V.rule}` }}>
+          {[["simple", "Simple"], ["technical", "Technical"]].map(([val, lbl]) => (
+            <button key={val} onClick={() => setDepth(val)} style={{ padding: "3px 10px", fontFamily: V.mono, fontSize: 10, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", background: depth === val ? V.bg : "transparent", color: depth === val ? V.ink : V.ink3, border: "none", borderRadius: 3, cursor: "pointer", boxShadow: depth === val ? "0 1px 2px rgba(0,0,0,0.04)" : "none", transition: "all 180ms" }}>{lbl}</button>
+          ))}
+        </div>
+      );
+
+      return (
+        <div style={{ padding: "32px 28px 20px", background: V.bg, fontFamily: V.serif }}>
+          {/* Top bar */}
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}>
+            <ToggleGroup/>
+          </div>
+
+          {/* Prompt picker */}
+          <div style={{ padding: "16px 20px", background: V.bg2, borderRadius: 6, marginBottom: 40 }}>
+            <Label style={{ marginBottom: 8 }}>Prompt</Label>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {PROMPTS.map(p => (
+                <button key={p.id} onClick={() => setPromptId(p.id)} style={{ padding: "8px 14px", fontFamily: V.mono, fontSize: 13, fontWeight: 500, background: promptId === p.id ? V.ink : V.bg, color: promptId === p.id ? V.bg : V.ink, border: `1px solid ${promptId === p.id ? V.ink : V.rule}`, borderRadius: 4, cursor: "pointer", transition: "all 160ms" }}>
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 01: Tokenize */}
+          <Section num="01" title="Tokenize the input"
+            caption={depth === "technical"
+              ? "The input string is broken into subword units from the model's fixed vocabulary. Leading spaces are part of the token (BPE convention), shown as ·."
+              : "The model doesn't read words directly. The input is sliced into small pieces called tokens — usually common words, word fragments, or punctuation."}>
+            <TokenStream tokens={prompt.inputTokens} accumulated={accumulated} originalLen={prompt.inputTokens.length} phase={phase} chosenToken={chosenCandidate?.token} isDone={isDone} showSpace={showSpace}/>
+          </Section>
+
+          {/* Section 02: Predict */}
+          <Section num="02" title={isDone ? "Done for now" : "Predict the next token"}
+            caption={isDone
+              ? "The loop has reached the end of the authored run. In a real model it continues until it emits an end-of-sequence token or hits a stop condition."
+              : depth === "technical"
+                ? "A forward pass yields a distribution over the model's entire vocabulary. Below are the top candidates by probability. Temperature sharpens (T<1) or flattens (T>1) the distribution."
+                : "Given everything so far, the model ranks possible next tokens by confidence."}>
+            {isDone ? (
+              <div style={{ padding: "24px 20px", background: V.bg2, borderRadius: 6, fontFamily: V.serif, fontSize: 17, color: V.ink2, fontStyle: "italic" }}>
+                Full output: <span style={{ fontStyle: "normal", fontWeight: 500, color: V.ink }}>"{accumulated.join("").trim()}"</span>
+              </div>
+            ) : (
+              <ProbBars candidates={adjustedCandidates.slice(0, 7)} chosenIndex={0} depth={depth} showSpace={showSpace}/>
+            )}
+            {!isDone && depth === "technical" && (
+              <div style={{ marginTop: 18 }}><TemperatureKnob value={temperature} onChange={setTemperature}/></div>
+            )}
+          </Section>
+
+          {/* Section 03: Loop */}
+          <Section num="03" title="Append and repeat"
+            caption={depth === "technical"
+              ? "The sampled token is appended to the context. The entire new sequence becomes the input to the next forward pass — the autoregressive loop."
+              : "The chosen token is tacked on to the end of the input, and then the whole thing is fed back in. One token at a time."}>
+            <LoopDiagram accumulated={accumulated} chosenToken={chosenCandidate?.token} phase={phase} isDone={isDone} showSpace={showSpace}/>
+          </Section>
+
+          {/* Controls */}
+          <div style={{ borderTop: `1px solid ${V.rule}`, paddingTop: 16, display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 20, alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+              <div style={{ fontFamily: V.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: V.ink3 }}>Step</div>
+              <div style={{ fontFamily: V.mono, fontSize: 16, fontWeight: 500, fontVariantNumeric: "tabular-nums", color: V.ink }}>
+                {stepIndex} <span style={{ color: V.ink3 }}>/ {totalSteps}</span>
+              </div>
+            </div>
+            <div style={{ height: 4, background: V.bg2, borderRadius: 2, overflow: "hidden" }}>
+              <div style={{ width: `${pct}%`, height: "100%", background: V.ink, transition: "width 420ms cubic-bezier(0.22,1,0.36,1)" }}/>
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              <CtrlBtn onClick={onReset} disabled={stepIndex === 0}>Reset</CtrlBtn>
+              <CtrlBtn onClick={onBack} disabled={stepIndex === 0}>← Back</CtrlBtn>
+              <PrimaryBtn onClick={onStep} disabled={isDone || phase === "appending"}>
+                {isDone ? "Complete" : phase === "appending" ? "Appending…" : "Step forward →"}
+              </PrimaryBtn>
+            </div>
+          </div>
+          <div style={{ textAlign: "right", fontFamily: V.mono, fontSize: 9, color: V.ink3, letterSpacing: "0.08em", textTransform: "uppercase", marginTop: 6 }}>
+            → step · ← back · R reset
+          </div>
+        </div>
+      );
+    }
+
+    const pgRoot = ReactDOM.createRoot(container);
+    pgRoot.render(<Playground/>);
+  })();
+  </script>
 </body>
 </html>
