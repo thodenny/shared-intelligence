@@ -91,7 +91,7 @@
         <div class="mt-2">
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-3">Interactive Playground</p>
           <p class="text-sm text-charcoal mb-4">See it in action. Pick a prompt and step through the loop — one token at a time.</p>
-          <div id="llm-token-playground" class="rounded overflow-hidden border border-parchment"></div>
+          <div id="llm-token-playground"></div>
         </div>
 
         <h4 class="font-display font-bold text-navy text-lg">Then Came Instruction Tuning</h4>
@@ -355,27 +355,25 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-  <!-- Playground fonts (additive — Newsreader + JetBrains Mono) -->
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
     /* Scoped CSS vars for the playground — won't conflict with Tailwind */
     #llm-token-playground {
-      --pg-bg: #FBFAF7;
-      --pg-bg-2: #F3F0E8;
-      --pg-ink: #1A1915;
-      --pg-ink-2: #413E35;
-      --pg-ink-3: #7A7568;
-      --pg-rule: #E4DFD2;
-      --pg-rule-2: #D1CBB9;
-      --pg-accent: oklch(58% 0.14 38);
-      --pg-accent-soft: oklch(92% 0.045 38);
-      --pg-accent-ink: oklch(42% 0.12 38);
-      --pg-cool: oklch(58% 0.11 230);
-      --pg-cool-soft: oklch(93% 0.035 230);
-      --pg-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
-      --pg-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      --pg-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --pg-bg: #F5F0E8;
+      --pg-bg-2: #E8DFC8;
+      --pg-ink: #1B2A4A;
+      --pg-ink-2: #2E2E2E;
+      --pg-ink-3: #7A8AA0;
+      --pg-rule: #D4C9B0;
+      --pg-rule-2: #C4B89A;
+      --pg-accent: #B94A2C;
+      --pg-accent-soft: #F5E8E3;
+      --pg-accent-ink: #8B3520;
+      --pg-cool: #D4A017;
+      --pg-cool-soft: #FBF4DC;
+      --pg-serif: "Lora", Georgia, serif;
+      --pg-display: "Playfair Display", Georgia, serif;
+      --pg-mono: "Courier Prime", "Courier New", monospace;
       background: var(--pg-bg);
       color: var(--pg-ink);
       font-family: var(--pg-serif);
@@ -472,7 +470,7 @@
       ink2: "var(--pg-ink-2)", ink3: "var(--pg-ink-3)", rule: "var(--pg-rule)",
       rule2: "var(--pg-rule-2)", accent: "var(--pg-accent)", accentSoft: "var(--pg-accent-soft)",
       accentInk: "var(--pg-accent-ink)", cool: "var(--pg-cool)", coolSoft: "var(--pg-cool-soft)",
-      serif: "var(--pg-serif)", mono: "var(--pg-mono)",
+      serif: "var(--pg-serif)", display: "var(--pg-display)", mono: "var(--pg-mono)",
     };
 
     // ── Small components ──────────────────────────────────────────────────
@@ -485,7 +483,7 @@
       const border = { context: V.rule, "just-added": V.cool, candidate: V.accent, incoming: V.cool }[variant];
       const color = { context: V.ink, "just-added": V.cool, candidate: V.accentInk, incoming: V.cool }[variant];
       return (
-        <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 9px", marginRight: 4, marginBottom: 4, background: bg, border: `1px solid ${border}`, borderRadius: 4, fontFamily: V.mono, fontSize: 13, fontWeight: variant === "just-added" ? 600 : 500, color, whiteSpace: "pre", transition: "background 220ms, border-color 220ms, color 220ms" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 9px", marginRight: 4, marginBottom: 4, background: bg, border: `2px solid ${border}`, fontFamily: V.mono, fontSize: 13, fontWeight: variant === "just-added" ? 700 : 500, color, whiteSpace: "pre", transition: "background 220ms, border-color 220ms, color 220ms" }}>
           {index != null && <sub style={{ fontSize: 8, color: V.ink3, marginRight: 3, fontWeight: 400, position: "relative", bottom: -2 }}>{index}</sub>}
           {renderToken(token, showSpace)}
         </span>
@@ -499,9 +497,9 @@
           {candidates.map((c, i) => {
             const isChosen = i === chosenIndex;
             return (
-              <div key={c.token + i} style={{ display: "grid", gridTemplateColumns: "100px 1fr 68px", alignItems: "center", gap: 10, padding: "5px 7px", borderRadius: 4, background: isChosen ? V.accentSoft : "transparent", transition: "background 220ms" }}>
+              <div key={c.token + i} style={{ display: "grid", gridTemplateColumns: "100px 1fr 68px", alignItems: "center", gap: 10, padding: "5px 7px", background: isChosen ? V.accentSoft : "transparent", borderLeft: isChosen ? `3px solid ${V.accent}` : "3px solid transparent", transition: "background 220ms, border-color 220ms" }}>
                 <div style={{ fontFamily: V.mono, fontSize: 13, fontWeight: isChosen ? 600 : 500, color: isChosen ? V.accentInk : V.ink, textAlign: "right", whiteSpace: "pre", overflow: "hidden", textOverflow: "ellipsis" }}>{renderToken(c.token, showSpace)}</div>
-                <div style={{ height: 16, background: V.bg2, borderRadius: 2, overflow: "hidden" }}>
+                <div style={{ height: 14, background: V.bg2, border: `1px solid ${V.rule}`, overflow: "hidden" }}>
                   <div style={{ height: "100%", width: `${(c.p / maxP) * 100}%`, background: isChosen ? V.accent : V.rule2, transition: "width 380ms cubic-bezier(0.22,1,0.36,1), background 220ms" }}/>
                 </div>
                 <div style={{ fontFamily: V.mono, fontSize: 11, fontVariantNumeric: "tabular-nums", color: isChosen ? V.accentInk : V.ink3, fontWeight: isChosen ? 600 : 500, textAlign: "right" }}>
@@ -518,10 +516,10 @@
     const Section = ({ num, title, caption, children }) => (
       <section style={{ marginBottom: 40 }}>
         <div style={{ display: "grid", gridTemplateColumns: "56px 1fr", gap: 16, marginBottom: 20 }}>
-          <div style={{ fontFamily: V.mono, fontSize: 11, fontWeight: 500, color: V.ink3, letterSpacing: "0.08em", paddingTop: 10, borderTop: `1px solid ${V.ink}` }}>{num}</div>
+          <div style={{ fontFamily: V.mono, fontSize: 11, fontWeight: 700, color: V.accent, letterSpacing: "0.12em", paddingTop: 10, borderTop: `2px solid ${V.ink}` }}>{num}</div>
           <div>
-            <h2 style={{ fontFamily: V.serif, fontSize: 22, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-0.015em", margin: 0, marginBottom: 8, paddingTop: 6, color: V.ink }}>{title}</h2>
-            <p style={{ fontFamily: V.serif, fontSize: 15, lineHeight: 1.55, color: V.ink2, margin: 0, maxWidth: 560 }}>{caption}</p>
+            <h2 style={{ fontFamily: V.display, fontSize: 20, fontWeight: 700, lineHeight: 1.15, margin: 0, marginBottom: 8, paddingTop: 6, color: V.ink }}>{title}</h2>
+            <p style={{ fontFamily: V.serif, fontSize: 14, lineHeight: 1.6, color: V.ink2, margin: 0, maxWidth: 560 }}>{caption}</p>
           </div>
         </div>
         <div style={{ marginLeft: 72 }}>{children}</div>
@@ -533,13 +531,13 @@
       const lastAddedIdx = accumulated.length - 1;
       const justAdded = accumulated.length > originalLen;
       return (
-        <div style={{ padding: "20px", background: V.bg, border: `1px solid ${V.rule}`, borderRadius: 6, minHeight: 80 }}>
+        <div style={{ padding: "20px", background: V.bg, border: `2px solid ${V.ink}`, minHeight: 80 }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
             {accumulated.map((t, i) => (
               <TokenChip key={i} token={t} variant={i === lastAddedIdx && justAdded && phase === "considering" ? "just-added" : "context"} showSpace={showSpace} index={i}/>
             ))}
             {phase === "appending" && chosenToken && !isDone && (
-              <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 9px", marginRight: 4, marginBottom: 4, background: V.coolSoft, border: `1px solid ${V.cool}`, borderRadius: 4, fontFamily: V.mono, fontSize: 13, fontWeight: 600, color: V.cool, whiteSpace: "pre", animation: "pg-slideIn 520ms cubic-bezier(0.22,1,0.36,1)" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 9px", marginRight: 4, marginBottom: 4, background: V.coolSoft, border: `2px solid ${V.cool}`, fontFamily: V.mono, fontSize: 13, fontWeight: 700, color: V.cool, whiteSpace: "pre", animation: "pg-slideIn 520ms cubic-bezier(0.22,1,0.36,1)" }}>
                 <sub style={{ fontSize: 8, color: V.ink3, marginRight: 3, fontWeight: 400, position: "relative", bottom: -2 }}>{accumulated.length}</sub>
                 {renderToken(chosenToken, showSpace)}
               </span>
@@ -567,7 +565,7 @@
 
     // ── Loop diagram ──────────────────────────────────────────────────────
     const Box = ({ label, sub, active, accent, highlight, dim, monoSub }) => (
-      <div style={{ padding: "11px 12px", background: dim ? V.bg2 : highlight ? V.coolSoft : V.bg, border: `1px solid ${highlight ? V.cool : active ? V.ink : V.rule}`, borderRadius: 4, textAlign: "center", transition: "all 280ms", opacity: dim ? 0.5 : 1 }}>
+      <div style={{ padding: "11px 12px", background: dim ? V.bg2 : highlight ? V.coolSoft : V.bg, border: `2px solid ${highlight ? V.cool : active ? V.ink : V.rule}`, textAlign: "center", transition: "all 280ms", opacity: dim ? 0.5 : 1 }}>
         <div style={{ fontFamily: V.mono, fontSize: 9, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: accent ? V.accentInk : V.ink3, marginBottom: 5 }}>{label}</div>
         <div style={{ fontFamily: monoSub ? V.mono : V.serif, fontSize: monoSub ? 13 : 13, fontWeight: monoSub ? 600 : 500, color: highlight ? V.cool : accent ? V.accent : V.ink, fontStyle: monoSub ? "normal" : "italic", whiteSpace: "pre" }}>{sub}</div>
       </div>
@@ -584,7 +582,7 @@
     );
 
     const LoopDiagram = ({ accumulated, chosenToken, phase, isDone, showSpace }) => (
-      <div style={{ padding: "20px 24px", background: V.bg2, borderRadius: 6, display: "grid", gridTemplateColumns: "1fr auto 1fr auto 1fr", alignItems: "center", gap: 12, minHeight: 110 }}>
+      <div style={{ padding: "20px 24px", background: V.bg2, border: `2px solid ${V.ink}`, display: "grid", gridTemplateColumns: "1fr auto 1fr auto 1fr", alignItems: "center", gap: 12, minHeight: 110 }}>
         <Box label="Context" sub={`${accumulated.length} token${accumulated.length === 1 ? "" : "s"}`} active={phase === "considering"}/>
         <Arrow label="forward pass" active={phase === "considering"}/>
         <Box label="Model" sub="probability distribution" accent active={phase === "considering"}/>
@@ -607,9 +605,9 @@
 
     // ── Temperature knob ──────────────────────────────────────────────────
     const TemperatureKnob = ({ value, onChange }) => (
-      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 14, alignItems: "center", padding: "12px 16px", background: V.bg2, borderRadius: 4, maxWidth: 500 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 14, alignItems: "center", padding: "12px 16px", background: V.bg2, border: `2px solid ${V.ink}`, maxWidth: 500 }}>
         <Label>Temp</Label>
-        <input type="range" min="0" max="2" step="0.05" value={value} onChange={e => onChange(parseFloat(e.target.value))} style={{ flex: 1, accentColor: "oklch(58% 0.14 38)" }}/>
+        <input type="range" min="0" max="2" step="0.05" value={value} onChange={e => onChange(parseFloat(e.target.value))} style={{ flex: 1, accentColor: "#B94A2C" }}/>
         <span style={{ fontFamily: V.mono, fontSize: 12, fontWeight: 500, fontVariantNumeric: "tabular-nums", color: V.ink, minWidth: 36, textAlign: "right" }}>{value.toFixed(2)}</span>
         <div style={{ gridColumn: "1 / -1", fontFamily: V.serif, fontSize: 12, fontStyle: "italic", color: V.ink3, marginTop: 2 }}>
           {value < 0.3 ? "Near-greedy: almost always picks the top candidate." : value < 0.8 ? "Sharpened: top candidates dominate." : value < 1.2 ? "Calibrated: as the model produced it." : value < 1.7 ? "Flattened: lower-ranked tokens gain mass." : "Very flat: near-uniform — output drifts."}
@@ -622,7 +620,7 @@
       const [h, setH] = useState(false);
       return (
         <button onClick={onClick} disabled={disabled} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-          style={{ padding: "6px 12px", fontFamily: V.mono, fontSize: 11, fontWeight: 500, letterSpacing: "0.04em", background: h && !disabled ? V.bg2 : V.bg, color: disabled ? V.ink3 : V.ink, border: `1px solid ${V.rule}`, borderRadius: 4, cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1, transition: "background 140ms" }}>
+          style={{ padding: "6px 12px", fontFamily: V.mono, fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: h && !disabled ? V.bg2 : V.bg, color: disabled ? V.ink3 : V.ink, border: `2px solid ${disabled ? V.rule : V.ink}`, cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.45 : 1, transition: "background 120ms" }}>
           {children}
         </button>
       );
@@ -632,7 +630,7 @@
       const [h, setH] = useState(false);
       return (
         <button onClick={onClick} disabled={disabled} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-          style={{ padding: "6px 16px", fontFamily: V.mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.04em", background: disabled ? V.bg2 : h ? V.accentInk : V.ink, color: disabled ? V.ink3 : V.bg, border: `1px solid ${disabled ? V.rule : V.ink}`, borderRadius: 4, cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1, transition: "background 160ms, color 160ms" }}>
+          style={{ padding: "6px 16px", fontFamily: V.display, fontSize: 12, fontWeight: 700, background: disabled ? V.bg2 : V.accent, color: disabled ? V.ink3 : V.bg, border: `2px solid ${disabled ? V.rule : V.ink}`, boxShadow: disabled ? "none" : h ? "none" : `2px 2px 0 ${V.ink}`, transform: h && !disabled ? "translate(-1px,-1px)" : "none", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.45 : 1, transition: "all 120ms" }}>
           {children}
         </button>
       );
@@ -696,26 +694,26 @@
 
       // Simple/Technical toggle
       const ToggleGroup = () => (
-        <div style={{ display: "inline-flex", background: V.bg2, borderRadius: 4, padding: 2, border: `1px solid ${V.rule}` }}>
+        <div style={{ display: "inline-flex", background: V.bg2, padding: 2, border: `2px solid ${V.ink}` }}>
           {[["simple", "Simple"], ["technical", "Technical"]].map(([val, lbl]) => (
-            <button key={val} onClick={() => setDepth(val)} style={{ padding: "3px 10px", fontFamily: V.mono, fontSize: 10, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", background: depth === val ? V.bg : "transparent", color: depth === val ? V.ink : V.ink3, border: "none", borderRadius: 3, cursor: "pointer", boxShadow: depth === val ? "0 1px 2px rgba(0,0,0,0.04)" : "none", transition: "all 180ms" }}>{lbl}</button>
+            <button key={val} onClick={() => setDepth(val)} style={{ padding: "4px 12px", fontFamily: V.mono, fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", background: depth === val ? V.ink : "transparent", color: depth === val ? V.bg : V.ink3, border: "none", cursor: "pointer", transition: "all 150ms" }}>{lbl}</button>
           ))}
         </div>
       );
 
       return (
-        <div style={{ padding: "32px 28px 20px", background: V.bg, fontFamily: V.serif }}>
+        <div style={{ padding: "28px 28px 20px", background: V.bg, fontFamily: V.serif, border: `3px solid ${V.ink}`, boxShadow: `5px 5px 0 ${V.accent}` }}>
           {/* Top bar */}
           <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 24 }}>
             <ToggleGroup/>
           </div>
 
           {/* Prompt picker */}
-          <div style={{ padding: "16px 20px", background: V.bg2, borderRadius: 6, marginBottom: 40 }}>
-            <Label style={{ marginBottom: 8 }}>Prompt</Label>
+          <div style={{ padding: "14px 18px", background: V.bg2, border: `2px solid ${V.ink}`, marginBottom: 36 }}>
+            <Label style={{ marginBottom: 10 }}>Choose a prompt</Label>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {PROMPTS.map(p => (
-                <button key={p.id} onClick={() => setPromptId(p.id)} style={{ padding: "8px 14px", fontFamily: V.mono, fontSize: 13, fontWeight: 500, background: promptId === p.id ? V.ink : V.bg, color: promptId === p.id ? V.bg : V.ink, border: `1px solid ${promptId === p.id ? V.ink : V.rule}`, borderRadius: 4, cursor: "pointer", transition: "all 160ms" }}>
+                <button key={p.id} onClick={() => setPromptId(p.id)} style={{ padding: "7px 14px", fontFamily: V.display, fontSize: 13, fontWeight: 700, background: promptId === p.id ? V.ink : V.bg, color: promptId === p.id ? V.bg : V.ink, border: `2px solid ${V.ink}`, boxShadow: promptId === p.id ? "none" : `2px 2px 0 ${V.accent}`, cursor: "pointer", transition: "all 140ms" }}>
                   {p.label}
                 </button>
               ))}
@@ -738,8 +736,8 @@
                 ? "A forward pass yields a distribution over the model's entire vocabulary. Below are the top candidates by probability. Temperature sharpens (T<1) or flattens (T>1) the distribution."
                 : "Given everything so far, the model ranks possible next tokens by confidence."}>
             {isDone ? (
-              <div style={{ padding: "24px 20px", background: V.bg2, borderRadius: 6, fontFamily: V.serif, fontSize: 17, color: V.ink2, fontStyle: "italic" }}>
-                Full output: <span style={{ fontStyle: "normal", fontWeight: 500, color: V.ink }}>"{accumulated.join("").trim()}"</span>
+              <div style={{ padding: "20px", background: V.bg2, border: `2px solid ${V.ink}`, fontFamily: V.serif, fontSize: 16, color: V.ink2, fontStyle: "italic" }}>
+                Full output: <span style={{ fontStyle: "normal", fontFamily: V.mono, fontWeight: 700, color: V.ink }}>"{accumulated.join("").trim()}"</span>
               </div>
             ) : (
               <ProbBars candidates={adjustedCandidates.slice(0, 7)} chosenIndex={0} depth={depth} showSpace={showSpace}/>
@@ -758,15 +756,15 @@
           </Section>
 
           {/* Controls */}
-          <div style={{ borderTop: `1px solid ${V.rule}`, paddingTop: 16, display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 20, alignItems: "center" }}>
+          <div style={{ borderTop: `2px solid ${V.ink}`, paddingTop: 16, display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 20, alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
               <div style={{ fontFamily: V.mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: V.ink3 }}>Step</div>
-              <div style={{ fontFamily: V.mono, fontSize: 16, fontWeight: 500, fontVariantNumeric: "tabular-nums", color: V.ink }}>
+              <div style={{ fontFamily: V.mono, fontSize: 16, fontWeight: 700, fontVariantNumeric: "tabular-nums", color: V.ink }}>
                 {stepIndex} <span style={{ color: V.ink3 }}>/ {totalSteps}</span>
               </div>
             </div>
-            <div style={{ height: 4, background: V.bg2, borderRadius: 2, overflow: "hidden" }}>
-              <div style={{ width: `${pct}%`, height: "100%", background: V.ink, transition: "width 420ms cubic-bezier(0.22,1,0.36,1)" }}/>
+            <div style={{ height: 5, background: V.bg2, border: `1px solid ${V.rule}` }}>
+              <div style={{ width: `${pct}%`, height: "100%", background: V.accent, transition: "width 420ms cubic-bezier(0.22,1,0.36,1)" }}/>
             </div>
             <div style={{ display: "flex", gap: 6 }}>
               <CtrlBtn onClick={onReset} disabled={stepIndex === 0}>Reset</CtrlBtn>
