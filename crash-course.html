@@ -282,6 +282,17 @@
       </div>
     </div>
 
+    <!-- Quiz -->
+    <div class="mt-16 mb-8">
+      <div class="text-center mb-8">
+        <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Test Your Understanding</p>
+        <h2 class="font-display font-black text-navy mb-3" style="font-size:2rem;">Quick Check</h2>
+        <div class="retro-divider-double max-w-xs mx-auto"></div>
+        <p class="mt-4 text-charcoal text-sm max-w-md mx-auto">Six questions based on what you just read. No score pressure — the explanations are the point.</p>
+      </div>
+      <div id="quiz-cc"></div>
+    </div>
+
     <div class="text-center mt-8">
       <a href="deep-dive.html" class="cta-btn-primary">Ready to go deeper? Read the Deep Dive →</a>
     </div>
@@ -298,5 +309,184 @@
   </footer>
 
   <script src="scripts.js"></script>
+  <script>
+  (function() {
+    var QUESTIONS = [
+      {
+        q: "What is a \"hallucination\" in the context of AI?",
+        options: [
+          "When the model refuses to answer a question",
+          "When the model generates false information presented as fact",
+          "When the model repeats itself in a loop",
+          "When the model can't understand your prompt"
+        ],
+        correct: 1,
+        explanation: "AI models generate statistically plausible text — plausible and true aren't the same thing. Always verify anything you plan to act on or share."
+      },
+      {
+        q: "Which of these is the most effective first prompt?",
+        options: [
+          "\"Write a QBR.\"",
+          "\"Write something professional.\"",
+          "\"I'm a program manager preparing a quarterly business review for senior leadership. Write a two-page executive summary focusing on Q1 revenue and risks.\"",
+          "\"Help me with work stuff.\""
+        ],
+        correct: 2,
+        explanation: "Context is everything. Role, goal, format, and audience all help the model predict what 'good' looks like for your specific situation."
+      },
+      {
+        q: "Your first AI response is close but too long and the tone is off. What's the best next step?",
+        options: [
+          "Start over with a completely different prompt",
+          "Edit the whole thing yourself from scratch",
+          "Ask the model to revise it — \"Make this shorter and more direct\" — and keep iterating",
+          "Assume AI can't handle this task"
+        ],
+        correct: 2,
+        explanation: "The first response is a draft, not the final answer. The best results come from back-and-forth — refine, redirect, and iterate rather than starting over or giving up."
+      },
+      {
+        q: "A colleague pastes a confidential client contract into a free personal ChatGPT account. What's the main risk?",
+        options: [
+          "The AI will refuse to read confidential documents",
+          "The data may be used to train the model, since consumer accounts don't carry enterprise data protections",
+          "The output will be less accurate for confidential content",
+          "There is no risk — all AI tools encrypt user data"
+        ],
+        correct: 1,
+        explanation: "Consumer accounts may use your inputs for model improvement. For anything sensitive, use your company's enterprise-provisioned account or keep it out entirely."
+      },
+      {
+        q: "What does \"just-in-time learning\" mean in the context of AI?",
+        options: [
+          "Completing an AI course before starting any real work",
+          "Keeping up with AI news daily so you're always prepared",
+          "Learning exactly what you need to solve the problem in front of you, then using it immediately",
+          "Saving your AI learning for a dedicated training day"
+        ],
+        correct: 2,
+        explanation: "Just-in-case learning — consuming content before you have a real problem — rarely sticks. Learning while solving an actual task does, and the field changes fast enough that advance studying goes stale quickly."
+      },
+      {
+        q: "Which mental model best describes the right way to work with AI outputs?",
+        options: [
+          "AI is always right — trust it completely",
+          "AI is unreliable — never use it for anything important",
+          "AI writes the final version, you approve it",
+          "AI drafts, you verify — it does the bulk work, you apply judgment before anything goes out"
+        ],
+        correct: 3,
+        explanation: "Think of it like managing a brilliant intern. Fast, widely-read, impressive first drafts — but they need your oversight and judgment before anything reaches your stakeholders."
+      }
+    ];
+
+    var C = {
+      bg: '#F5F0E8', parchment: '#E8DFC8', navy: '#1B2A4A',
+      rust: '#B94A2C', mustard: '#D4A017', charcoal: '#2E2E2E',
+      cream: '#F5F0E8', inkLight: '#7A8AA0'
+    };
+
+    var state = { current: 0, score: 0, answered: false };
+    var el = document.getElementById('quiz-cc');
+    if (!el) return;
+
+    function resultMessage(score, total) {
+      if (score === total) return "Perfect score — you've got this. Head to the Deep Dive when you're ready.";
+      if (score >= total - 1) return "Nearly there. Worth a quick re-read of any sections that tripped you up.";
+      if (score >= Math.floor(total / 2)) return "Good foundation. A re-read of a couple of sections will sharpen things up.";
+      return "Worth going back through the crash course — the concepts will click faster on a second pass.";
+    }
+
+    function render() {
+      if (state.current >= QUESTIONS.length) {
+        renderResults(); return;
+      }
+      var q = QUESTIONS[state.current];
+      var html = '<div style="border:3px solid ' + C.navy + ';box-shadow:5px 5px 0 ' + C.rust + ';background:' + C.parchment + ';padding:28px;">';
+      html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">';
+      html += '<span style="font-family:\'Courier Prime\',monospace;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:' + C.rust + ';">Question ' + (state.current + 1) + ' of ' + QUESTIONS.length + '</span>';
+      html += '<div style="display:flex;gap:6px;">';
+      for (var i = 0; i < QUESTIONS.length; i++) {
+        var dot = i < state.current ? C.rust : i === state.current ? C.navy : C.inkLight;
+        html += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + dot + ';transition:background 200ms;"></span>';
+      }
+      html += '</div></div>';
+      html += '<p style="font-family:\'Playfair Display\',Georgia,serif;font-size:1.2rem;font-weight:700;color:' + C.navy + ';line-height:1.4;margin:0 0 20px;">' + q.q + '</p>';
+      html += '<div style="display:flex;flex-direction:column;gap:10px;" id="quiz-options">';
+      q.options.forEach(function(opt, i) {
+        html += '<button onclick="quizCC.select(' + i + ')" id="quiz-opt-' + i + '" style="text-align:left;padding:12px 16px;font-family:\'Lora\',Georgia,serif;font-size:0.95rem;background:' + C.bg + ';border:2px solid ' + C.navy + ';color:' + C.charcoal + ';cursor:pointer;transition:all 140ms;line-height:1.45;" onmouseover="if(!quizCC.answered())this.style.background=\'' + C.parchment + '\'" onmouseout="if(!quizCC.answered())this.style.background=\'' + C.bg + '\'">' + opt + '</button>';
+      });
+      html += '</div>';
+      html += '<div id="quiz-explanation" style="display:none;margin-top:20px;padding:16px;border-left:4px solid ' + C.mustard + ';background:' + C.cream + ';font-family:\'Lora\',Georgia,serif;font-size:0.9rem;color:' + C.charcoal + ';line-height:1.6;"></div>';
+      html += '<div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;">';
+      html += '<span id="quiz-score-label" style="font-family:\'Courier Prime\',monospace;font-size:11px;color:' + C.inkLight + ';letter-spacing:0.08em;text-transform:uppercase;">Score: ' + state.score + ' / ' + state.current + '</span>';
+      html += '<button id="quiz-next-btn" onclick="quizCC.next()" style="display:none;padding:10px 22px;font-family:\'Playfair Display\',Georgia,serif;font-size:0.9rem;font-weight:700;background:' + C.navy + ';color:' + C.cream + ';border:2px solid ' + C.navy + ';box-shadow:3px 3px 0 ' + C.rust + ';cursor:pointer;transition:all 120ms;" onmouseover="this.style.transform=\'translate(-2px,-2px)\';this.style.boxShadow=\'5px 5px 0 ' + C.rust + '\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'3px 3px 0 ' + C.rust + '\'">' + (state.current === QUESTIONS.length - 1 ? 'See Results →' : 'Next Question →') + '</button>';
+      html += '</div></div>';
+      el.innerHTML = html;
+    }
+
+    function renderResults() {
+      var total = QUESTIONS.length;
+      var pct = Math.round((state.score / total) * 100);
+      var html = '<div style="border:3px solid ' + C.navy + ';box-shadow:5px 5px 0 ' + C.mustard + ';background:' + C.parchment + ';padding:36px;text-align:center;">';
+      html += '<p style="font-family:\'Courier Prime\',monospace;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:' + C.rust + ';margin-bottom:12px;">Results</p>';
+      html += '<div style="font-family:\'Playfair Display\',Georgia,serif;font-size:3.5rem;font-weight:900;color:' + C.navy + ';line-height:1;">' + state.score + '<span style="font-size:2rem;color:' + C.inkLight + ';">/' + total + '</span></div>';
+      html += '<div style="width:100%;height:8px;background:' + C.cream + ';border:2px solid ' + C.navy + ';margin:20px 0;"><div style="height:100%;width:' + pct + '%;background:' + (pct === 100 ? C.rust : C.mustard) + ';transition:width 600ms cubic-bezier(0.22,1,0.36,1);"></div></div>';
+      html += '<p style="font-family:\'Lora\',Georgia,serif;font-size:1rem;color:' + C.charcoal + ';line-height:1.6;max-width:480px;margin:0 auto 24px;">' + resultMessage(state.score, total) + '</p>';
+      html += '<button onclick="quizCC.reset()" style="padding:10px 24px;font-family:\'Courier Prime\',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:transparent;color:' + C.navy + ';border:2px solid ' + C.navy + ';cursor:pointer;">Try Again</button>';
+      html += '</div>';
+      el.innerHTML = html;
+    }
+
+    function select(i) {
+      if (state.answered) return;
+      state.answered = true;
+      var q = QUESTIONS[state.current];
+      var correct = i === q.correct;
+      if (correct) state.score++;
+
+      for (var j = 0; j < q.options.length; j++) {
+        var btn = document.getElementById('quiz-opt-' + j);
+        if (!btn) continue;
+        btn.style.cursor = 'default';
+        if (j === q.correct) {
+          btn.style.background = '#EAF4EC';
+          btn.style.borderColor = '#2D7A4F';
+          btn.style.color = '#1A4D30';
+          btn.style.fontWeight = '600';
+        } else if (j === i && !correct) {
+          btn.style.background = '#FAE8E5';
+          btn.style.borderColor = C.rust;
+          btn.style.color = '#8B3520';
+        } else {
+          btn.style.opacity = '0.45';
+        }
+      }
+
+      var expEl = document.getElementById('quiz-explanation');
+      if (expEl) {
+        expEl.style.display = 'block';
+        expEl.innerHTML = '<strong style="font-family:\'Courier Prime\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:' + (correct ? '#2D7A4F' : C.rust) + ';">' + (correct ? '✓ Correct' : '✗ Incorrect') + '</strong><br/><br/>' + q.explanation;
+      }
+
+      var nextBtn = document.getElementById('quiz-next-btn');
+      if (nextBtn) nextBtn.style.display = 'block';
+    }
+
+    function next() {
+      state.current++;
+      state.answered = false;
+      render();
+    }
+
+    function reset() {
+      state = { current: 0, score: 0, answered: false };
+      render();
+    }
+
+    window.quizCC = { select: select, next: next, reset: reset, answered: function() { return state.answered; } };
+    render();
+  })();
+  </script>
 </body>
 </html>

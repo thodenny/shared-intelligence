@@ -332,6 +332,17 @@
       </div>
     </div>
 
+    <!-- Quiz -->
+    <div class="mt-16 mb-8">
+      <div class="text-center mb-8">
+        <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">Test Your Understanding</p>
+        <h2 class="font-display font-black text-navy mb-3" style="font-size:2rem;">Quick Check</h2>
+        <div class="retro-divider-double max-w-xs mx-auto"></div>
+        <p class="mt-4 text-charcoal text-sm max-w-md mx-auto">Six questions on the concepts from the Deep Dive. Harder than the Crash Course — the explanations do the teaching.</p>
+      </div>
+      <div id="quiz-dd"></div>
+    </div>
+
     <div class="text-center mt-8">
       <a href="prompt-library.html" class="cta-btn-primary">Put It to Work — Browse Prompts →</a>
     </div>
@@ -349,6 +360,168 @@
   </footer>
 
   <script src="scripts.js"></script>
+  <script>
+  (function() {
+    var QUESTIONS = [
+      {
+        q: "Why can a language model sound confident while being completely wrong?",
+        options: [
+          "It deliberately makes up answers to fill space",
+          "It always generates the most statistically plausible next token — plausible and accurate are different things",
+          "It doesn't have access to enough training data",
+          "Confidence is a bug that engineers haven't fixed yet"
+        ],
+        correct: 1,
+        explanation: "The model optimises for what sounds right given patterns in training data — not for what is factually true. Fluency and accuracy are independent, which is why hallucinations happen even when the model seems certain."
+      },
+      {
+        q: "What is the role of the attention mechanism in a transformer?",
+        options: [
+          "It decides how fast the model generates text",
+          "It stores facts the model has memorised from training",
+          "It lets each token dynamically attend to other tokens in the sequence to determine relevance",
+          "It filters out inappropriate or unsafe content"
+        ],
+        correct: 2,
+        explanation: "Attention is what replaced sequential processing. Each token computes how relevant every other token is, letting the model resolve meaning across long distances — like figuring out what \"it\" refers to in a sentence."
+      },
+      {
+        q: "What happens to the probability distribution when you set temperature above 1?",
+        options: [
+          "The top candidate gets even more probability mass",
+          "The model always picks the highest-probability token",
+          "The model refuses to generate a response",
+          "Lower-probability tokens gain mass — the distribution flattens, increasing variety and randomness"
+        ],
+        correct: 3,
+        explanation: "Temperature above 1 makes output more creative but also more prone to incoherence. Temperature close to 0 approaches argmax — near-deterministic output that almost always picks the top candidate."
+      },
+      {
+        q: "What is the key problem that RAG (Retrieval-Augmented Generation) solves?",
+        options: [
+          "Making models generate faster",
+          "Eliminating hallucinations entirely",
+          "Giving the model access to up-to-date or private knowledge it wasn't trained on",
+          "Letting the model browse the live internet in real time"
+        ],
+        correct: 2,
+        explanation: "A model's knowledge is frozen at its training cutoff. RAG retrieves relevant content at query time and injects it into the context — so the model can reason over current or proprietary information without retraining."
+      },
+      {
+        q: "In a very long conversation, why might a model seem to \"forget\" something you said earlier?",
+        options: [
+          "The model clears its memory every few minutes as a privacy measure",
+          "The model deprioritises older messages on purpose to save compute",
+          "Earlier messages may fall outside the context window — the model's fixed working memory",
+          "The model gets confused by long conversations and resets its state"
+        ],
+        correct: 2,
+        explanation: "The context window is a hard limit. Everything inside it is active; everything outside simply doesn't exist to the model. Starting a fresh conversation with a summary is often more effective than continuing indefinitely."
+      },
+      {
+        q: "What was the key breakthrough of the transformer over earlier RNN-based models?",
+        options: [
+          "It uses far less compute to train",
+          "It can process images as well as text",
+          "It stores facts more reliably in its weights",
+          "It reads the whole sequence at once and uses attention to decide what's relevant, instead of going word-by-word"
+        ],
+        correct: 3,
+        explanation: "RNNs processed text sequentially and struggled to connect ideas across long distances. Transformers process the full sequence in parallel with dynamic attention — that combination unlocked the scale and performance that made modern LLMs possible."
+      }
+    ];
+
+    var C = {
+      bg: '#F5F0E8', parchment: '#E8DFC8', navy: '#1B2A4A',
+      rust: '#B94A2C', mustard: '#D4A017', charcoal: '#2E2E2E',
+      cream: '#F5F0E8', inkLight: '#7A8AA0'
+    };
+
+    var state = { current: 0, score: 0, answered: false };
+    var el = document.getElementById('quiz-dd');
+    if (!el) return;
+
+    function resultMessage(score, total) {
+      if (score === total) return "Full marks — you've genuinely understood the material. You're ready to put it to work.";
+      if (score >= total - 1) return "Strong result. One concept worth revisiting, but you've got the core ideas down.";
+      if (score >= Math.floor(total / 2)) return "Solid foundation. A re-read of the sections that tripped you up will make the rest click faster.";
+      return "The Deep Dive covers a lot of ground — worth going back through it. The concepts compound once they connect.";
+    }
+
+    function render() {
+      if (state.current >= QUESTIONS.length) { renderResults(); return; }
+      var q = QUESTIONS[state.current];
+      var html = '<div style="border:3px solid ' + C.navy + ';box-shadow:5px 5px 0 ' + C.rust + ';background:' + C.parchment + ';padding:28px;">';
+      html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">';
+      html += '<span style="font-family:\'Courier Prime\',monospace;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:' + C.rust + ';">Question ' + (state.current + 1) + ' of ' + QUESTIONS.length + '</span>';
+      html += '<div style="display:flex;gap:6px;">';
+      for (var i = 0; i < QUESTIONS.length; i++) {
+        var dot = i < state.current ? C.rust : i === state.current ? C.navy : C.inkLight;
+        html += '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + dot + ';"></span>';
+      }
+      html += '</div></div>';
+      html += '<p style="font-family:\'Playfair Display\',Georgia,serif;font-size:1.2rem;font-weight:700;color:' + C.navy + ';line-height:1.4;margin:0 0 20px;">' + q.q + '</p>';
+      html += '<div style="display:flex;flex-direction:column;gap:10px;">';
+      q.options.forEach(function(opt, i) {
+        html += '<button onclick="quizDD.select(' + i + ')" id="quiz-dd-opt-' + i + '" style="text-align:left;padding:12px 16px;font-family:\'Lora\',Georgia,serif;font-size:0.95rem;background:' + C.bg + ';border:2px solid ' + C.navy + ';color:' + C.charcoal + ';cursor:pointer;transition:all 140ms;line-height:1.45;" onmouseover="if(!quizDD.answered())this.style.background=\'' + C.parchment + '\'" onmouseout="if(!quizDD.answered())this.style.background=\'' + C.bg + '\'">' + opt + '</button>';
+      });
+      html += '</div>';
+      html += '<div id="quiz-dd-explanation" style="display:none;margin-top:20px;padding:16px;border-left:4px solid ' + C.mustard + ';background:' + C.cream + ';font-family:\'Lora\',Georgia,serif;font-size:0.9rem;color:' + C.charcoal + ';line-height:1.6;"></div>';
+      html += '<div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;">';
+      html += '<span style="font-family:\'Courier Prime\',monospace;font-size:11px;color:' + C.inkLight + ';letter-spacing:0.08em;text-transform:uppercase;">Score: ' + state.score + ' / ' + state.current + '</span>';
+      html += '<button id="quiz-dd-next-btn" onclick="quizDD.next()" style="display:none;padding:10px 22px;font-family:\'Playfair Display\',Georgia,serif;font-size:0.9rem;font-weight:700;background:' + C.navy + ';color:' + C.cream + ';border:2px solid ' + C.navy + ';box-shadow:3px 3px 0 ' + C.rust + ';cursor:pointer;transition:all 120ms;" onmouseover="this.style.transform=\'translate(-2px,-2px)\';this.style.boxShadow=\'5px 5px 0 ' + C.rust + '\'" onmouseout="this.style.transform=\'none\';this.style.boxShadow=\'3px 3px 0 ' + C.rust + '\'">' + (state.current === QUESTIONS.length - 1 ? 'See Results →' : 'Next Question →') + '</button>';
+      html += '</div></div>';
+      el.innerHTML = html;
+    }
+
+    function renderResults() {
+      var total = QUESTIONS.length;
+      var pct = Math.round((state.score / total) * 100);
+      var html = '<div style="border:3px solid ' + C.navy + ';box-shadow:5px 5px 0 ' + C.mustard + ';background:' + C.parchment + ';padding:36px;text-align:center;">';
+      html += '<p style="font-family:\'Courier Prime\',monospace;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:' + C.rust + ';margin-bottom:12px;">Results</p>';
+      html += '<div style="font-family:\'Playfair Display\',Georgia,serif;font-size:3.5rem;font-weight:900;color:' + C.navy + ';line-height:1;">' + state.score + '<span style="font-size:2rem;color:' + C.inkLight + ';">/' + total + '</span></div>';
+      html += '<div style="width:100%;height:8px;background:' + C.cream + ';border:2px solid ' + C.navy + ';margin:20px 0;"><div style="height:100%;width:' + pct + '%;background:' + (pct === 100 ? C.rust : C.mustard) + ';"></div></div>';
+      html += '<p style="font-family:\'Lora\',Georgia,serif;font-size:1rem;color:' + C.charcoal + ';line-height:1.6;max-width:480px;margin:0 auto 24px;">' + resultMessage(state.score, total) + '</p>';
+      html += '<button onclick="quizDD.reset()" style="padding:10px 24px;font-family:\'Courier Prime\',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:transparent;color:' + C.navy + ';border:2px solid ' + C.navy + ';cursor:pointer;">Try Again</button>';
+      html += '</div>';
+      el.innerHTML = html;
+    }
+
+    function select(i) {
+      if (state.answered) return;
+      state.answered = true;
+      var q = QUESTIONS[state.current];
+      var correct = i === q.correct;
+      if (correct) state.score++;
+      for (var j = 0; j < q.options.length; j++) {
+        var btn = document.getElementById('quiz-dd-opt-' + j);
+        if (!btn) continue;
+        btn.style.cursor = 'default';
+        if (j === q.correct) {
+          btn.style.background = '#EAF4EC'; btn.style.borderColor = '#2D7A4F';
+          btn.style.color = '#1A4D30'; btn.style.fontWeight = '600';
+        } else if (j === i && !correct) {
+          btn.style.background = '#FAE8E5'; btn.style.borderColor = C.rust; btn.style.color = '#8B3520';
+        } else {
+          btn.style.opacity = '0.45';
+        }
+      }
+      var expEl = document.getElementById('quiz-dd-explanation');
+      if (expEl) {
+        expEl.style.display = 'block';
+        expEl.innerHTML = '<strong style="font-family:\'Courier Prime\',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:' + (correct ? '#2D7A4F' : C.rust) + ';">' + (correct ? '✓ Correct' : '✗ Incorrect') + '</strong><br/><br/>' + q.explanation;
+      }
+      var nextBtn = document.getElementById('quiz-dd-next-btn');
+      if (nextBtn) nextBtn.style.display = 'block';
+    }
+
+    function next() { state.current++; state.answered = false; render(); }
+    function reset() { state = { current: 0, score: 0, answered: false }; render(); }
+
+    window.quizDD = { select: select, next: next, reset: reset, answered: function() { return state.answered; } };
+    render();
+  })();
+  </script>
 
   <!-- LLM Token Playground — React + Babel (loaded only when playground container is present) -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
