@@ -44,23 +44,12 @@ function scrollToArticle(id) {
   setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
-let technicalVisible = false;
-
-function toggleTechnical() {
-  technicalVisible = !technicalVisible;
-  const btn = document.getElementById('techToggle');
-  btn.textContent = technicalVisible ? '− Hide Technical Terms' : '+ Show Technical Terms';
-  filterGlossary();
-}
-
 function filterGlossary() {
   const q = document.getElementById('glossarySearch').value.toLowerCase().trim();
   const terms = document.querySelectorAll('.glossary-term');
   const groups = document.querySelectorAll('.letter-group');
   let visible = 0;
   terms.forEach(t => {
-    const isTechnical = t.dataset.technical === 'true';
-    if (isTechnical && !technicalVisible) { t.style.display = 'none'; return; }
     const match = !q || t.dataset.term.includes(q) || t.textContent.toLowerCase().includes(q);
     t.style.display = match ? '' : 'none';
     if (match) visible++;

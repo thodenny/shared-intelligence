@@ -56,13 +56,6 @@
         class="w-full font-mono text-sm border-2 border-navy bg-cream px-4 py-3 focus:outline-none focus:border-rust placeholder-charcoal/50" />
     </div>
 
-    <!-- Technical toggle -->
-    <div class="flex items-center justify-end mb-6">
-      <button id="techToggle" onclick="toggleTechnical()" class="font-mono text-xs border-2 border-navy px-4 py-2 bg-cream hover:bg-navy hover:text-cream transition-colors uppercase tracking-widest">
-        + Show Technical Terms
-      </button>
-    </div>
-
     <!-- Letter jump nav -->
     <div id="letterNav" class="flex flex-wrap gap-1 mb-8">
       <span class="font-mono text-xs text-charcoal uppercase tracking-widest mr-2 self-center">Jump to:</span>
@@ -148,7 +141,7 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The model's working memory</p>
           <p class="text-sm leading-relaxed">The total amount of text a model can "see" and reason over at once — your messages, any documents you've shared, and the conversation history. Everything outside the context window is invisible to the model. Larger context windows let you work with longer documents and more complex tasks.</p>
         </div>
-        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="compute gpu hardware" data-technical="true">
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="compute gpu hardware">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Compute <span class="font-body font-normal text-sm text-charcoal">/ GPU</span></h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The hardware that makes AI possible</p>
           <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
@@ -172,7 +165,7 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The engine under most modern AI</p>
           <p class="text-sm leading-relaxed">A type of machine learning that uses layered neural networks to find patterns in data. "Deep" refers to the many layers in those networks, not to any philosophical depth. Most modern AI — image recognition, voice assistants, LLMs — is built on deep learning. You don't need to understand how it works to use these tools well, but it's the technique that made the current wave of AI possible.</p>
         </div>
-        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="distillation model distillation knowledge distillation" data-technical="true">
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="distillation model distillation knowledge distillation">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Distillation</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Compressing a large model into a smaller one</p>
           <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
@@ -345,7 +338,7 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Beyond text — images, audio, video</p>
           <p class="text-sm leading-relaxed">A model that can process and generate multiple types of data — text, images, audio, video — rather than text alone. GPT-4o and Gemini are multimodal. Practically: you can show the model a chart, a screenshot, or a whiteboard photo and ask questions about it. This capability is expanding rapidly.</p>
         </div>
-        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="model card model documentation" data-technical="true">
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="model card model documentation">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Model Card</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The owner's manual for an AI model</p>
           <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
@@ -428,7 +421,7 @@
           <span class="font-display font-black text-rust text-3xl leading-none">Q</span>
           <div class="h-px bg-navy flex-1"></div>
         </div>
-        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="quantization quantized model" data-technical="true">
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="quantization quantized model">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Quantization</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Shrinking a model to fit on smaller hardware</p>
           <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
@@ -470,7 +463,7 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The hidden instructions shaping every response</p>
           <p class="text-sm leading-relaxed">Instructions given to a model before a conversation begins — setting its role, tone, constraints, and context. You often don't see it, but it shapes every response. When a product built on Claude behaves differently than Claude.ai, a system prompt is usually why. You can write your own in tools like Claude's Projects to customize behavior for recurring tasks.</p>
         </div>
-        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="synthetic data ai generated data" data-technical="true">
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="synthetic data ai generated data">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Synthetic Data</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI-generated training data</p>
           <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
@@ -489,7 +482,7 @@
           <span class="font-display font-black text-rust text-3xl leading-none">T</span>
           <div class="h-px bg-navy flex-1"></div>
         </div>
-        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="tool use function calling tools" data-technical="true">
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="tool use function calling tools">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Tool Use <span class="font-body font-normal text-sm text-charcoal">/ Function Calling</span></h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How models reach outside themselves to act</p>
           <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
