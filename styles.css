@@ -40,6 +40,14 @@ body {
   border-bottom-color: #D4A017;
   color: #D4A017;
 }
+.nav-link-start {
+  color: #D4A017;
+  border-bottom-color: #D4A017;
+}
+.nav-link-start:hover {
+  color: #F5F0E8;
+  border-bottom-color: #F5F0E8;
+}
 .prompt-card { cursor: pointer; transition: transform 0.15s; }
 .prompt-card:hover { transform: translate(-2px, -2px); }
 .prompt-card.open .prompt-expand { display: block; }
