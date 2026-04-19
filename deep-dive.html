@@ -54,9 +54,9 @@
     <div class="bg-parchment retro-border p-6 mb-12">
       <p class="font-mono text-xs text-rust uppercase tracking-widest mb-4">In This Section</p>
       <ol class="space-y-2">
-        <li><a href="#dd1" onclick="scrollToArticle('dd1')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">01 — How Large Language Models Actually Work</a></li>
+        <li><a href="#dd1" onclick="scrollToArticle('dd1')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">01 — How Large Language Models Work</a></li>
         <li><a href="#dd2" onclick="scrollToArticle('dd2')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">02 — Tokens, Context Windows & Why They Matter</a></li>
-        <li><a href="#dd3" onclick="scrollToArticle('dd3')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">03 — Inside the Transformer: How LLMs Actually Think</a></li>
+        <li><a href="#dd3" onclick="scrollToArticle('dd3')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">03 — Inside the Transformer: How LLMs Think</a></li>
         <li><a href="#dd4" onclick="scrollToArticle('dd4')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">04 — What Is RAG and Why Should You Care?</a></li>
         <li><a href="#dd5" onclick="scrollToArticle('dd5')" class="font-display font-bold text-navy hover:text-rust transition-colors cursor-pointer">05 — Agents, Automation & What's Coming Next</a></li>
       </ol>
@@ -67,20 +67,24 @@
       <div class="flex items-start gap-4 mb-4">
         <span class="font-display font-black text-rust text-5xl leading-none mt-1">01</span>
         <div>
-          <h3 class="font-display font-bold text-navy text-2xl">How Large Language Models Actually Work</h3>
-          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Mental Model That Makes Everything Else Click</p>
+          <h3 class="font-display font-bold text-navy text-2xl">How Large Language Models Work</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">A Mental Model</p>
         </div>
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
-        <p>When you type a message to Claude or ChatGPT, something specific is happening on the other end. It's not a search engine. It's not a database lookup. And it's not a human. Understanding what it actually is changes how you use it — and why it sometimes gets things wrong.</p>
+        <p>When you type a message to Claude or ChatGPT, something specific is happening on the other end. It's not a search engine. It's not a database lookup. And it's not a human. Understanding what it is changes how you use it, and why it sometimes gets things wrong (hallucinates).</p>
 
         <h4 class="font-display font-bold text-navy text-lg">It Started with Prediction</h4>
         <p>At the core, a large language model is trained to do one thing: predict the next word. Or more precisely, the next <em>token</em> — a chunk of text that might be a word, part of a word, or a punctuation mark. Given "The capital of France is," the model predicts "Paris" because that sequence appeared countless times in its training data.</p>
         <p>That sounds trivial. But when you train a model on hundreds of billions of words — books, websites, academic papers, code, conversations — the model has to develop an extraordinarily sophisticated internal understanding of language, facts, reasoning patterns, and context in order to predict well. The prediction task forces the model to actually "understand" the material it's predicting from.</p>
 
-        <h4 class="font-display font-bold text-navy text-lg">What Training Actually Means</h4>
+        <h4 class="font-display font-bold text-navy text-lg">What Training Means</h4>
         <p>Training a language model involves feeding it enormous amounts of text and having it repeatedly guess the next token. Every time it gets it wrong, the model's internal parameters — billions of numerical weights — are adjusted slightly. Over trillions of these adjustments, the model gets better and better at prediction.</p>
-        <p>Those weights are the model. They're a compressed, mathematical representation of everything the model "learned" from the training data. When you ask Claude a question, you're not querying a database — you're activating a complex web of numerical relationships that, together, produce a probable next sequence of tokens that constitutes a useful answer.</p>
+        <p>Those weights are the model. They're a compressed, mathematical representation of everything the model "learned" from the training data. When you ask Claude a question, you're not querying a database, you're activating a complex web of numerical relationships that, together, produce a probable next sequence of tokens that constitutes a useful answer.</p>
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">A Note on Masking</p>
+          <p class="text-sm">During training, the model never gets to "look ahead" at the answer. Future tokens are masked — hidden — so the model must predict each token based only on what came before. This is called causal masking, and it's what forces the model to actually learn the structure of language rather than memorize sequences. Without masking, the training task would be trivial and the model would learn nothing useful.</p>
+        </div>
 
         <div class="bg-cream border-2 border-dashed border-navy p-4">
           <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">The Key Insight</p>
@@ -97,13 +101,17 @@
         <h4 class="font-display font-bold text-navy text-lg">Then Came Instruction Tuning</h4>
         <p>A raw pre-trained model is a powerful text predictor, but it won't helpfully answer your questions — it'll just continue your text as if it were a document. The models you use today have been through a second phase called instruction tuning (or RLHF — Reinforcement Learning from Human Feedback), where human raters score outputs and the model is fine-tuned to produce responses that are helpful, honest, and safe.</p>
         <p>This is why Claude and ChatGPT feel like assistants rather than autocomplete engines. The underlying mechanism is still prediction — but the model has been shaped to predict responses that a helpful, knowledgeable assistant would give.</p>
+        <div class="bg-cream border-2 border-dashed border-navy p-4">
+          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">A Technical Nuance</p>
+          <p class="text-sm">Instruction tuning and RLHF are technically sequential steps, not the same thing. Instruction tuning happens first — it gives the model a baseline of assistant-like behavior by training it on examples of good responses. RLHF comes second, using human preference ratings to polish the model's personality and sharpen its safety guardrails. Both phases are often grouped under "fine-tuning," but they do different jobs.</p>
+        </div>
 
         <h4 class="font-display font-bold text-navy text-lg">What This Means for How You Use It</h4>
         <p>This mental model has practical implications:</p>
         <ul class="space-y-2 pl-2">
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Confidence ≠ accuracy.</strong> The model generates fluent text. Fluency and correctness are not the same thing. Always verify factual claims on anything that matters.</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Context shapes output.</strong> The model is predicting what a good response looks like given everything in the conversation. More context = better prediction = better output.</div></li>
-          <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>It doesn't "know" things the way you do.</strong> Its knowledge is frozen at its training cutoff. It has no access to your company's internal data, recent news, or anything not in its training set — unless you explicitly provide it.</div></li>
+          <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>It doesn't "know" things the way you do.</strong> Its knowledge is frozen at its training cutoff. It has no access to your company's internal data, recent news, or anything not in its training set — unless you explicitly provide it. Newer models now have web access.</div></li>
         </ul>
       </div>
     </div>
@@ -116,11 +124,11 @@
         <span class="font-display font-black text-rust text-5xl leading-none mt-1">02</span>
         <div>
           <h3 class="font-display font-bold text-navy text-2xl">Tokens, Context Windows & Why They Matter</h3>
-          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Invisible Limits That Shape Every Interaction</p>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Invisible Limits</p>
         </div>
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
-        <p>Every time you interact with an AI, two invisible constraints are at work: the size of a token and the size of the context window. Most users never think about either — until something goes wrong. Understanding both makes you a significantly more effective user.</p>
+        <p>Every time you interact with an AI, two invisible constraints are at work: the size of a token and the size of the context window. Understanding both makes you a significantly more effective user.</p>
 
         <h4 class="font-display font-bold text-navy text-lg">What Is a Token?</h4>
         <p>Models don't process text word by word — they process it in chunks called tokens. A token is roughly 3–4 characters of English text, which works out to about ¾ of a word on average. "Unbelievable" might be two tokens. "AI" is one. "GPT-4" is three.</p>
@@ -131,19 +139,8 @@
         <p>The context window is the amount of text a model can "see" at once — your full conversation, any documents you've uploaded, the system instructions, and the response it's generating. Think of it as the model's working memory.</p>
         <p>Everything inside the context window is active and available. Everything outside it simply doesn't exist to the model. This has a counterintuitive implication: in a very long conversation, early messages may eventually get pushed out of context — and the model will genuinely have no memory of them.</p>
 
-        <div class="bg-cream border-2 border-dashed border-navy p-4">
-          <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Context Window Sizes (Approx., 2025)</p>
-          <div class="font-mono text-xs space-y-1 mt-2">
-            <div class="flex justify-between"><span>Claude (Sonnet/Opus)</span><span class="text-rust">200,000 tokens (~150K words)</span></div>
-            <div class="flex justify-between"><span>ChatGPT (GPT-4o)</span><span class="text-rust">128,000 tokens (~96K words)</span></div>
-            <div class="flex justify-between"><span>Gemini 1.5 Pro</span><span class="text-rust">1,000,000 tokens (~750K words)</span></div>
-            <div class="flex justify-between"><span>Perplexity</span><span class="text-rust">Varies by model</span></div>
-          </div>
-        </div>
-
         <h4 class="font-display font-bold text-navy text-lg">Practical Implications</h4>
         <ul class="space-y-2 pl-2">
-          <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>For document work:</strong> Claude's 200K context window means you can paste an entire book, a full contract, or months of meeting notes and ask questions about all of it at once. This is genuinely useful.</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>For long conversations:</strong> If a chat session drags on for hours, the model may start to "forget" early context. Starting a fresh conversation with a summary is sometimes more effective than continuing indefinitely.</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>For quality:</strong> Research suggests that models pay more attention to content at the beginning and end of a long context than in the middle. If you're feeding in a long document and want the model to focus on a specific section, consider putting that section first.</div></li>
         </ul>
@@ -157,13 +154,13 @@
       <div class="flex items-start gap-4 mb-4">
         <span class="font-display font-black text-rust text-5xl leading-none mt-1">03</span>
         <div>
-          <h3 class="font-display font-bold text-navy text-2xl">Inside the Transformer: How LLMs Actually Think</h3>
-          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">No Math. No PhD. Just the Real Explanation.</p>
+          <h3 class="font-display font-bold text-navy text-2xl">Inside the Transformer: How LLMs Think</h3>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">Real Explanation.</p>
         </div>
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
 
-        <p>The word "transformer" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what actually is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language, without the math.</p>
+        <p>The word "transformer" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what actually is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language.</p>
 
         <h4 class="font-display font-bold text-navy text-lg">The Paper That Started Everything</h4>
         <p>In 2017, eight researchers at Google Brain published a paper titled <em>"Attention Is All You Need."</em> It introduced the transformer architecture and quietly made everything that came after it possible — GPT, BERT, Claude, Gemini, all of it.</p>
@@ -316,11 +313,12 @@
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Claude's Projects</strong> maintain context across sessions and can work through multi-step tasks with memory.</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Zapier AI</strong> and similar tools let AI trigger actions across apps: "When a new form is submitted, summarize it and draft a reply."</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Coding agents</strong> like GitHub Copilot Workspace can read a codebase, understand a bug report, write a fix, run the tests, and open a pull request — without a human in the loop for each step.</div></li>
+          <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Manus</strong> and similar fully autonomous agents can take a high-level goal — research a market, produce a report, book a meeting — and execute dozens of steps across the web and your tools without any hand-holding.</div></li>
         </ul>
 
         <h4 class="font-display font-bold text-navy text-lg">What This Means for Knowledge Workers</h4>
         <p>The honest answer is: a lot, over the next few years. Tasks that currently require a human to orchestrate a sequence of decisions and actions — research synthesis, report generation, scheduling, data processing, operational monitoring — are increasingly automatable with agents.</p>
-        <p>This doesn't mean those jobs disappear. It means the ratio of time spent on routine orchestration vs. judgment and strategy shifts dramatically. The professionals who adapt fastest are the ones who start thinking now about which parts of their work are mechanical sequences and which parts genuinely require human judgment, relationships, and accountability.</p>
+        <p>The ratio of time spent on routine orchestration vs. judgment and strategy shifts dramatically. The professionals who adapt fastest are the ones who start thinking now about which parts of their work are mechanical sequences and which parts genuinely require human judgment, relationships, and accountability.</p>
 
         <div class="bg-cream border-2 border-dashed border-navy p-4">
           <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">The Practical Move Right Now</p>
