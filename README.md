@@ -2,7 +2,7 @@
 
 **Practical AI resources for busy people.**
 
-A free, jargon-free educational site for everyday professionals who want to get real value from AI — without the hype, the paywalls, or the prerequisite computer science degree.
+A free, jargon-free educational site for everyday professionals who want to get real value from AI.
 
 Live at: [thodenny.github.io/shared-intelligence](https://thodenny.github.io/shared-intelligence)
 
