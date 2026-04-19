@@ -176,6 +176,28 @@
         <p>These numbers aren't arbitrary. Through training, tokens that appear in similar contexts end up with similar embeddings. "Dog" and "puppy" end up close together in the embedding space. "Dog" and "democracy" end up far apart. The geometry of this space encodes meaning — which is why the model can reason about analogies, synonyms, and semantic relationships.</p>
         <p>The transformer also adds <strong>positional encodings</strong> — another set of numbers layered on top of the embeddings to tell the model where each token sits in the sequence. Without this, the model would have no sense of word order.</p>
 
+        <!-- Interactive: Embedding Space Explorer -->
+        <div class="mt-6">
+          <p class="font-mono text-rust text-xs uppercase tracking-widest mb-3">Interactive: The Geometry of Words</p>
+          <p class="text-sm leading-relaxed mb-4">The tokens in your prompt each live at a coordinate in a high-dimensional space. The cloud below is a 3D projection of that space for a small vocabulary of animals, colors, and foods. Drag to rotate. Hover a token to see its nearest neighbors by cosine similarity. Click to pin.</p>
+          <div id="emb-space-explorer"></div>
+          <div class="bg-cream border-2 border-dashed border-navy p-4 mt-4">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Cosine Similarity</p>
+            <p class="text-sm">We measure "closeness" by the angle between two vectors, not their Euclidean distance. Two tokens pointing the same direction score near <code class="font-mono text-xs">1.00</code>. Perpendicular = <code class="font-mono text-xs">0</code>. Opposite = <code class="font-mono text-xs">−1</code>.</p>
+          </div>
+        </div>
+
+        <!-- Interactive: Analogy Demo -->
+        <div class="mt-8">
+          <p class="font-mono text-rust text-xs uppercase tracking-widest mb-3">Interactive: Arithmetic on Meaning</p>
+          <p class="text-sm leading-relaxed mb-4">The result that made everyone care about embeddings: take the vector for "king," subtract "man," add "woman" — and the nearest token is "queen." The direction from man→woman is the same direction as king→queen. Meaning is encoded in geometry.</p>
+          <div id="emb-analogy-demo"></div>
+          <div class="bg-cream border-2 border-dashed border-navy p-4 mt-4">
+            <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">One Caveat</p>
+            <p class="text-sm">Analogies work cleanly in toy demos and messily in the wild. Real embedding spaces inside frontier models are richer, more entangled, and harder to interpret — but the core geometric intuition holds.</p>
+          </div>
+        </div>
+
         <h4 class="font-display font-bold text-navy text-lg">Step 2: The Attention Mechanism</h4>
         <p>This is the core of what makes transformers work. The idea: when processing any given token, the model should be able to "pay attention" to other tokens in the sequence — and the amount of attention should be determined dynamically based on the content, not hardcoded by position.</p>
         <p>Here's how it works. For each token, the model computes three vectors:</p>
@@ -950,6 +972,390 @@
 
     const pgRoot = ReactDOM.createRoot(container);
     pgRoot.render(<Playground/>);
+  })();
+  </script>
+
+  <!-- ═══ Embedding Visualization ═══════════════════════════════════════ -->
+  <style>
+    .emb-cloud-layout { display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: start; }
+    .emb-cloud-wrap { position: relative; background: #F5F0E8; border: 3px solid #1B2A4A; box-shadow: 4px 4px 0 #B94A2C; overflow: hidden; }
+    .emb-cloud-hint { position: absolute; bottom: 8px; left: 12px; font-family: 'Courier Prime', monospace; font-size: 10px; color: rgba(27,42,74,0.5); letter-spacing: 0.04em; pointer-events: none; }
+    .emb-cloud-side { font-family: 'Lora', Georgia, serif; padding: 14px; background: #E8DFC8; border: 3px solid #1B2A4A; box-shadow: 4px 4px 0 #B94A2C; }
+    .emb-side-head { padding-bottom: 10px; border-bottom: 2px dashed rgba(27,42,74,0.2); margin-bottom: 10px; }
+    .emb-side-eyebrow { font-family: 'Courier Prime', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(27,42,74,0.5); margin-bottom: 3px; }
+    .emb-side-title { display: flex; align-items: center; gap: 7px; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: #1B2A4A; line-height: 1.2; }
+    .emb-side-sub { font-size: 11px; color: rgba(27,42,74,0.5); margin-top: 3px; font-family: 'Courier Prime', monospace; }
+    .emb-side-label { font-family: 'Courier Prime', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(27,42,74,0.5); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+    .emb-side-vector { margin-bottom: 18px; }
+    .emb-vec-row { display: flex; gap: 3px; align-items: flex-end; }
+    .emb-vec-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; }
+    .emb-vec-num { font-family: 'Courier Prime', monospace; font-size: 8px; color: #1B2A4A; }
+    .emb-vec-bar-wrap { width: 100%; height: 32px; position: relative; display: flex; flex-direction: column; justify-content: center; border-top: 1px dashed rgba(27,42,74,0.18); border-bottom: 1px dashed rgba(27,42,74,0.18); }
+    .emb-vec-bar-pos { width: 100%; background: #B94A2C; position: absolute; bottom: 50%; }
+    .emb-vec-bar-neg { width: 100%; background: #1B2A4A; position: absolute; top: 50%; }
+    .emb-vec-more { color: rgba(27,42,74,0.5); font-family: 'Courier Prime', monospace; font-size: 13px; align-self: center; padding-bottom: 4px; text-align: center; }
+    .emb-vec-more-label { font-size: 8px; color: rgba(27,42,74,0.5); margin-top: 2px; }
+    .emb-n-list { display: flex; flex-direction: column; gap: 2px; }
+    .emb-n-row { display: grid; grid-template-columns: 10px 60px 1fr 30px; gap: 6px; align-items: center; padding: 4px 2px; cursor: pointer; font-size: 11px; border-radius: 2px; }
+    .emb-n-row:hover { background: rgba(27,42,74,0.07); }
+    .emb-n-name { color: #1B2A4A; }
+    .emb-n-bar { height: 3px; background: rgba(27,42,74,0.12); overflow: hidden; }
+    .emb-n-bar span { display: block; height: 100%; background: #B94A2C; }
+    .emb-n-num { color: #2E2E2E; text-align: right; font-size: 9px; font-family: 'Courier Prime', monospace; }
+    .emb-swatch { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .emb-legend { margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(27,42,74,0.18); display: flex; flex-wrap: wrap; gap: 8px; font-family: 'Courier Prime', monospace; font-size: 10px; color: rgba(27,42,74,0.5); }
+    .emb-legend-row { display: flex; align-items: center; gap: 5px; }
+    .emb-analogy-layout { display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: start; }
+    .emb-analogy-side { font-family: 'Lora', Georgia, serif; padding: 14px; background: #E8DFC8; border: 3px solid #1B2A4A; box-shadow: 4px 4px 0 #B94A2C; }
+    .emb-formula { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; padding-bottom: 12px; border-bottom: 2px dashed rgba(27,42,74,0.2); margin-bottom: 12px; }
+    .emb-tok-pill { font-family: 'Courier Prime', monospace; font-size: 12px; padding: 4px 8px; background: #F5F0E8; border: 2px solid #1B2A4A; color: #1B2A4A; }
+    .emb-tok-pill.pill-a { background: #1B2A4A; color: #F5F0E8; }
+    .emb-tok-pill.pill-reveal { background: #B94A2C; color: #F5F0E8; border-color: #B94A2C; }
+    .emb-tok-pill.pill-hidden { color: rgba(27,42,74,0.35); border-color: rgba(27,42,74,0.25); }
+    .emb-op { font-family: 'Playfair Display', serif; font-size: 16px; color: rgba(27,42,74,0.5); }
+    .emb-stage-copy { font-size: 13px; line-height: 1.6; color: #2E2E2E; min-height: 72px; }
+    .emb-stage-copy p { margin: 0; }
+    .emb-stage-copy b { font-weight: 700; color: #1B2A4A; }
+    .emb-stage-copy i { font-style: italic; }
+    .emb-stage-copy .emb-mono { font-family: 'Courier Prime', monospace; font-size: 0.88em; }
+    .emb-run-btn { font-family: 'Courier Prime', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; background: #1B2A4A; color: #F5F0E8; border: none; cursor: pointer; margin: 12px 0 16px; transition: background 0.15s; }
+    .emb-run-btn:hover { background: #B94A2C; }
+    .emb-pick-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+    .emb-pick-label { font-family: 'Courier Prime', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(27,42,74,0.5); margin-bottom: 4px; }
+    .emb-pick { font-family: 'Courier Prime', monospace; font-size: 10px; text-align: left; padding: 6px 8px; background: transparent; border: 2px solid rgba(27,42,74,0.2); color: rgba(27,42,74,0.55); cursor: pointer; }
+    .emb-pick:hover, .emb-pick.pick-on { border-color: #1B2A4A; color: #1B2A4A; }
+    .emb-pull { display: grid; grid-template-columns: 3px 1fr; gap: 12px; padding-top: 14px; border-top: 2px dashed rgba(27,42,74,0.2); }
+    .emb-pull-bar { background: #B94A2C; }
+    .emb-pull-eyebrow { font-family: 'Courier Prime', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #B94A2C; margin: 0 0 4px; }
+    .emb-pull-body { font-size: 13px; line-height: 1.55; color: #2E2E2E; margin: 0; }
+    .emb-pull-body i { font-style: italic; }
+    @media (max-width: 700px) {
+      .emb-cloud-layout, .emb-analogy-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script>
+    window.EMB_TOKENS = [
+      { t:"dog",     v:[ 0.82,-0.15, 0.42,0,0.55] },
+      { t:"puppy",   v:[ 0.78,-0.08, 0.55,0,0.78] },
+      { t:"cat",     v:[ 0.75,-0.22, 0.30,0,0.40] },
+      { t:"kitten",  v:[ 0.72,-0.12, 0.48,0,0.75] },
+      { t:"wolf",    v:[ 0.88,-0.62,-0.20,0,0.15] },
+      { t:"fox",     v:[ 0.80,-0.45, 0.10,0,0.30] },
+      { t:"lion",    v:[ 0.90,-0.70, 0.35,0,0.20] },
+      { t:"tiger",   v:[ 0.92,-0.72, 0.40,0,0.18] },
+      { t:"bear",    v:[ 0.86,-0.58,-0.05,0,0.22] },
+      { t:"rabbit",  v:[ 0.68,-0.10, 0.25,0,0.70] },
+      { t:"horse",   v:[ 0.83,-0.30, 0.12,0,0.45] },
+      { t:"cow",     v:[ 0.78,-0.05, 0.05,0,0.52] },
+      { t:"sheep",   v:[ 0.70, 0.05, 0.10,0,0.60] },
+      { t:"eagle",   v:[ 0.85,-0.68, 0.50,0,0.25] },
+      { t:"sparrow", v:[ 0.62,-0.20, 0.30,0,0.55] },
+      { t:"red",     v:[-0.60,-0.35, 0.90,1,0.45] },
+      { t:"crimson", v:[-0.62,-0.40, 0.88,1,0.40] },
+      { t:"scarlet", v:[-0.58,-0.38, 0.92,1,0.42] },
+      { t:"orange",  v:[-0.55,-0.28, 0.85,1,0.65] },
+      { t:"amber",   v:[-0.52,-0.22, 0.78,1,0.68] },
+      { t:"yellow",  v:[-0.50,-0.15, 0.72,1,0.75] },
+      { t:"green",   v:[-0.45,-0.10,-0.20,1,0.58] },
+      { t:"emerald", v:[-0.48,-0.12,-0.22,1,0.62] },
+      { t:"blue",    v:[-0.52,-0.18,-0.85,1,0.40] },
+      { t:"azure",   v:[-0.50,-0.20,-0.82,1,0.45] },
+      { t:"indigo",  v:[-0.55,-0.25,-0.90,1,0.35] },
+      { t:"violet",  v:[-0.58,-0.30,-0.75,1,0.50] },
+      { t:"pink",    v:[-0.48,-0.05, 0.60,1,0.82] },
+      { t:"white",   v:[-0.42, 0.05, 0.02,1,0.60] },
+      { t:"black",   v:[-0.60,-0.55, 0.00,1,0.15] },
+      { t:"bread",   v:[-0.10, 0.55, 0.35,2,0.62] },
+      { t:"cheese",  v:[-0.08, 0.52, 0.42,2,0.65] },
+      { t:"butter",  v:[-0.12, 0.60, 0.38,2,0.72] },
+      { t:"honey",   v:[-0.05, 0.68, 0.55,2,0.88] },
+      { t:"sugar",   v:[-0.18, 0.72, 0.30,2,0.90] },
+      { t:"cake",    v:[-0.02, 0.75, 0.45,2,0.92] },
+      { t:"pie",     v:[ 0.02, 0.70, 0.50,2,0.85] },
+      { t:"apple",   v:[ 0.15, 0.62, 0.52,2,0.75] },
+      { t:"lemon",   v:[ 0.10, 0.58, 0.55,2,0.55] },
+      { t:"grape",   v:[ 0.08, 0.60, 0.48,2,0.72] },
+      { t:"pepper",  v:[ 0.18, 0.45, 0.70,2,0.30] },
+      { t:"salt",    v:[-0.22, 0.48, 0.15,2,0.40] },
+      { t:"coffee",  v:[-0.15, 0.55,-0.10,2,0.45] },
+      { t:"tea",     v:[-0.12, 0.58,-0.18,2,0.48] },
+    ];
+    window.EMB_ANALOGY_TOKENS = [
+      { t:"king",     v:[ 0.10,-0.85,-0.55,3,0.40] },
+      { t:"queen",    v:[ 0.10,-0.85,-0.20,3,0.45] },
+      { t:"man",      v:[-0.25,-0.45,-0.55,3,0.35] },
+      { t:"woman",    v:[-0.25,-0.45,-0.20,3,0.38] },
+      { t:"prince",   v:[ 0.05,-0.72,-0.52,3,0.42] },
+      { t:"princess", v:[ 0.05,-0.72,-0.18,3,0.44] },
+    ];
+    window.EMB_CATEGORIES = [
+      { name:"animal",  color:"oklch(0.62 0.14 45)"  },
+      { name:"color",   color:"oklch(0.55 0.12 250)" },
+      { name:"food",    color:"oklch(0.58 0.13 140)" },
+      { name:"concept", color:"oklch(0.45 0.10 300)" },
+    ];
+    window.embCosine = function(a, b) {
+      var idx=[0,1,2,4], dot=0, na=0, nb=0;
+      for (var i=0;i<idx.length;i++) { dot+=a[idx[i]]*b[idx[i]]; na+=a[idx[i]]*a[idx[i]]; nb+=b[idx[i]]*b[idx[i]]; }
+      return dot/(Math.sqrt(na)*Math.sqrt(nb)+1e-9);
+    };
+  </script>
+
+  <script type="text/babel">
+  (function() {
+    function rotate(p, yaw, pitch) {
+      var cy=Math.cos(yaw), sy=Math.sin(yaw), cx=Math.cos(pitch), sx=Math.sin(pitch);
+      var x=p[0], y=p[1], z=p[2];
+      var x1=cy*x+sy*z, z1=-sy*x+cy*z;
+      var y2=cx*y-sx*z1, z2=sx*y+cx*z1;
+      return [x1,y2,z2];
+    }
+    function project(p, w, h) {
+      var fov=3.2, d=fov/(fov-p[2]);
+      return [w/2+p[0]*180*d, h/2-p[1]*180*d, d];
+    }
+
+    window.EmbPointCloud = function EmbPointCloud({
+      width=460, height=380, tokens,
+      highlightedIds=[], hoverId, onHover, onPick,
+      showAxes=true, showGrid=true,
+      connections=[], autoSpin=false,
+      initialYaw=0.6, initialPitch=-0.25,
+    }) {
+      const [yaw, setYaw] = React.useState(initialYaw);
+      const [pitch, setPitch] = React.useState(initialPitch);
+      const drag = React.useRef(null);
+      const rafRef = React.useRef(null);
+
+      React.useEffect(() => {
+        if (!autoSpin) return;
+        let last = performance.now();
+        const tick = (t) => { const dt=(t-last)/1000; last=t; setYaw(y=>y+dt*0.15); rafRef.current=requestAnimationFrame(tick); };
+        rafRef.current = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(rafRef.current);
+      }, [autoSpin]);
+
+      const onDown = (e) => { const pt=e.touches?e.touches[0]:e; drag.current={x:pt.clientX,y:pt.clientY,yaw,pitch}; };
+      const onMove = (e) => {
+        if (!drag.current) return;
+        const pt=e.touches?e.touches[0]:e;
+        setYaw(drag.current.yaw+(pt.clientX-drag.current.x)*0.006);
+        setPitch(Math.max(-1.2,Math.min(1.2,drag.current.pitch+(pt.clientY-drag.current.y)*0.006)));
+      };
+      const onUp = () => { drag.current=null; };
+      React.useEffect(() => {
+        window.addEventListener('mousemove',onMove); window.addEventListener('mouseup',onUp);
+        window.addEventListener('touchmove',onMove,{passive:false}); window.addEventListener('touchend',onUp);
+        return () => { window.removeEventListener('mousemove',onMove); window.removeEventListener('mouseup',onUp); window.removeEventListener('touchmove',onMove); window.removeEventListener('touchend',onUp); };
+      });
+
+      const projected = React.useMemo(() =>
+        tokens.map(tk => { const rot=rotate([tk.v[0],tk.v[1],tk.v[2]],yaw,pitch); const [sx,sy,depth]=project(rot,width,height); return {...tk,sx,sy,rot,depth}; })
+              .sort((a,b)=>a.rot[2]-b.rot[2])
+      , [tokens,yaw,pitch,width,height]);
+
+      const byToken = React.useMemo(() => { const m=new Map(); projected.forEach(p=>m.set(p.t,p)); return m; }, [projected]);
+
+      const axes = React.useMemo(() => {
+        const len=1.15, origin=project(rotate([0,0,0],yaw,pitch),width,height);
+        return [{id:'x',end:project(rotate([len,0,0],yaw,pitch),width,height),label:'dim 1'},
+                {id:'y',end:project(rotate([0,len,0],yaw,pitch),width,height),label:'dim 2'},
+                {id:'z',end:project(rotate([0,0,len],yaw,pitch),width,height),label:'dim 3'}].map(a=>({...a,origin}));
+      }, [yaw,pitch,width,height]);
+
+      const grid = React.useMemo(() => {
+        if (!showGrid) return [];
+        const lines=[], N=4;
+        for (let i=-N;i<=N;i++) { const t=i/N;
+          lines.push({a:project(rotate([t,-0.5,-1],yaw,pitch),width,height), b:project(rotate([t,-0.5,1],yaw,pitch),width,height)});
+          lines.push({a:project(rotate([-1,-0.5,t],yaw,pitch),width,height), b:project(rotate([1,-0.5,t],yaw,pitch),width,height)});
+        }
+        return lines;
+      }, [yaw,pitch,width,height,showGrid]);
+
+      const catColors = window.EMB_CATEGORIES.map(c=>c.color);
+
+      return (
+        <svg width={width} height={height} onMouseDown={onDown} onTouchStart={onDown}
+             style={{cursor:drag.current?'grabbing':'grab',userSelect:'none',touchAction:'none',display:'block'}}>
+          <defs>
+            <radialGradient id="emb-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(27,42,74,0.12)"/>
+              <stop offset="100%" stopColor="rgba(27,42,74,0)"/>
+            </radialGradient>
+            <marker id="emb-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="rgba(27,42,74,0.55)"/>
+            </marker>
+            <marker id="emb-arr-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#B94A2C"/>
+            </marker>
+          </defs>
+          {grid.map((g,i)=><line key={i} x1={g.a[0]} y1={g.a[1]} x2={g.b[0]} y2={g.b[1]} stroke="rgba(27,42,74,0.07)" strokeWidth="1"/>)}
+          {showAxes && axes.map(a=>(
+            <g key={a.id}>
+              <line x1={a.origin[0]} y1={a.origin[1]} x2={a.end[0]} y2={a.end[1]} stroke="rgba(27,42,74,0.35)" strokeWidth="1" markerEnd="url(#emb-arr)"/>
+              <text x={a.end[0]+5} y={a.end[1]+4} fontFamily="'Courier Prime',monospace" fontSize="10" fill="rgba(27,42,74,0.55)">{a.label}</text>
+            </g>
+          ))}
+          {connections.map((c,i)=>{
+            const A=byToken.get(c.from), B=byToken.get(c.to); if(!A||!B) return null;
+            return <g key={i}>
+              <line x1={A.sx} y1={A.sy} x2={B.sx} y2={B.sy} stroke={c.color||'#B94A2C'} strokeWidth={c.width||1.2} strokeDasharray={c.kind==='dashed'?'4 4':'none'} opacity={c.opacity??0.85} markerEnd={c.arrow?'url(#emb-arr-acc)':''}/>
+              {c.label&&<text x={(A.sx+B.sx)/2} y={(A.sy+B.sy)/2-5} fontFamily="'Courier Prime',monospace" fontSize="10" fill="#B94A2C" textAnchor="middle">{c.label}</text>}
+            </g>;
+          })}
+          {projected.map(p=>{
+            const isHover=hoverId===p.t, isHi=highlightedIds.includes(p.t);
+            const faded=(highlightedIds.length>0&&!isHi)||(hoverId&&!isHover&&!isHi);
+            const r=3.5*p.depth+(isHover?2.5:0)+(isHi?1:0);
+            return <g key={p.t} onMouseEnter={()=>onHover&&onHover(p.t)} onMouseLeave={()=>onHover&&onHover(null)} onClick={()=>onPick&&onPick(p.t)} style={{cursor:'pointer'}}>
+              {isHover&&<circle cx={p.sx} cy={p.sy} r={r+10} fill="url(#emb-glow)"/>}
+              <circle cx={p.sx} cy={p.sy} r={r} fill={catColors[p.v[3]]||'#333'} opacity={faded?0.15:0.9} stroke={isHover||isHi?'rgba(27,42,74,0.9)':'none'} strokeWidth="1.5"/>
+              <text x={p.sx+r+4} y={p.sy+3} fontFamily="'Lora',Georgia,serif" fontSize={9+(isHover?1.5:0)} fontWeight={isHover||isHi?600:400} fill={faded?'rgba(27,42,74,0.2)':'rgba(27,42,74,0.85)'} style={{pointerEvents:'none'}}>{p.t2||p.t}</text>
+            </g>;
+          })}
+        </svg>
+      );
+    };
+  })();
+  </script>
+
+  <script type="text/babel">
+  (function() {
+    const { useState, useEffect, useMemo } = React;
+
+    function EmbSwatch({cat}) {
+      return <span className="emb-swatch" style={{background:window.EMB_CATEGORIES[cat]?.color||'#999'}}/>;
+    }
+
+    function SpaceExplorer() {
+      const [hover,setHover]=useState(null);
+      const [pinned,setPinned]=useState("dog");
+      const tokens=window.EMB_TOKENS;
+      const focus=hover||pinned;
+      const focusTok=tokens.find(t=>t.t===focus);
+      const neighbors=useMemo(()=>{
+        if (!focusTok) return [];
+        return tokens.filter(t=>t.t!==focus).map(t=>({...t,sim:window.embCosine(focusTok.v,t.v)})).sort((a,b)=>b.sim-a.sim).slice(0,6);
+      },[focus,tokens]);
+      const highlights=[focus,...neighbors.slice(0,3).map(n=>n.t)];
+      const connections=neighbors.slice(0,3).map(n=>({from:focus,to:n.t,kind:'dashed',color:'#B94A2C',opacity:0.3+(0.5*(n.sim+1)/2),width:0.8+n.sim*1.2}));
+      return (
+        <div className="emb-cloud-layout">
+          <div className="emb-cloud-wrap">
+            <window.EmbPointCloud width={460} height={380} tokens={tokens} highlightedIds={focus?highlights:[]} hoverId={hover} onHover={setHover} onPick={id=>setPinned(id)} showAxes={true} showGrid={true} connections={connections} autoSpin={false}/>
+            <div className="emb-cloud-hint">drag to rotate · hover · click to pin</div>
+          </div>
+          <aside className="emb-cloud-side">
+            <div className="emb-side-head">
+              <div className="emb-side-eyebrow">inspecting</div>
+              <div className="emb-side-title"><EmbSwatch cat={focusTok?.v[3]??0}/><span>{focusTok?.t2||focusTok?.t||'—'}</span></div>
+              <div className="emb-side-sub">{pinned===focus?'pinned':'hover'} · click to pin</div>
+            </div>
+            <div className="emb-side-vector">
+              <div className="emb-side-label">vector (first 5 dims)</div>
+              <div className="emb-vec-row">
+                {focusTok&&focusTok.v.map((n,i)=>(
+                  <div key={i} className="emb-vec-cell">
+                    <div className="emb-vec-num">{n.toFixed(2)}</div>
+                    <div className="emb-vec-bar-wrap">
+                      <div className="emb-vec-bar-pos" style={{height:`${Math.max(0,n)*30}px`}}/>
+                      <div className="emb-vec-bar-neg" style={{height:`${Math.max(0,-n)*30}px`}}/>
+                    </div>
+                  </div>
+                ))}
+                <div className="emb-vec-more">…<div className="emb-vec-more-label">+763</div></div>
+              </div>
+            </div>
+            <div>
+              <div className="emb-side-label">nearest neighbors</div>
+              <div className="emb-n-list">
+                {neighbors.map(n=>(
+                  <div key={n.t} className="emb-n-row" onMouseEnter={()=>setHover(n.t)} onMouseLeave={()=>setHover(null)} onClick={()=>setPinned(n.t)}>
+                    <EmbSwatch cat={n.v[3]}/><span className="emb-n-name">{n.t2||n.t}</span>
+                    <span className="emb-n-bar"><span style={{width:`${n.sim*100}%`}}/></span>
+                    <span className="emb-n-num">{n.sim.toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="emb-legend">
+              {window.EMB_CATEGORIES.map((c,i)=><div key={i} className="emb-legend-row"><span className="emb-swatch" style={{background:c.color}}/>{c.name}</div>)}
+            </div>
+          </aside>
+        </div>
+      );
+    }
+
+    function AnalogyDemo() {
+      const pairs=[
+        {a:"king",  b:"man",   c:"woman", expected:"queen"},
+        {a:"prince",b:"man",   c:"woman", expected:"princess"},
+        {a:"queen", b:"woman", c:"man",   expected:"king"},
+      ];
+      const [pick,setPick]=useState(0);
+      const [stage,setStage]=useState(0);
+      const p=pairs[pick];
+      const tokens=[...window.EMB_TOKENS,...window.EMB_ANALOGY_TOKENS];
+      useEffect(()=>{setStage(0);},[pick]);
+      useEffect(()=>{
+        if (stage===0||stage>=3) return;
+        const t=setTimeout(()=>setStage(s=>s+1),900);
+        return()=>clearTimeout(t);
+      },[stage]);
+      const connections=[];
+      if (stage>=1) connections.push({from:p.a,to:p.b,kind:'dashed',arrow:true,label:`− ${p.b}`,opacity:0.9});
+      if (stage>=2) connections.push({from:p.b,to:p.c,kind:'dashed',arrow:true,label:`+ ${p.c}`,opacity:0.9});
+      if (stage>=3) connections.push({from:p.a,to:p.expected,color:'#8B3520',width:2,arrow:true,opacity:1});
+      return (
+        <div className="emb-analogy-layout">
+          <div className="emb-cloud-wrap">
+            <window.EmbPointCloud width={460} height={380} tokens={tokens} highlightedIds={[p.a,p.b,p.c,...(stage>=3?[p.expected]:[])]} showAxes={true} showGrid={true} connections={connections} initialYaw={0.9} initialPitch={-0.15}/>
+          </div>
+          <aside className="emb-analogy-side">
+            <div className="emb-formula">
+              <span className="emb-tok-pill pill-a">{p.a}</span>
+              <span className="emb-op">−</span>
+              <span className="emb-tok-pill">{p.b}</span>
+              <span className="emb-op">+</span>
+              <span className="emb-tok-pill">{p.c}</span>
+              <span className="emb-op">≈</span>
+              <span className={"emb-tok-pill"+(stage>=3?" pill-reveal":" pill-hidden")}>{stage>=3?p.expected:"?"}</span>
+            </div>
+            <div className="emb-stage-copy">
+              {stage===0&&<p>Start with the vector for <b>{p.a}</b>. Subtract <b>{p.b}</b> to erase a shared direction, then add <b>{p.c}</b> to inject a new one.</p>}
+              {stage===1&&<p>We just removed everything <b>{p.a}</b> shares with <b>{p.b}</b>. What's left is the pure "royalty" direction.</p>}
+              {stage===2&&<p>Now we add <b>{p.c}</b> — royalty plus the dimension separating <span className="emb-mono">{p.b}</span> from <span className="emb-mono">{p.c}</span>.</p>}
+              {stage===3&&<p>The resulting vector lands on <b>{p.expected}</b>. The <i>direction</i> between <span className="emb-mono">{p.b}→{p.c}</span> also connects <span className="emb-mono">{p.a}→{p.expected}</span>. Meaning is encoded in <i>directions</i>.</p>}
+            </div>
+            <button className="emb-run-btn" onClick={()=>setStage(stage>=3?0:1)}>
+              {stage===0?'Run it →':stage>=3?'Reset':'…'}
+            </button>
+            <div className="emb-pick-row">
+              <div className="emb-pick-label">try another</div>
+              {pairs.map((pp,i)=>(
+                <button key={i} className={"emb-pick"+(i===pick?" pick-on":"")} onClick={()=>setPick(i)}>
+                  {pp.a} − {pp.b} + {pp.c}
+                </button>
+              ))}
+            </div>
+            <div className="emb-pull">
+              <div className="emb-pull-bar"/>
+              <div>
+                <p className="emb-pull-eyebrow">the key insight</p>
+                <p className="emb-pull-body">Embeddings don't just cluster related words — they encode <i>relationships</i> as consistent directions. "Royalty", "gender", "tense", "plurality" all show up as reusable vectors you can add and subtract.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      );
+    }
+
+    const spaceEl = document.getElementById('emb-space-explorer');
+    const analogyEl = document.getElementById('emb-analogy-demo');
+    if (spaceEl) ReactDOM.createRoot(spaceEl).render(<SpaceExplorer/>);
+    if (analogyEl) ReactDOM.createRoot(analogyEl).render(<AnalogyDemo/>);
   })();
   </script>
 </body>
