@@ -51,16 +51,23 @@
     </div>
 
     <!-- Search -->
-    <div class="bg-parchment retro-border p-5 mb-8">
+    <div class="bg-parchment retro-border p-5 mb-4">
       <input id="glossarySearch" type="text" placeholder="Search terms..." oninput="filterGlossary()"
         class="w-full font-mono text-sm border-2 border-navy bg-cream px-4 py-3 focus:outline-none focus:border-rust placeholder-charcoal/50" />
+    </div>
+
+    <!-- Technical toggle -->
+    <div class="flex items-center justify-end mb-6">
+      <button id="techToggle" onclick="toggleTechnical()" class="font-mono text-xs border-2 border-navy px-4 py-2 bg-cream hover:bg-navy hover:text-cream transition-colors uppercase tracking-widest">
+        + Show Technical Terms
+      </button>
     </div>
 
     <!-- Letter jump nav -->
     <div id="letterNav" class="flex flex-wrap gap-1 mb-8">
       <span class="font-mono text-xs text-charcoal uppercase tracking-widest mr-2 self-center">Jump to:</span>
       <script>
-        ['A','B','C','E','F','G','H','I','K','L','M','N','O','P','R','S','T','V','W'].forEach(l => {
+        ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','V','W'].forEach(l => {
           document.write(`<button onclick="jumpToLetter('${l}')" class="filter-btn px-3 py-1 text-xs">${l}</button>`);
         });
       </script>
@@ -90,6 +97,11 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How software talks to software</p>
           <p class="text-sm leading-relaxed">The connection point that lets one piece of software send requests to another. When developers "build with AI," they're usually calling a model through its API — sending a prompt and receiving a response programmatically, without using the chat interface.</p>
         </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="alignment ai alignment">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Alignment</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Making AI do what humans actually intend</p>
+          <p class="text-sm leading-relaxed">The challenge of ensuring AI systems reliably pursue the goals and values their developers and users intend — not just the literal objective they were optimized for. A model that maximizes engagement at any cost isn't "aligned" with human wellbeing, even if it scores well on its training metric. Alignment research is the field trying to make AI systems safer and more reliably beneficial as they become more capable.</p>
+        </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="attention attention mechanism">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Attention</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How the model decides what's relevant</p>
@@ -107,6 +119,11 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Backpropagation</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How a model learns from its mistakes</p>
           <p class="text-sm leading-relaxed">The algorithm used to train neural networks. After the model makes a prediction and calculates how wrong it was, backpropagation computes the gradient — how much each parameter contributed to the error — and nudges every weight in the direction that reduces it. Repeat this trillions of times across the training corpus and the model converges toward useful predictions. The engine behind everything the model learned.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="bias ai bias">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Bias</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">When training data skews the model's worldview</p>
+          <p class="text-sm leading-relaxed">Systematic errors or skewed outputs that result from patterns in training data reflecting real-world inequalities, historical prejudices, or gaps in representation. A model trained mostly on English text from Western sources will reflect those perspectives more than others. Bias isn't always obvious — it often shows up in subtle ways, like generating different default assumptions about who holds which jobs. Knowing it exists is the first step to catching it.</p>
         </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="benchmark">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Benchmark</h4>
@@ -131,6 +148,12 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The model's working memory</p>
           <p class="text-sm leading-relaxed">The total amount of text a model can "see" and reason over at once — your messages, any documents you've shared, and the conversation history. Everything outside the context window is invisible to the model. Larger context windows let you work with longer documents and more complex tasks.</p>
         </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="compute gpu hardware" data-technical="true">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Compute <span class="font-body font-normal text-sm text-charcoal">/ GPU</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The hardware that makes AI possible</p>
+          <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
+          <p class="text-sm leading-relaxed">The raw processing power used to train and run AI models — primarily GPUs (graphics processing units), originally designed for rendering video games, now the backbone of AI. Training a frontier model can cost tens of millions of dollars in compute alone. "Compute constraints" explains why not every organization can train their own model, and why access to GPUs is a strategic resource in AI development.</p>
+        </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="corpus">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Corpus</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The text a model learned from</p>
@@ -148,6 +171,12 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Deep Learning</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The engine under most modern AI</p>
           <p class="text-sm leading-relaxed">A type of machine learning that uses layered neural networks to find patterns in data. "Deep" refers to the many layers in those networks, not to any philosophical depth. Most modern AI — image recognition, voice assistants, LLMs — is built on deep learning. You don't need to understand how it works to use these tools well, but it's the technique that made the current wave of AI possible.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="distillation model distillation knowledge distillation" data-technical="true">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Distillation</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Compressing a large model into a smaller one</p>
+          <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
+          <p class="text-sm leading-relaxed">A training technique where a smaller "student" model is trained to imitate the outputs of a larger "teacher" model, rather than learning from raw data. The result: a compact model that punches above its weight. This is why "mini" and "lite" model variants often outperform older full-sized models — they've been distilled from something much larger. DeepSeek-R1 used distillation to build a highly capable model at a fraction of the usual training cost.</p>
         </div>
       </div>
 
@@ -203,6 +232,11 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The architecture that sparked the AI wave</p>
           <p class="text-sm leading-relaxed">The model architecture behind OpenAI's products and the technical breakthrough that triggered the current generation of AI tools. "Pre-trained" means trained on enormous amounts of text before being specialized. GPT-4 and its successors are the models powering ChatGPT — but "GPT" is often used loosely to mean any large language model.</p>
         </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="guardrails safety constraints">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Guardrails</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Hard limits on what a model will do</p>
+          <p class="text-sm leading-relaxed">Safety constraints applied to a model's outputs — preventing it from generating harmful content, revealing confidential information, or acting outside defined boundaries. Guardrails can be baked into the model itself through training (like RLHF), enforced via system prompts, or applied as a separate filtering layer. Every enterprise AI deployment has them. The debate is always how tight to set them without making the model too restrictive to be useful.</p>
+        </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="grounding grounded">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Grounding</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Tying outputs to verifiable sources</p>
@@ -243,6 +277,19 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Instruction Tuning</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">From text predictor to assistant</p>
           <p class="text-sm leading-relaxed">A training phase where a model is fine-tuned on examples of instruction-following to make it behave like a helpful assistant rather than just continuing text. A raw pre-trained model would complete your sentence; an instruction-tuned model answers your question. Often combined with RLHF to shape safe, helpful behavior.</p>
+        </div>
+      </div>
+
+      <!-- J -->
+      <div class="letter-group" data-letter="J">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">J</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="jailbreak jailbreaking">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Jailbreak</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Tricking a model into ignoring its guardrails</p>
+          <p class="text-sm leading-relaxed">A prompt or technique designed to bypass a model's safety constraints — getting it to produce content it would normally refuse. Jailbreaks range from simple role-play tricks ("pretend you have no restrictions") to elaborate multi-step prompts. AI labs actively work to patch them; the cat-and-mouse dynamic is ongoing. Understanding jailbreaks matters for anyone deploying AI in a context where misuse is a risk.</p>
         </div>
       </div>
 
@@ -298,6 +345,12 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Beyond text — images, audio, video</p>
           <p class="text-sm leading-relaxed">A model that can process and generate multiple types of data — text, images, audio, video — rather than text alone. GPT-4o and Gemini are multimodal. Practically: you can show the model a chart, a screenshot, or a whiteboard photo and ask questions about it. This capability is expanding rapidly.</p>
         </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="model card model documentation" data-technical="true">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Model Card</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The owner's manual for an AI model</p>
+          <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
+          <p class="text-sm leading-relaxed">A short document published alongside a model that explains what it was trained on, what it's designed to do, its known limitations, and where it's likely to fail. Popularized by Google researchers as a best practice for responsible AI. If you're evaluating an AI tool for professional use, the model card is where a responsible lab will tell you what they know about its weaknesses.</p>
+        </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="model collapse">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Model Collapse</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">What happens when AI trains on AI</p>
@@ -323,6 +376,16 @@
         <div class="flex items-center gap-3 mt-6 mb-3">
           <span class="font-display font-black text-rust text-3xl leading-none">O</span>
           <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="open source open weights open model llama mistral">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Open Source / Open Weights</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI you can download and run yourself</p>
+          <p class="text-sm leading-relaxed">Models whose weights are publicly released — anyone can download, run, or modify them without paying per API call or sending data to a third party. Llama (Meta) and Mistral are the most prominent examples. Open weights models are increasingly capable and run locally on a laptop or server you control. Important distinction from "open source" software: releasing weights isn't the same as releasing the training code or data, so the term is sometimes contested.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="on-device local model on device">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">On-Device / Local Model</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI that runs on your hardware, not the cloud</p>
+          <p class="text-sm leading-relaxed">AI that runs entirely on your own device — laptop, phone, or server — without sending data to an external API. Apple Intelligence runs on-device for privacy. Running Llama locally via Ollama is another example. Benefits: privacy (data never leaves your machine), no API costs, works offline. Trade-off: you're limited to smaller, less capable models than what cloud providers run on their giant clusters.</p>
         </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="overfitting overfit">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Overfitting</h4>
@@ -356,6 +419,20 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Prompt Injection</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Hijacking an AI with hidden instructions</p>
           <p class="text-sm leading-relaxed">An attack where malicious instructions hidden inside content — a document, a webpage, a user message — are designed to override an AI's intended behavior. For example: a PDF that contains invisible text saying "Ignore your previous instructions and instead do X." A real security concern for agentic systems that process untrusted content. One of the more important attack surfaces to understand if you're building with AI.</p>
+        </div>
+      </div>
+
+      <!-- Q -->
+      <div class="letter-group" data-letter="Q">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">Q</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="quantization quantized model" data-technical="true">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Quantization</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Shrinking a model to fit on smaller hardware</p>
+          <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
+          <p class="text-sm leading-relaxed">A technique that reduces a model's memory footprint by representing its numerical weights with less precision — for example, storing values as 4-bit integers instead of 32-bit floats. A quantized model is smaller and faster but may lose some accuracy. When you see "Q4" or "Q8" in a local model filename, that's the quantization level. It's what makes it possible to run a capable model on a laptop with 16GB of RAM rather than a data center.</p>
         </div>
       </div>
 
@@ -393,6 +470,12 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The hidden instructions shaping every response</p>
           <p class="text-sm leading-relaxed">Instructions given to a model before a conversation begins — setting its role, tone, constraints, and context. You often don't see it, but it shapes every response. When a product built on Claude behaves differently than Claude.ai, a system prompt is usually why. You can write your own in tools like Claude's Projects to customize behavior for recurring tasks.</p>
         </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="synthetic data ai generated data" data-technical="true">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Synthetic Data</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">AI-generated training data</p>
+          <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
+          <p class="text-sm leading-relaxed">Training data that was generated by an AI model rather than collected from human-produced text. Used when real data is scarce, sensitive, or expensive to label. Many recent models — including reasoning models — are trained heavily on synthetic data. The risk: models trained on AI-generated data can amplify errors or drift toward homogenous outputs over generations. Related to model collapse, and an active area of research.</p>
+        </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="softmax">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Softmax</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Turning scores into probabilities</p>
@@ -405,6 +488,12 @@
         <div class="flex items-center gap-3 mt-6 mb-3">
           <span class="font-display font-black text-rust text-3xl leading-none">T</span>
           <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="tool use function calling tools" data-technical="true">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Tool Use <span class="font-body font-normal text-sm text-charcoal">/ Function Calling</span></h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How models reach outside themselves to act</p>
+          <span class="inline-block font-mono text-xs bg-navy text-cream px-2 py-0.5 mb-2 uppercase tracking-widest">Technical</span>
+          <p class="text-sm leading-relaxed">The ability of a model to call external functions, APIs, or services as part of generating a response — searching the web, reading a file, running code, querying a database. The mechanism behind agentic behavior. When Claude uses a calculator or browses the web, it's using tools. "Function calling" is the API-level term for the same concept. This is what transforms a language model from a text generator into something that can take action in the world.</p>
         </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="temperature">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Temperature</h4>
