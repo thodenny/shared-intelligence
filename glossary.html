@@ -57,13 +57,15 @@
     </div>
 
     <!-- Letter jump nav -->
-    <div id="letterNav" class="flex flex-wrap gap-1 mb-8">
-      <span class="font-mono text-xs text-charcoal uppercase tracking-widest mr-2 self-center">Jump to:</span>
-      <script>
-        ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','V','W'].forEach(l => {
-          document.write(`<button onclick="jumpToLetter('${l}')" class="filter-btn px-3 py-1 text-xs">${l}</button>`);
-        });
-      </script>
+    <div id="letterNav" class="mb-8">
+      <span class="font-mono text-xs text-charcoal uppercase tracking-widest block mb-2">Jump to:</span>
+      <div class="flex flex-wrap gap-1">
+        <script>
+          ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','V','W'].forEach(l => {
+            document.write(`<button onclick="jumpToLetter('${l}')" class="filter-btn" style="padding:5px 10px;min-width:2rem;">${l}</button>`);
+          });
+        </script>
+      </div>
     </div>
 
     <!-- Terms -->
