@@ -76,14 +76,14 @@
 
         <h4 class="font-display font-bold text-navy text-lg">It Started with Prediction</h4>
         <p>At the core, a large language model is trained to do one thing: predict the next word. Or more precisely, the next <em>token</em> — a chunk of text that might be a word, part of a word, or a punctuation mark. Given "The capital of France is," the model predicts "Paris" because that sequence appeared countless times in its training data.</p>
-        <p>That sounds trivial. But when you train a model on hundreds of billions of words — books, websites, academic papers, code, conversations — the model has to develop an extraordinarily sophisticated internal understanding of language, facts, reasoning patterns, and context in order to predict well. The prediction task forces the model to actually "understand" the material it's predicting from.</p>
+        <p>That sounds trivial. But when you train a model on hundreds of billions of words — books, websites, academic papers, code, conversations — the model has to develop an extraordinarily sophisticated internal understanding of language, facts, reasoning patterns, and context in order to predict well. The prediction task forces the model to "understand" the material it's predicting from.</p>
 
         <h4 class="font-display font-bold text-navy text-lg">What Training Means</h4>
         <p>Training a language model involves feeding it enormous amounts of text and having it repeatedly guess the next token. Every time it gets it wrong, the model's internal parameters — billions of numerical weights — are adjusted slightly. Over trillions of these adjustments, the model gets better and better at prediction.</p>
         <p>Those weights are the model. They're a compressed, mathematical representation of everything the model "learned" from the training data. When you ask Claude a question, you're not querying a database, you're activating a complex web of numerical relationships that, together, produce a probable next sequence of tokens that constitutes a useful answer.</p>
         <div class="bg-cream border-2 border-dashed border-navy p-4">
           <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">A Note on Masking</p>
-          <p class="text-sm">During training, the model never gets to "look ahead" at the answer. Future tokens are masked — hidden — so the model must predict each token based only on what came before. This is called causal masking, and it's what forces the model to actually learn the structure of language rather than memorize sequences. Without masking, the training task would be trivial and the model would learn nothing useful.</p>
+          <p class="text-sm">During training, the model never gets to "look ahead" at the answer. Future tokens are masked — hidden — so the model must predict each token based only on what came before. This is called causal masking, and it's what forces the model to learn the structure of language rather than memorize sequences. Without masking, the training task would be trivial and the model would learn nothing useful.</p>
         </div>
 
         <div class="bg-cream border-2 border-dashed border-navy p-4">
@@ -160,7 +160,7 @@
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
 
-        <p>The word "transformer" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what actually is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language.</p>
+        <p>The word "transformer" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language.</p>
 
         <h4 class="font-display font-bold text-navy text-lg">The Paper That Started Everything</h4>
         <p>In 2017, eight researchers at Google Brain published a paper titled <em>"Attention Is All You Need."</em> It introduced the transformer architecture and quietly made everything that came after it possible — GPT, BERT, Claude, Gemini, all of it.</p>
@@ -204,7 +204,7 @@
         <ul class="space-y-2 pl-2">
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Query (Q):</strong> "What am I looking for?" — a representation of what this token needs from the others.</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Key (K):</strong> "What do I offer?" — a representation of what each token contains.</div></li>
-          <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Value (V):</strong> "What should I actually pass on?" — the content that gets weighted and summed.</div></li>
+          <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Value (V):</strong> "What should I pass on?" — the content that gets weighted and summed.</div></li>
         </ul>
         <p>The model computes a similarity score between a token's Query and every other token's Key. High similarity = high attention weight. These weights are then used to create a weighted sum of the Values. The result: each token's representation gets updated by pulling in information from the tokens most relevant to it.</p>
 
@@ -273,7 +273,7 @@
         <span class="font-display font-black text-rust text-5xl leading-none mt-1">04</span>
         <div>
           <h3 class="font-display font-bold text-navy text-2xl">What Is RAG and Why Should You Care?</h3>
-          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Architecture Behind AI That Actually Knows Your Business</p>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mt-1">The Architecture Behind AI That Knows Your Business</p>
         </div>
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
