@@ -33,6 +33,23 @@ function filterPrompts() {
   document.getElementById('noResults').classList.toggle('hidden', visible > 0);
 }
 
+// Copy prompt buttons
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.prompt-expand pre').forEach(pre => {
+    const btn = document.createElement('button');
+    btn.textContent = 'Copy';
+    btn.className = 'font-mono text-xs border-2 border-rust text-rust px-3 py-1 block ml-auto mb-2 hover:bg-rust hover:text-cream transition-colors';
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    };
+    pre.parentNode.insertBefore(btn, pre);
+  });
+});
+
 // Card expand/collapse
 function toggleCard(card) {
   const wasOpen = card.classList.contains('open');
