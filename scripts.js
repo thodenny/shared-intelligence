@@ -86,6 +86,18 @@ function jumpToLetter(l) {
   }, 50);
 }
 
+// Changelog panel toggle (homepage)
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('changelog-toggle');
+  const panel = document.getElementById('changelog-panel');
+  if (!btn || !panel) return;
+  btn.addEventListener('click', function() {
+    const open = !panel.classList.contains('hidden');
+    panel.classList.toggle('hidden', open);
+    btn.querySelector('.expand-icon').textContent = open ? '+' : '−';
+  });
+});
+
 function toggleFaq(card) {
   const answer = card.querySelector('.faq-answer');
   const icon = card.querySelector('.expand-icon');
