@@ -40,11 +40,11 @@ body {
   border-bottom-color: #D4A017;
   color: #D4A017;
 }
-.nav-link-start {
+.nav-link.nav-link-start {
   color: #D4A017;
   border-bottom-color: #D4A017;
 }
-.nav-link-start:hover {
+.nav-link.nav-link-start:hover {
   color: #F5F0E8;
   border-bottom-color: #F5F0E8;
 }
