@@ -60,7 +60,7 @@
     <div id="letterNav" class="flex flex-nowrap gap-1 mb-8 overflow-x-auto pb-1">
       <span class="font-mono text-xs text-charcoal uppercase tracking-widest mr-2 self-center">Jump to:</span>
       <script>
-        ['A','B','C','E','F','G','H','I','L','M','N','P','R','S','T','V','W'].forEach(l => {
+        ['A','B','C','E','F','G','H','I','K','L','M','N','O','P','R','S','T','V','W'].forEach(l => {
           document.write(`<button onclick="jumpToLetter('${l}')" class="filter-btn px-3 py-1 text-xs">${l}</button>`);
         });
       </script>
@@ -80,10 +80,20 @@
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Takes actions, not just answers</p>
           <p class="text-sm leading-relaxed">An AI system that can execute a sequence of actions to complete a goal — browsing the web, running code, sending emails, filling out forms — rather than just generating a response. You give it an objective; it figures out the steps. Still early but rapidly improving.</p>
         </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="agentic workflow agentic">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Agentic Workflow</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Multi-step AI acting in the world</p>
+          <p class="text-sm leading-relaxed">A process where an AI agent takes a sequence of autonomous actions to complete a goal — searching the web, running code, editing files, calling other services — rather than just producing a single response. You set the goal; the agent plans and executes the steps. The human typically reviews the outcome rather than supervising each action.</p>
+        </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="api application programming interface">
           <h4 class="font-display font-bold text-navy text-lg mb-1">API <span class="font-body font-normal text-sm text-charcoal">/ Application Programming Interface</span></h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How software talks to software</p>
           <p class="text-sm leading-relaxed">The connection point that lets one piece of software send requests to another. When developers "build with AI," they're usually calling a model through its API — sending a prompt and receiving a response programmatically, without using the chat interface.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="attention attention mechanism">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Attention</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How the model decides what's relevant</p>
+          <p class="text-sm leading-relaxed">The mechanism inside transformers that lets each token dynamically weigh the relevance of every other token in the sequence when determining meaning. Rather than reading word-by-word, the model considers all tokens simultaneously. What lets a model understand that "it" in "The trophy didn't fit in the suitcase because it was too big" refers to the trophy — not the suitcase. Introduced in the 2017 paper "Attention Is All You Need."</p>
         </div>
       </div>
 
@@ -92,6 +102,11 @@
         <div class="flex items-center gap-3 mt-6 mb-3">
           <span class="font-display font-black text-rust text-3xl leading-none">B</span>
           <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="backpropagation backprop">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Backpropagation</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How a model learns from its mistakes</p>
+          <p class="text-sm leading-relaxed">The algorithm used to train neural networks. After the model makes a prediction and calculates how wrong it was, backpropagation computes the gradient — how much each parameter contributed to the error — and nudges every weight in the direction that reduces it. Repeat this trillions of times across the training corpus and the model converges toward useful predictions. The engine behind everything the model learned.</p>
         </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="benchmark">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Benchmark</h4>
@@ -105,6 +120,11 @@
         <div class="flex items-center gap-3 mt-6 mb-3">
           <span class="font-display font-black text-rust text-3xl leading-none">C</span>
           <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="chain of thought chain-of-thought cot">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Chain of Thought</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Show your working</p>
+          <p class="text-sm leading-relaxed">A prompting technique where you ask the model to reason through a problem step by step before giving a final answer. Adding "Let's think through this step by step" can significantly improve accuracy on logic, math, and multi-step problems. Reasoning models like o1 do this automatically as part of their architecture — it's baked in rather than prompted.</p>
         </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="context window">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Context Window</h4>
@@ -162,6 +182,13 @@
         </div>
       </div>
 
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="few-shot zero-shot few shot zero shot prompting">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Few-shot / Zero-shot</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How many examples you give the model</p>
+          <p class="text-sm leading-relaxed">Zero-shot: no examples — just an instruction. The model figures out the task from description alone. Few-shot: a small number of examples showing the pattern you want before asking the model to follow it. Few-shot prompting is one of the most reliable techniques for getting consistent, correctly-formatted output — especially useful for structured tasks or when you need a specific style.</p>
+        </div>
+      </div>
+
       <!-- G -->
       <div class="letter-group" data-letter="G">
         <div class="flex items-center gap-3 mt-6 mb-3">
@@ -177,6 +204,13 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">GPT <span class="font-body font-normal text-sm text-charcoal">/ Generative Pre-trained Transformer</span></h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The architecture that sparked the AI wave</p>
           <p class="text-sm leading-relaxed">The model architecture behind OpenAI's products and the technical breakthrough that triggered the current generation of AI tools. "Pre-trained" means trained on enormous amounts of text before being specialized. GPT-4 and its successors are the models powering ChatGPT — but "GPT" is often used loosely to mean any large language model.</p>
+        </div>
+      </div>
+
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="grounding grounded">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Grounding</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Tying outputs to verifiable sources</p>
+          <p class="text-sm leading-relaxed">Connecting a model's outputs to real, verifiable sources rather than relying solely on training data. A grounded response is backed by retrieved documents, live data, or explicit citations — not just what the model remembers. RAG is the most common grounding technique. Grounding reduces hallucinations and makes AI outputs more trustworthy for factual, high-stakes tasks.</p>
         </div>
       </div>
 
@@ -216,6 +250,19 @@
         </div>
       </div>
 
+      <!-- K -->
+      <div class="letter-group" data-letter="K">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">K</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="knowledge cutoff training cutoff">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Knowledge Cutoff</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The point where the model's knowledge stops</p>
+          <p class="text-sm leading-relaxed">The date after which a model has no training data. Events, publications, or developments after this date are simply unknown to the model unless you provide them directly in your prompt. Always check the cutoff when asking about recent events — and when accuracy matters, paste in the relevant current information rather than assuming the model knows it.</p>
+        </div>
+      </div>
+
       <!-- L -->
       <div class="letter-group" data-letter="L">
         <div class="flex items-center gap-3 mt-6 mb-3">
@@ -226,6 +273,18 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Large Language Model <span class="font-body font-normal text-sm text-charcoal">/ LLM</span></h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The engine inside most AI tools</p>
           <p class="text-sm leading-relaxed">A type of AI model trained on massive amounts of text to understand and generate language. Claude, ChatGPT, Gemini, and Grok are all LLMs. "Large" refers to the number of parameters — typically billions — learned during training. Most of the AI tools you use for writing, analysis, and conversation are built on LLMs.</p>
+        </div>
+      </div>
+
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="latency">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Latency</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">How long you wait for a response</p>
+          <p class="text-sm leading-relaxed">The time between sending a prompt and receiving a response. Matters more in real-time applications — voice assistants, live chat — than in document analysis or drafting tasks where a few seconds is fine. Reasoning models typically have higher latency because they generate an internal chain of thought before answering. Capability and speed are usually a tradeoff.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="logits logit">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Logits</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Raw scores before they become probabilities</p>
+          <p class="text-sm leading-relaxed">The unnormalized scores a model produces for every possible next token before they're converted into probabilities. Higher logit = more likely candidate. Softmax converts logits into a proper probability distribution. Temperature is applied to logits before softmax — which is the mechanism behind how it sharpens or flattens the distribution. Mostly relevant when working directly with model APIs or building on top of models.</p>
         </div>
       </div>
 
@@ -247,6 +306,13 @@
         </div>
       </div>
 
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="model collapse">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Model Collapse</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">What happens when AI trains on AI</p>
+          <p class="text-sm leading-relaxed">A failure mode where a model trained on AI-generated content progressively degrades — losing diversity, accuracy, and nuance over successive generations of training. An emerging concern as the internet fills with AI-generated text that future models will inevitably train on. Still an active area of research, but worth knowing as AI-generated content becomes the norm rather than the exception.</p>
+        </div>
+      </div>
+
       <!-- N -->
       <div class="letter-group" data-letter="N">
         <div class="flex items-center gap-3 mt-6 mb-3">
@@ -257,6 +323,19 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Neural Network</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">The architecture under the hood</p>
           <p class="text-sm leading-relaxed">The computational structure that underlies modern AI — loosely inspired by how neurons connect in the brain, though the analogy only goes so far. Consists of layers of interconnected nodes that transform inputs into outputs through billions of learned numerical weights. You don't need to understand how it works to use AI well, but knowing it exists helps explain why models behave the way they do.</p>
+        </div>
+      </div>
+
+      <!-- O -->
+      <div class="letter-group" data-letter="O">
+        <div class="flex items-center gap-3 mt-6 mb-3">
+          <span class="font-display font-black text-rust text-3xl leading-none">O</span>
+          <div class="h-px bg-navy flex-1"></div>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="overfitting overfit">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Overfitting</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Memorizing instead of learning</p>
+          <p class="text-sm leading-relaxed">When a model learns its training data too well — memorizing specific examples rather than generalizing patterns — and performs poorly on new inputs it hasn't seen. A classic ML problem. In fine-tuning, overfitting on a small dataset can make a model excellent at a narrow task while degrading its general capability. The risk of fine-tuning with too little data or too many training steps.</p>
         </div>
       </div>
 
@@ -280,6 +359,13 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Prompt Engineering</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Getting better outputs through better inputs</p>
           <p class="text-sm leading-relaxed">The practice of crafting prompts to reliably get useful outputs from AI models. Less about engineering, more about clear communication — giving the model the right role, context, format instructions, and examples. Anyone who uses AI effectively is doing some version of prompt engineering, whether they call it that or not.</p>
+        </div>
+      </div>
+
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="prompt injection injection attack">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Prompt Injection</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Hijacking an AI with hidden instructions</p>
+          <p class="text-sm leading-relaxed">An attack where malicious instructions hidden inside content — a document, a webpage, a user message — are designed to override an AI's intended behavior. For example: a PDF that contains invisible text saying "Ignore your previous instructions and instead do X." A real security concern for agentic systems that process untrusted content. One of the more important attack surfaces to understand if you're building with AI.</p>
         </div>
       </div>
 
@@ -319,6 +405,13 @@
         </div>
       </div>
 
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="softmax">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Softmax</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Turning scores into probabilities</p>
+          <p class="text-sm leading-relaxed">The mathematical function that converts a set of raw scores (logits) into a probability distribution — values between 0 and 1 that sum to 1. Used at the final step of a model's next-token prediction to produce something you can sample from. Temperature is applied to the logits before softmax runs, which is the mechanism that sharpens or flattens which tokens the model is likely to pick.</p>
+        </div>
+      </div>
+
       <!-- T -->
       <div class="letter-group" data-letter="T">
         <div class="flex items-center gap-3 mt-6 mb-3">
@@ -329,6 +422,11 @@
           <h4 class="font-display font-bold text-navy text-lg mb-1">Temperature</h4>
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Creativity vs. consistency</p>
           <p class="text-sm leading-relaxed">A setting that controls how random or creative a model's outputs are. Low temperature = predictable, consistent, conservative. High temperature = more varied, surprising, occasionally weird. Most chat interfaces set this automatically. It matters most when you're using the API directly or building a product on top of a model.</p>
+        </div>
+        <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="tokenization tokenize">
+          <h4 class="font-display font-bold text-navy text-lg mb-1">Tokenization</h4>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Splitting text into chunks the model can process</p>
+          <p class="text-sm leading-relaxed">The process of breaking input text into tokens before a model can process it. Most modern models use byte-pair encoding (BPE), which learns common subword units from training data. The same sentence can tokenize differently across models. Understanding tokenization helps explain why models sometimes struggle with character-counting or letter-spotting tasks — they don't see individual letters, they see token-sized chunks.</p>
         </div>
         <div class="glossary-term bg-parchment retro-border p-5 mb-3" data-term="token tokens">
           <h4 class="font-display font-bold text-navy text-lg mb-1">Token</h4>
