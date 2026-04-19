@@ -26,7 +26,7 @@ Live at: [thodenny.github.io/shared-intelligence](https://thodenny.github.io/sha
 
 ## Who it's for
 
-Program managers, operations leaders, and knowledge workers who keep hearing about AI and want to actually use it — not just read about it. The site is written from the perspective of someone who's spent two years training colleagues on AI inside large organisations (Meta, Amazon), not from a research lab.
+Program managers, operations leaders, and knowledge workers who keep hearing about AI and want to use it — not just read about it. The site is written from the perspective of someone who's spent two years training colleagues on AI inside large organisations (Meta, Amazon), not from a research lab.
 
 ---
 
