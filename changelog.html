@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-wrap gap-0 items-center">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="crash-course.html" class="nav-link">Crash Course</a>
+        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <div class="nav-dropdown relative">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="dropdown-caret">▾</span></button>
+          <div class="nav-dropdown-menu hidden" role="menu">
+            <a href="prompt-library.html" class="nav-dropdown-item" role="menuitem">Prompt Library</a>
+            <a href="field-guides.html" class="nav-dropdown-item" role="menuitem">Field Guides</a>
+            <a href="tools.html" class="nav-dropdown-item" role="menuitem">Tools</a>
+            <a href="glossary.html" class="nav-dropdown-item" role="menuitem">Glossary</a>
+          </div>
+        </div>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-3xl mx-auto px-4 py-16">
+
+    <!-- Hero -->
+    <div class="text-center mb-12">
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Log</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Changelog</h2>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">A running log of what's shipped and what's next. Updated as the site grows.</p>
+    </div>
+
+    <!-- SHIPPED -->
+    <!-- NEW ENTRIES GO AT THE TOP OF THIS <ol> - mirror the top 3 onto index.html's changelog panel -->
+    <div class="mb-14">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="stamp text-rust">Shipped</span>
+        <h3 class="font-display font-black text-navy text-2xl">What's New</h3>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+
+      <ol class="space-y-6">
+
+        <li id="apr-20-2026" class="bg-parchment retro-border p-6">
+          <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
+            <div class="font-mono text-xs text-rust font-bold tracking-widest uppercase">Apr 20, 2026</div>
+            <a href="#apr-20-2026" class="font-mono text-xs text-charcoal/50 hover:text-rust tracking-widest uppercase no-underline" aria-label="Permalink to this entry">#</a>
+          </div>
+          <h4 class="font-display font-bold text-navy text-lg mb-2">Field Guides &amp; Resources dropdown</h4>
+          <p class="text-sm leading-relaxed text-charcoal mb-3">Added the Field Guides section with its first guide, <a href="guides/teach-claude-your-voice.html" class="text-rust underline hover:text-navy">Teach Claude Your Voice</a> — live in-browser and as a PDF download.</p>
+          <p class="text-sm leading-relaxed text-charcoal">Consolidated Prompt Library, Field Guides, Tools, and Glossary under a single Resources dropdown in the nav to keep the top bar tidy as the site grows.</p>
+        </li>
+
+        <li id="apr-19-2026" class="bg-parchment retro-border p-6">
+          <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
+            <div class="font-mono text-xs text-rust font-bold tracking-widest uppercase">Apr 19, 2026</div>
+            <a href="#apr-19-2026" class="font-mono text-xs text-charcoal/50 hover:text-rust tracking-widest uppercase no-underline" aria-label="Permalink to this entry">#</a>
+          </div>
+          <h4 class="font-display font-bold text-navy text-lg mb-2">Shared Intelligence launches</h4>
+          <p class="text-sm leading-relaxed text-charcoal">Crash Course, Deep Dive, Prompt Library, Projects, Tools, Glossary, and FAQ all live at launch. Free. No tracking. No paywall.</p>
+        </li>
+
+      </ol>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- UPCOMING -->
+    <div class="mb-14">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="stamp text-mustard">Planned</span>
+        <h3 class="font-display font-black text-navy text-2xl">What's Upcoming</h3>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+
+      <ul class="space-y-4">
+        <li class="bg-parchment retro-border-mustard p-5 flex gap-3 items-start">
+          <span class="text-rust font-bold text-lg leading-none">›</span>
+          <p class="text-sm leading-relaxed text-charcoal">A step-by-step walkthrough for building a professional website with Gamma and similar no-code tools.</p>
+        </li>
+        <li class="bg-parchment retro-border-mustard p-5 flex gap-3 items-start">
+          <span class="text-rust font-bold text-lg leading-none">›</span>
+          <p class="text-sm leading-relaxed text-charcoal">A curated Resources section featuring trusted publications, researchers, and courses for deeper study.</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Back link -->
+    <div class="text-center">
+      <a href="index.html" class="font-mono text-xs text-rust uppercase tracking-widest border-b-2 border-dotted border-rust hover:text-navy hover:border-navy transition-colors no-underline">← Back to Home</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
