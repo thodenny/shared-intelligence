@@ -48,6 +48,54 @@ body {
   color: #F5F0E8;
   border-bottom-color: #F5F0E8;
 }
+.nav-dropdown { display: inline-flex; }
+.nav-dropdown-trigger {
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.dropdown-caret {
+  font-size: 0.65rem;
+  line-height: 1;
+  transition: transform 0.15s;
+  display: inline-block;
+}
+.nav-dropdown.open .dropdown-caret { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: #1B2A4A;
+  border: 2px solid #D4A017;
+  min-width: 180px;
+  padding: 0.5rem 0;
+  z-index: 60;
+  box-shadow: 4px 4px 0 #B94A2C;
+}
+.nav-dropdown-item {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #F5F0E8;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.nav-dropdown-item:hover, .nav-dropdown-item.active {
+  background: rgba(212, 160, 23, 0.12);
+  border-left-color: #D4A017;
+  color: #D4A017;
+}
 .prompt-card { cursor: pointer; transition: transform 0.15s; }
 .prompt-card:hover { transform: translate(-2px, -2px); }
 .prompt-card.open .prompt-expand { display: block; }

@@ -4,7 +4,46 @@
   document.querySelectorAll('.nav-link').forEach(link => {
     if (link.getAttribute('href') === path) link.classList.add('active');
   });
+  document.querySelectorAll('.nav-dropdown-item').forEach(item => {
+    if (item.getAttribute('href') === path) {
+      item.classList.add('active');
+      const parent = item.closest('.nav-dropdown');
+      const trigger = parent && parent.querySelector('.nav-dropdown-trigger');
+      if (trigger) trigger.classList.add('active');
+    }
+  });
 })();
+
+// Resources dropdown toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+  const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+  const menu = dropdown.querySelector('.nav-dropdown-menu');
+  if (!trigger || !menu) return;
+
+  function closeMenu() {
+    menu.classList.add('hidden');
+    dropdown.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+  function openMenu() {
+    menu.classList.remove('hidden');
+    dropdown.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  trigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (dropdown.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  document.addEventListener('click', function(e) {
+    if (!dropdown.contains(e.target)) closeMenu();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+});
 
 // Prompt filtering
 let activeFilter = 'all';

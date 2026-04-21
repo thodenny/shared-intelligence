@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — Shared Intelligence</title>
+  <title>Field Guides — Shared Intelligence</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -48,34 +48,43 @@
     </div>
   </nav>
 
-  <div class="max-w-2xl mx-auto px-4 py-20">
+  <div class="max-w-5xl mx-auto px-4 py-16">
     <div class="text-center mb-12">
-      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Story</p>
-      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">About</h2>
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Library</p>
+      <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">Field Guides</h2>
       <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">In-depth, downloadable guides for mastering specific AI skills. Read them, print them, share them.</p>
     </div>
 
-    <div class="bg-parchment retro-border p-8 leading-relaxed space-y-5">
-      <p class="text-lg">Shared Intelligence is a free resource built for the everyday professional who wants to understand how to use AI practically in their day-to-day life.</p>
+    <!-- Guides grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-      <p>It seems like there's a new model, a new tool, or a new "everything changes now" headline every week. It's easy to feel like you're already behind. You're not. Most of what gets announced doesn't change what you need to do today.</p>
+      <!-- Guide: Teach Claude Your Voice -->
+      <a href="guides/teach-claude-your-voice.html" data-topic="writing" data-title="teach claude your voice" class="guide-card bg-parchment retro-border p-6 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+        <div class="flex items-center justify-between mb-4">
+          <span class="category-pill text-rust">Writing</span>
+          <span class="font-mono text-xs text-charcoal/60 uppercase tracking-widest">HTML · PDF</span>
+        </div>
+        <h3 class="font-display font-black text-navy text-2xl mb-2 leading-tight">Teach Claude Your Voice</h3>
+        <p class="text-sm leading-relaxed text-charcoal mb-5">A practical guide to getting Claude to write in your voice — so everything it drafts sounds like you, not a chatbot.</p>
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs text-charcoal/50 uppercase tracking-widest">April 2026</span>
+          <span class="font-display font-bold text-rust text-sm tracking-wide uppercase">Open Guide →</span>
+        </div>
+      </a>
 
-      <p>I'm Thomas Denny — Program Manager at Meta, former Amazon operations leader. I've spent the last two years training colleagues on AI tools and building AI workflows that save real time. I built this to help get you started.</p>
+    </div>
 
-      <p>If this site helped you, share it and let me know!</p>
-
-      <hr class="retro-divider" />
-
-      <div class="flex flex-wrap gap-4 justify-center pt-2">
-        <a href="https://www.linkedin.com/in/thomasdenny1/" target="_blank" rel="noopener" class="cta-btn-secondary text-sm">LinkedIn →</a>
+    <!-- Coming soon note -->
+    <div class="mt-16 text-center">
+      <div class="flex items-center justify-center gap-4 mb-4">
+        <div class="h-px bg-navy flex-1 max-w-16"></div>
+        <span class="font-mono text-rust text-xs tracking-widest uppercase">More Soon</span>
+        <div class="h-px bg-navy flex-1 max-w-16"></div>
       </div>
+      <p class="text-sm text-charcoal/70 italic max-w-md mx-auto">New guides added regularly. Check back, or keep an eye on the homepage changelog.</p>
     </div>
 
-    <div class="mt-8 bg-parchment retro-border-mustard p-6 text-center">
-      <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Shared Intelligence</p>
-      <p class="font-display font-bold text-navy text-lg mb-2">This site is free.</p>
-      <p class="text-sm text-charcoal">Build something with it.</p>
-    </div>
   </div>
 
   <!-- FOOTER -->

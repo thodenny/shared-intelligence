@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teach Claude Your Voice — Field Guide · Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="../index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-wrap gap-0 items-center">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../crash-course.html" class="nav-link">Crash Course</a>
+        <a href="../deep-dive.html" class="nav-link">Deep Dive</a>
+        <a href="../projects.html" class="nav-link">Projects</a>
+        <div class="nav-dropdown relative">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="dropdown-caret">▾</span></button>
+          <div class="nav-dropdown-menu hidden" role="menu">
+            <a href="../prompt-library.html" class="nav-dropdown-item" role="menuitem">Prompt Library</a>
+            <a href="../field-guides.html" class="nav-dropdown-item" role="menuitem">Field Guides</a>
+            <a href="../tools.html" class="nav-dropdown-item" role="menuitem">Tools</a>
+            <a href="../glossary.html" class="nav-dropdown-item" role="menuitem">Glossary</a>
+          </div>
+        </div>
+        <a href="../faq.html" class="nav-link">FAQ</a>
+        <a href="../about.html" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-14">
+
+    <!-- Breadcrumb -->
+    <div class="mb-8">
+      <a href="../field-guides.html" class="font-mono text-xs text-rust uppercase tracking-widest border-b-2 border-dotted border-rust hover:text-navy hover:border-navy transition-colors no-underline">← Back to Field Guides</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="text-center mb-10">
+      <div class="flex items-center justify-center gap-3 mb-4 flex-wrap">
+        <span class="stamp text-rust">AI Personalization · #1</span>
+        <span class="stamp text-mustard">Field Guide</span>
+      </div>
+      <h1 class="font-display font-black text-navy leading-tight mb-4" style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -0.02em;">
+        Teach Claude<br /><span class="italic text-mustard">Your Voice</span>
+      </h1>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-6 text-charcoal leading-relaxed text-lg max-w-2xl mx-auto">A style guide that's set up right can make Claude's writing sound like you — and not a robot.</p>
+    </div>
+
+    <!-- Download CTA -->
+    <div class="flex flex-wrap justify-center gap-3 mb-14">
+      <a href="teach-claude-your-voice.pdf" download class="cta-btn-primary">Download PDF ↓</a>
+      <a href="teach-claude-your-voice.pdf" target="_blank" rel="noopener" class="cta-btn-secondary">Open PDF in New Tab ↗</a>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 1: Four Places -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-6">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Section One</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-6">4 Places Your Style Guide Can Live</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="bg-parchment retro-border p-5">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest font-bold mb-2">Global</p>
+          <h3 class="font-display font-bold text-navy text-lg mb-2">Profile Preferences</h3>
+          <p class="text-sm leading-relaxed text-charcoal">Universal rules for every chat. Best for small habits like "never open with <em>Certainly!</em>"</p>
+        </div>
+
+        <div class="bg-parchment retro-border-mustard p-5">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest font-bold mb-2">Best for Voice</p>
+          <h3 class="font-display font-bold text-navy text-lg mb-2">Project Instructions</h3>
+          <p class="text-sm leading-relaxed text-charcoal">Your main home. Loads automatically every time you open that project.</p>
+        </div>
+
+        <div class="bg-parchment retro-border p-5">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest font-bold mb-2">Samples</p>
+          <h3 class="font-display font-bold text-navy text-lg mb-2">Project Knowledge</h3>
+          <p class="text-sm leading-relaxed text-charcoal">Upload 10–20 of your best posts. Claude uses these as "what good looks like."</p>
+        </div>
+
+        <div class="bg-parchment retro-border p-5">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest font-bold mb-2">Quick Sketch</p>
+          <h3 class="font-display font-bold text-navy text-lg mb-2">Custom Style</h3>
+          <p class="text-sm leading-relaxed text-charcoal">A short summary of your voice. Toggle it on per chat as needed.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 2: What Goes Inside -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-6">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Section Two</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-2">What Goes Inside</h2>
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-6">In This Order</p>
+
+      <div class="space-y-4">
+
+        <div class="bg-parchment retro-border p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">01</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-1">Who You Are</h3>
+            <p class="text-sm leading-relaxed text-charcoal">2–3 sentences on your role and what you write about.</p>
+          </div>
+        </div>
+
+        <div class="bg-parchment retro-border p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">02</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-1">Positive Voice Rules</h3>
+            <p class="text-sm leading-relaxed text-charcoal">5–7 rules written as commands. <em>"Be direct. Vary sentence length."</em></p>
+          </div>
+        </div>
+
+        <div class="bg-parchment retro-border-mustard p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">03</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-1">Before / After Examples <span class="font-mono text-xs text-mustard uppercase tracking-widest font-bold align-middle ml-2">Highest ROI</span></h3>
+            <p class="text-sm leading-relaxed text-charcoal">3–5 real pairs: bad (AI writing) vs. how you'd actually say it.</p>
+          </div>
+        </div>
+
+        <div class="bg-parchment retro-border p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">04</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-1">What to Avoid</h3>
+            <p class="text-sm leading-relaxed text-charcoal">Banned phrases and structures. Keep it to 15–25 items max.</p>
+          </div>
+        </div>
+
+        <div class="bg-parchment retro-border p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">05</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-1">Self-Check Instruction</h3>
+            <p class="text-sm leading-relaxed text-charcoal"><em>"Does any sentence sound like a press release? Rewrite it."</em></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 3: Save as Markdown -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-6">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Section Three</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-6">Save It as a Markdown <span class="font-mono text-lg text-mustard">(.md)</span> File</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="bg-parchment retro-border p-6">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest font-bold mb-3">Let Claude Write It For You</p>
+          <p class="text-sm leading-relaxed text-charcoal">Use Claude's built-in Skill Creator to auto-generate the style guide from your existing writing. No manual writing required — paste your best posts and let it extract the patterns.</p>
+        </div>
+
+        <div class="bg-parchment retro-border-mustard p-6">
+          <p class="font-mono text-xs text-rust uppercase tracking-widest font-bold mb-3">Upload to Project Knowledge</p>
+          <p class="text-sm leading-relaxed text-charcoal">Save the output as a .md file and drop it into your Claude Project. It loads automatically into every conversation in that project.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Section 4: Common Mistakes -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-6">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Section Four</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-6">Common Mistakes</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-cream border-2 border-dashed border-navy p-5 flex gap-3 items-start">
+          <span class="font-display font-black text-rust text-2xl leading-none shrink-0">×</span>
+          <p class="text-sm leading-relaxed text-charcoal">Banned-word list longer than 25 items — Claude ignores the bottom half.</p>
+        </div>
+        <div class="bg-cream border-2 border-dashed border-navy p-5 flex gap-3 items-start">
+          <span class="font-display font-black text-rust text-2xl leading-none shrink-0">×</span>
+          <p class="text-sm leading-relaxed text-charcoal">Over-formatting the guide — Claude mirrors your formatting back at you.</p>
+        </div>
+        <div class="bg-cream border-2 border-dashed border-navy p-5 flex gap-3 items-start">
+          <span class="font-display font-black text-rust text-2xl leading-none shrink-0">×</span>
+          <p class="text-sm leading-relaxed text-charcoal">Guide over 3,000 words → diminishing returns kick in fast.</p>
+        </div>
+        <div class="bg-cream border-2 border-dashed border-navy p-5 flex gap-3 items-start">
+          <span class="font-display font-black text-rust text-2xl leading-none shrink-0">×</span>
+          <p class="text-sm leading-relaxed text-charcoal">Writing it once and never updating it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Loop callout -->
+    <div class="bg-navy text-cream p-8 retro-border-mustard mb-14">
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-3 font-bold">The Feedback Loop</p>
+      <p class="font-display text-xl leading-relaxed italic">Every 5 posts you publish, paste them back in and ask Claude what it learned about your voice. The guide is a living document, not a one-time write.</p>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mb-4">
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <div class="h-px bg-navy flex-1 max-w-16"></div>
+        <span class="font-mono text-rust text-xs tracking-widest uppercase">Take It With You</span>
+        <div class="h-px bg-navy flex-1 max-w-16"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 mb-4">
+        <a href="teach-claude-your-voice.pdf" download class="cta-btn-primary">Download PDF ↓</a>
+        <a href="../field-guides.html" class="cta-btn-secondary">← All Field Guides</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="../scripts.js"></script>
+</body>
+</html>

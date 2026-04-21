@@ -28,14 +28,20 @@
       <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
         SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
       </a>
-      <div class="flex flex-nowrap gap-0 overflow-x-auto">
+      <div class="flex flex-wrap gap-0 items-center">
         <a href="index.html" class="nav-link">Home</a>
         <a href="crash-course.html" class="nav-link">Crash Course</a>
         <a href="deep-dive.html" class="nav-link">Deep Dive</a>
-        <a href="prompt-library.html" class="nav-link">Prompt Library</a>
         <a href="projects.html" class="nav-link">Projects</a>
-        <a href="tools.html" class="nav-link">Tools</a>
-        <a href="glossary.html" class="nav-link">Glossary</a>
+        <div class="nav-dropdown relative">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="dropdown-caret">▾</span></button>
+          <div class="nav-dropdown-menu hidden" role="menu">
+            <a href="prompt-library.html" class="nav-dropdown-item" role="menuitem">Prompt Library</a>
+            <a href="field-guides.html" class="nav-dropdown-item" role="menuitem">Field Guides</a>
+            <a href="tools.html" class="nav-dropdown-item" role="menuitem">Tools</a>
+            <a href="glossary.html" class="nav-dropdown-item" role="menuitem">Glossary</a>
+          </div>
+        </div>
         <a href="faq.html" class="nav-link">FAQ</a>
         <a href="about.html" class="nav-link">About</a>
       </div>
