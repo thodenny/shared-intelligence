@@ -1,11 +1,18 @@
 // Active nav highlighting
 (function() {
-  const path = window.location.pathname.split('/').pop() || 'index.html';
+  const path = window.location.pathname;
+  const isHome = path === '/' || path === '/index.html';
+  function matches(href) {
+    if (!href) return false;
+    if (isHome) return href === '/';
+    if (href === '/') return false;
+    return href === path || href === path + '/' || href === path.replace(/\/$/, '');
+  }
   document.querySelectorAll('.nav-link').forEach(link => {
-    if (link.getAttribute('href') === path) link.classList.add('active');
+    if (matches(link.getAttribute('href'))) link.classList.add('active');
   });
   document.querySelectorAll('.nav-dropdown-item').forEach(item => {
-    if (item.getAttribute('href') === path) {
+    if (matches(item.getAttribute('href'))) {
       item.classList.add('active');
       const parent = item.closest('.nav-dropdown');
       const trigger = parent && parent.querySelector('.nav-dropdown-trigger');

@@ -23,32 +23,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body class="font-body text-charcoal min-h-screen">
 
   <!-- NAV -->
   <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
-      <a href="index.html" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+      <a href="/" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
         SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
       </a>
       <div class="flex flex-wrap gap-0 items-center">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="crash-course.html" class="nav-link">Crash Course</a>
-        <a href="deep-dive.html" class="nav-link">Deep Dive</a>
-        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="/" class="nav-link">Home</a>
+        <a href="/crash-course/" class="nav-link">Crash Course</a>
+        <a href="/deep-dive/" class="nav-link">Deep Dive</a>
+        <a href="/projects/" class="nav-link">Projects</a>
         <div class="nav-dropdown relative">
           <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="dropdown-caret">▾</span></button>
           <div class="nav-dropdown-menu hidden" role="menu">
-            <a href="prompt-library.html" class="nav-dropdown-item" role="menuitem">Prompt Library</a>
-            <a href="field-guides.html" class="nav-dropdown-item" role="menuitem">Field Guides</a>
-            <a href="tools.html" class="nav-dropdown-item" role="menuitem">Tools</a>
-            <a href="glossary.html" class="nav-dropdown-item" role="menuitem">Glossary</a>
+            <a href="/prompt-library/" class="nav-dropdown-item" role="menuitem">Prompt Library</a>
+            <a href="/field-guides/" class="nav-dropdown-item" role="menuitem">Field Guides</a>
+            <a href="/tools/" class="nav-dropdown-item" role="menuitem">Tools</a>
+            <a href="/glossary/" class="nav-dropdown-item" role="menuitem">Glossary</a>
           </div>
         </div>
-        <a href="faq.html" class="nav-link">FAQ</a>
-        <a href="about.html" class="nav-link">About</a>
+        <a href="/faq/" class="nav-link">FAQ</a>
+        <a href="/about/" class="nav-link">About</a>
       </div>
     </div>
   </nav>
@@ -82,7 +82,7 @@
           <h3 class="font-display font-bold text-navy text-2xl mb-3">Understand what you're working with.</h3>
           <p class="text-charcoal leading-relaxed mb-4">The Crash Course is eight short sections. No technical background needed. You'll come out understanding what LLMs are, how they "think", what they gets wrong, and how to write prompts to get what you need.</p>
           <p class="text-charcoal leading-relaxed mb-5">You don't need to memorise anything. You just need enough mental model to use the tools without being surprised by their behaviour.</p>
-          <a href="crash-course.html" class="cta-btn-primary">Read the Crash Course →</a>
+          <a href="/crash-course/" class="cta-btn-primary">Read the Crash Course →</a>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
           <h3 class="font-display font-bold text-navy text-2xl mb-3">Try it on something real.</h3>
           <p class="text-charcoal leading-relaxed mb-4">Go to the Prompt Library. Don't read the whole thing — just pick one prompt that matches something you have to do this week. Copy it, fill in the placeholders, and paste it into Claude, ChatGPT, or Gemini.</p>
           <p class="text-charcoal leading-relaxed mb-5">Don't skip it. The first time you use AI on a real task from your own work is when it stops being abstract.</p>
-          <a href="prompt-library.html" class="cta-btn-secondary">Browse the Prompt Library →</a>
+          <a href="/prompt-library/" class="cta-btn-secondary">Browse the Prompt Library →</a>
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@
           <h3 class="font-display font-bold text-navy text-2xl mb-3">Pick your tool and stick with it.</h3>
           <p class="text-charcoal leading-relaxed mb-4">There are a lot of AI tools right now. Most of them aren't worth your attention yet. The Tools page is organized by what they do — find the category that matches your situation and pick one to start with.</p>
           <p class="text-charcoal leading-relaxed mb-5">Don't try five tools at once. Pick one, use it for two weeks, get comfortable. You can explore the others after you have a baseline.</p>
-          <a href="tools.html" class="cta-btn-secondary">Browse the Tools Directory →</a>
+          <a href="/tools/" class="cta-btn-secondary">Browse the Tools Directory →</a>
         </div>
       </div>
     </div>
@@ -132,12 +132,12 @@
         <h3 class="font-display font-bold text-navy text-2xl">Once you've done those three things.</h3>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <a href="deep-dive.html" class="bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+        <a href="/deep-dive/" class="bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Curious how it works?</p>
           <h4 class="font-display font-bold text-navy text-lg mb-2">The Deep Dive</h4>
           <p class="text-sm leading-relaxed text-charcoal">Five articles on how large language models work — tokens, transformers, context windows, RAG, and agents. This will give you a much deeper understanding.</p>
         </a>
-        <a href="projects.html" class="bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+        <a href="/projects/" class="bg-parchment retro-border p-5 block no-underline hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
           <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">Want hands-on practice?</p>
           <h4 class="font-display font-bold text-navy text-lg mb-2">The Projects</h4>
           <p class="text-sm leading-relaxed text-charcoal">Structured exercises from beginner to advanced. Each one gives you a real deliverable — something you've built and can use immediately.</p>
@@ -171,7 +171,7 @@
     <!-- FAQ nudge -->
     <div class="text-center">
       <p class="text-charcoal mb-4">Still have questions before you start?</p>
-      <a href="faq.html" class="font-mono text-sm text-rust uppercase tracking-widest border-b-2 border-rust pb-0.5 hover:text-navy hover:border-navy transition-colors no-underline">Read the FAQ →</a>
+      <a href="/faq/" class="font-mono text-sm text-rust uppercase tracking-widest border-b-2 border-rust pb-0.5 hover:text-navy hover:border-navy transition-colors no-underline">Read the FAQ →</a>
     </div>
 
   </div>
@@ -186,6 +186,6 @@
     </div>
   </footer>
 
-  <script src="scripts.js"></script>
+  <script src="/scripts.js"></script>
 </body>
 </html>
