@@ -73,7 +73,7 @@
       </h1>
       <div class="retro-divider-double max-w-xs mx-auto"></div>
       <p class="mt-6 text-charcoal leading-relaxed text-lg max-w-2xl mx-auto">Same task. Two ways to ask. Three real pairs that show what changes when you stop typing keywords and start writing prompts.</p>
-      <p class="font-mono text-rust text-xs tracking-widest uppercase mt-6">4 Min Read</p>
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mt-6">5 Min Read</p>
     </div>
 
     <hr class="retro-divider" />
@@ -82,6 +82,51 @@
     <div class="mb-14">
       <p class="leading-relaxed mb-4">The Crash Course covers <a href="/crash-course/" class="text-rust border-b border-dotted border-rust hover:text-navy hover:border-navy no-underline">how to think about prompting</a>. This guide shows the same idea in practice. Three tasks a program manager runs into every week. For each one, the bad prompt is what most people actually type. The good prompt is what gets you something usable.</p>
       <p class="leading-relaxed">The outputs below are real — the kind of thing you'd get from Claude or ChatGPT today, not cherry-picked. The bad outputs aren't bad because the model is broken. They're bad because the prompt didn't give the model enough to work with.</p>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Framework -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-4">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Framework</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-2">The Three Pieces</h2>
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-6">A mental model you can reuse</p>
+
+      <p class="leading-relaxed mb-6">Before the pairs, the framework that explains why one works and the other doesn't. Every good prompt has at least two of these three pieces — and when you can't manage the first two, the third is your escape hatch.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+        <div class="bg-parchment retro-border p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">01</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-2">Situation</h3>
+            <p class="text-sm leading-relaxed text-charcoal">Who you are, what you're trying to do, who the output is for. Without this, the model can only return a generic template — that's the safest answer to a question with no context.</p>
+          </div>
+        </div>
+
+        <div class="bg-parchment retro-border p-5 flex gap-5 items-start">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">02</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-2">Shape</h3>
+            <p class="text-sm leading-relaxed text-charcoal">The form you want the output to take: format, length, tone, structure. <em>"Three bullets, under 20 words each, for someone joining the project"</em> produces something different from <em>"summarize."</em></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-parchment retro-border-mustard p-6">
+        <div class="flex items-start gap-5 mb-4">
+          <span class="font-display font-black text-rust text-4xl leading-none shrink-0">03</span>
+          <div>
+            <h3 class="font-display font-bold text-navy text-xl mb-2">Or, Ask the Model to Interview You</h3>
+            <p class="text-sm leading-relaxed text-charcoal">When (1) and (2) are too much to front-load — you're starting cold, you don't know what's relevant yet, the task is fuzzy — flip it. Make the model gather the context. It knows what's missing better than you do.</p>
+          </div>
+        </div>
+        <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2 font-bold">Copy-Paste</p>
+        <pre class="bg-cream border-2 border-navy p-4 font-mono text-xs leading-relaxed">Before you help me with this, interview me one question at a time until you have everything you need to give me a useful answer. Don't draft anything until you've asked enough.</pre>
+        <p class="text-sm leading-relaxed text-charcoal italic mt-3">Used at the start of a chat, this often beats trying to write a perfect prompt cold. You'll see it in action in Pair Three.</p>
+      </div>
     </div>
 
     <hr class="retro-divider" />
@@ -239,15 +284,12 @@ Don't suggest anything until you've asked enough.</pre>
       </div>
     </div>
 
-    <!-- The pattern callout -->
+    <!-- Recap callout -->
     <div class="bg-navy text-cream p-8 retro-border-mustard mb-14">
-      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-3 font-bold">The Pattern</p>
-      <p class="font-display text-xl leading-relaxed italic mb-4">Every good prompt does the same three things:</p>
-      <ol class="space-y-3 text-base leading-relaxed">
-        <li class="flex gap-3"><span class="font-mono text-mustard font-bold shrink-0">1.</span><span>Gives the model your situation — who you are, what you're trying to do, who it's for.</span></li>
-        <li class="flex gap-3"><span class="font-mono text-mustard font-bold shrink-0">2.</span><span>Names the shape of the output — format, length, tone, constraints.</span></li>
-        <li class="flex gap-3"><span class="font-mono text-mustard font-bold shrink-0">3.</span><span>Or, when you can't do (1) and (2) yourself, asks the model to interview you first.</span></li>
-      </ol>
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-3 font-bold">Recap</p>
+      <p class="font-display text-xl leading-relaxed italic mb-2">Same framework, three different tasks.</p>
+      <p class="font-display font-black text-3xl text-mustard leading-tight mb-4 tracking-tight">Situation. Shape. Or interview.</p>
+      <p class="text-base leading-relaxed">Build the habit once, get it on every prompt. The pairs above all came down to the same three pieces — applied differently each time.</p>
     </div>
 
     <!-- Bottom CTA -->
