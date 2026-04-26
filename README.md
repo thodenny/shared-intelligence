@@ -29,7 +29,7 @@ Live at: [sharedintelligence.co](https://sharedintelligence.co)
 
 ## Who it's for
 
-Program managers, operations leaders, and knowledge workers who keep hearing about AI and want to use it — not just read about it. The site is written from the perspective of someone who's spent two years training colleagues on AI inside large organisations (Meta, Amazon), not from a research lab.
+Program managers, operations leaders, and knowledge workers who keep hearing about AI and want to use it. The site is written from the perspective of someone who's spent two years training colleagues on AI inside large organisations like Meta.
 
 ---
 
@@ -91,7 +91,7 @@ shared-intelligence/
 ## Principles
 
 - **Free.** No paywall, no newsletter gate, no referral codes.
-- **Honest.** Limitations and trade-offs are called out, not buried.
+- **Honest.** Limitations and trade-offs are called out.
 - **Practical.** Everything on here should be immediately usable.
 - **No tracking.** No analytics scripts, no cookies, no data collection.
 
