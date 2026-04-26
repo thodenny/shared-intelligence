@@ -29,6 +29,8 @@
 
   <!-- NAV -->
   <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <!-- scroll progress bar: overlays the mustard bottom border, filled by scripts.js on scroll -->
+    <div id="scroll-progress" class="absolute left-0 right-0 h-1 bg-rust origin-left pointer-events-none" style="bottom: -4px; transform: scaleX(0);"></div>
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
       <a href="/" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
         SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
@@ -55,7 +57,7 @@
 
   <div class="max-w-3xl mx-auto px-4 py-16">
     <div class="text-center mb-12">
-      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Short Version</p>
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mb-3">The Short Version <span class="text-charcoal/40 mx-1">·</span> <span class="text-mustard">7 Min Read</span></p>
       <h2 class="font-display font-black text-navy mb-4" style="font-size: clamp(2.5rem, 6vw, 4rem);">AI Crash Course</h2>
       <div class="retro-divider-double max-w-xs mx-auto"></div>
       <p class="mt-4 text-charcoal leading-relaxed max-w-xl mx-auto">The eight things worth knowing before anything else. Simplified on purpose. The goal is to understand. I stripped the parts that don't help you immediately. Read it once and you'll know more than most people in your office.</p>
