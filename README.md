@@ -4,7 +4,7 @@
 
 A free, jargon-free educational site for everyday professionals who want to get real value from AI.
 
-Live at: [thodenny.github.io/shared-intelligence](https://thodenny.github.io/shared-intelligence)
+Live at: [sharedintelligence.co](https://sharedintelligence.co)
 
 ---
 
@@ -13,14 +13,17 @@ Live at: [thodenny.github.io/shared-intelligence](https://thodenny.github.io/sha
 | Page | What it does |
 |---|---|
 | **Home** | Overview and entry point |
-| **Crash Course** | 8-section primer covering how AI works, how to prompt, and what to watch out for |
-| **Deep Dive** | 5 technical articles on LLMs, tokens, transformers, RAG, and agents |
-| **Prompt Library** | 15+ copy-paste prompt templates organised by use case |
+| **Start Here** | First-stop orientation for new visitors |
+| **Crash Course** | Primer covering how AI works, how to prompt, and what to watch out for |
+| **Deep Dive** | Technical articles on LLMs, tokens, transformers, RAG, and agents |
 | **Projects** | Hands-on exercises from beginner to advanced |
+| **Prompt Library** | Copy-paste prompt templates organised by use case |
+| **Field Guides** | Longer how-to guides for specific workflows |
 | **Tools** | Curated directory of AI tools, organised by category |
 | **Glossary** | Plain-English definitions of common AI terms |
 | **FAQ** | Honest answers to real questions (privacy, cost, where to start) |
 | **About** | Background on why this exists |
+| **Changelog** | Running log of what's shipped |
 
 ---
 
@@ -35,7 +38,7 @@ Program managers, operations leaders, and knowledge workers who keep hearing abo
 - Plain HTML, CSS, and vanilla JavaScript — no framework, no build step
 - [Tailwind CSS](https://tailwindcss.com) via CDN
 - [Google Fonts](https://fonts.google.com) (Playfair Display, Lora, Courier Prime)
-- Hosted on GitHub Pages
+- Hosted on GitHub Pages with a custom domain (`CNAME` → `sharedintelligence.co`)
 
 ---
 
@@ -59,19 +62,28 @@ npx serve .
 
 ## Project structure
 
+Each section lives in its own folder with an `index.html`, so URLs are extensionless (e.g. `/crash-course/`). Shared assets sit at the root and are referenced via absolute paths so they resolve from any depth.
+
 ```
 shared-intelligence/
-├── index.html
-├── crash-course.html
-├── deep-dive.html
-├── prompt-library.html
-├── projects.html
-├── tools.html
-├── glossary.html
-├── faq.html
-├── about.html
-├── styles.css
-└── scripts.js
+├── index.html              # Home
+├── styles.css              # Shared styles (loaded as /styles.css)
+├── scripts.js              # Shared client behavior (loaded as /scripts.js)
+├── CNAME                   # Custom domain for GitHub Pages
+├── favicon.*               # Favicons + apple-touch-icon
+├── start-here/index.html
+├── crash-course/index.html
+├── deep-dive/index.html
+├── projects/index.html
+├── prompt-library/index.html
+├── field-guides/index.html
+├── tools/index.html
+├── glossary/index.html
+├── faq/index.html
+├── about/index.html
+├── changelog/index.html
+└── guides/                 # Long-form guides + downloadable PDFs
+    └── teach-claude-your-voice/index.html
 ```
 
 ---
