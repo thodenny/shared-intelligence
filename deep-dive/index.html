@@ -173,11 +173,11 @@
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
 
-        <p>The word "transformer" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language.</p>
+        <p>The word "<dfn class="jargon" tabindex="0" data-def="The 2017 invention that powers every major AI model. Lets the model look at all the words in a sequence at once and figure out which matter most to each other." style="font-style: normal;">transformer</dfn>" gets thrown around constantly. It's in the name GPT (<em>Generative Pre-trained <strong>Transformer</strong></em>). It's the architecture underneath Claude, Gemini, LLaMA, and every major LLM. But what is it? This article explains the mechanics — the attention mechanism, activation functions, backpropagation, temperature — in plain language.</p>
 
         <h4 class="font-display font-bold text-navy text-lg">The Paper That Started Everything</h4>
         <p>In 2017, eight researchers at Google Brain published a paper titled <em>"Attention Is All You Need."</em> It introduced the transformer architecture and quietly made everything that came after it possible — GPT, BERT, Claude, Gemini, all of it.</p>
-        <p>Before transformers, the dominant approach to language modeling used recurrent neural networks (RNNs), which processed text sequentially — one word at a time, left to right. This worked, but it was slow, struggled with long sequences, and had trouble connecting ideas that were far apart in a document. Transformers threw out the sequential constraint entirely. The key insight: instead of reading word by word, the model should be able to look at every word in a sequence simultaneously and dynamically decide which words are most relevant to each other. They called this mechanism <strong>attention</strong>.</p>
+        <p>Before transformers, the dominant approach to language modeling used recurrent neural networks (RNNs), which processed text sequentially — one word at a time, left to right. This worked, but it was slow, struggled with long sequences, and had trouble connecting ideas that were far apart in a document. Transformers threw out the sequential constraint entirely. The key insight: instead of reading word by word, the model should be able to look at every word in a sequence simultaneously and dynamically decide which words are most relevant to each other. They called this mechanism <strong class="jargon" tabindex="0" data-def="The mechanism that lets the model decide which other words to focus on when interpreting any given word.">attention</strong>.</p>
 
         <div class="bg-cream border-2 border-dashed border-navy p-4">
           <p class="font-mono text-xs text-navy font-bold uppercase tracking-widest mb-1">Why the Title Matters</p>
@@ -185,7 +185,7 @@
         </div>
 
         <h4 class="font-display font-bold text-navy text-lg">Step 1: Turning Words Into Numbers (Embeddings)</h4>
-        <p>Before any attention can happen, the model needs to convert text into something it can compute with. Text gets broken into tokens (see Article 02), and each token is mapped to a high-dimensional vector — a list of hundreds or thousands of numbers. This is called an <strong>embedding</strong>.</p>
+        <p>Before any attention can happen, the model needs to convert text into something it can compute with. Text gets broken into tokens (see Article 02), and each token is mapped to a high-dimensional vector — a list of hundreds or thousands of numbers. This is called an <strong class="jargon" tabindex="0" data-def="A list of numbers representing a token's meaning, so the model can compare ideas mathematically — synonyms end up close, opposites end up far apart.">embedding</strong>.</p>
         <p>These numbers aren't arbitrary. Through training, tokens that appear in similar contexts end up with similar embeddings. "Dog" and "puppy" end up close together in the embedding space. "Dog" and "democracy" end up far apart. The geometry of this space encodes meaning — which is why the model can reason about analogies, synonyms, and semantic relationships.</p>
         <p>The transformer also adds <strong>positional encodings</strong> — another set of numbers layered on top of the embeddings to tell the model where each token sits in the sequence. Without this, the model would have no sense of word order.</p>
 
@@ -241,7 +241,7 @@
         </ul>
 
         <h4 class="font-display font-bold text-navy text-lg">Step 4: How the Model Learns — Backpropagation</h4>
-        <p>Training a transformer means adjusting billions of numerical parameters (the weights in the attention and feed-forward layers) so that the model gets better at predicting the next token. The mechanism that makes this work is <strong>backpropagation</strong>.</p>
+        <p>Training a transformer means adjusting billions of numerical parameters (the weights in the attention and feed-forward layers) so that the model gets better at predicting the next token. The mechanism that makes this work is <strong class="jargon" tabindex="0" data-def="The algorithm that trains an AI by measuring how wrong each prediction is and nudging every internal setting toward less wrong.">backpropagation</strong>.</p>
         <p>Here's the loop:</p>
         <ol class="space-y-2 pl-2 list-none">
           <li class="flex gap-2 items-start"><span class="font-bold text-rust shrink-0">1.</span><div><strong>Forward pass.</strong> The model takes an input sequence and predicts the next token. It produces a probability distribution over the entire vocabulary — e.g., "Paris" has 40% probability, "London" has 12%, "Berlin" has 8%, etc.</div></li>
@@ -257,7 +257,7 @@
         </div>
 
         <h4 class="font-display font-bold text-navy text-lg">Temperature: Controlling Randomness at Inference</h4>
-        <p>When the model generates a response, it doesn't just always pick the highest-probability next token. If it did, responses would be deterministic and repetitive. Instead, a parameter called <strong>temperature</strong> controls how the model samples from its probability distribution.</p>
+        <p>When the model generates a response, it doesn't just always pick the highest-probability next token. If it did, responses would be deterministic and repetitive. Instead, a parameter called <strong class="jargon" tabindex="0" data-def="A dial that controls how 'creative' the AI's output is — low values produce focused, predictable text; high values produce more varied and surprising text.">temperature</strong> controls how the model samples from its probability distribution.</p>
         <ul class="space-y-2 pl-2">
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>Low temperature (close to 0):</strong> The model becomes more deterministic, almost always picking the highest-probability token. Outputs are focused, consistent, and conservative. Good for factual tasks, code generation, and structured outputs where you want precision over creativity.</div></li>
           <li class="flex gap-2 items-start"><span class="text-rust font-bold shrink-0">→</span><div> <strong>High temperature (closer to 1 or above):</strong> The probability distribution is flattened — lower-probability tokens get more of a chance. Outputs become more varied, surprising, and creative. Good for brainstorming, creative writing, and generating diverse options. Also increases the chance of incoherence at extremes.</div></li>
@@ -290,7 +290,7 @@
         </div>
       </div>
       <div class="bg-parchment retro-border p-6 leading-relaxed space-y-5">
-        <p>You've probably heard "RAG" thrown around in AI conversations. It sounds technical — and it is, under the hood — but the core idea is simple and important, especially if you're thinking about how AI could work with your company's internal information.</p>
+        <p>You've probably heard "<dfn class="jargon" tabindex="0" data-def="Retrieval-Augmented Generation. The AI looks up relevant documents at query time and uses them as a reference, instead of relying only on what it learned during training." style="font-style: normal;">RAG</dfn>" thrown around in AI conversations. It sounds technical — and it is, under the hood — but the core idea is simple and important, especially if you're thinking about how AI could work with your company's internal information.</p>
 
         <h4 class="font-display font-bold text-navy text-lg">The Problem RAG Solves</h4>
         <p>A standard language model is trained once, then deployed. Its knowledge is frozen at the training cutoff. It knows nothing about your company's internal documents, your proprietary processes, your customer data, or anything that happened after it was trained.</p>

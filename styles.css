@@ -183,3 +183,46 @@ pre {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #E8DFC8; }
 ::-webkit-scrollbar-thumb { background: #1B2A4A; }
+
+/* Jargon decoder: dotted underline + retro hover tooltip reading data-def */
+.jargon {
+  text-decoration: underline dotted;
+  text-decoration-color: #B94A2C;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  cursor: help;
+  position: relative;
+  font-style: inherit;
+  font-weight: inherit;
+}
+.jargon::after {
+  content: attr(data-def);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  width: max-content;
+  max-width: 280px;
+  white-space: normal;
+  background: #E8DFC8;
+  border: 2px solid #1B2A4A;
+  box-shadow: 4px 4px 0 #D4A017;
+  padding: 8px 12px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: none;
+  color: #2E2E2E;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 100;
+}
+.jargon:hover::after,
+.jargon:focus::after,
+.jargon.show-tip::after {
+  opacity: 1;
+}

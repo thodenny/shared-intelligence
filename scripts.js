@@ -156,6 +156,27 @@ function toggleFaq(card) {
   }
 }
 
+// Jargon decoder: tap-to-toggle on touch devices (hover handled in CSS)
+document.addEventListener('DOMContentLoaded', function() {
+  const terms = document.querySelectorAll('.jargon');
+  if (!terms.length) return;
+  function closeAll(except) {
+    terms.forEach(t => { if (t !== except) t.classList.remove('show-tip'); });
+  }
+  terms.forEach(t => {
+    t.addEventListener('click', function(e) {
+      const wasOpen = t.classList.contains('show-tip');
+      closeAll(t);
+      if (!wasOpen) t.classList.add('show-tip');
+      e.stopPropagation();
+    });
+  });
+  document.addEventListener('click', function() { closeAll(null); });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeAll(null);
+  });
+});
+
 // Scroll progress bar (only runs on pages that include #scroll-progress)
 (function() {
   const bar = document.getElementById('scroll-progress');
