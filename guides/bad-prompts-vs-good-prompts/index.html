@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>Bad Prompts vs Good Prompts — Field Guide · Shared Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', rust: '#B94A2C', mustard: '#D4A017', navy: '#1B2A4A', parchment: '#E8DFC8', charcoal: '#2E2E2E' },
+          fontFamily: { display: ['"Playfair Display"', 'Georgia', 'serif'], body: ['Lora', 'Georgia', 'serif'], mono: ['"Courier Prime"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="font-body text-charcoal min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-navy sticky top-0 z-50 border-b-4 border-mustard">
+    <!-- scroll progress bar: overlays the mustard bottom border, filled by scripts.js on scroll -->
+    <div id="scroll-progress" class="absolute left-0 right-0 h-1 bg-rust origin-left pointer-events-none" style="bottom: -4px; transform: scaleX(0);"></div>
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+      <a href="/" class="font-display font-black text-cream text-xl tracking-tight leading-none shrink-0 no-underline">
+        SHARED<br /><span class="text-mustard">INTELLIGENCE</span>
+      </a>
+      <div class="flex flex-wrap gap-0 items-center">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/crash-course/" class="nav-link">Crash Course</a>
+        <a href="/deep-dive/" class="nav-link">Deep Dive</a>
+        <a href="/projects/" class="nav-link">Projects</a>
+        <div class="nav-dropdown relative">
+          <button type="button" class="nav-link nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Resources <span class="dropdown-caret">▾</span></button>
+          <div class="nav-dropdown-menu hidden" role="menu">
+            <a href="/prompt-library/" class="nav-dropdown-item" role="menuitem">Prompt Library</a>
+            <a href="/field-guides/" class="nav-dropdown-item" role="menuitem">Field Guides</a>
+            <a href="/tools/" class="nav-dropdown-item" role="menuitem">Tools</a>
+            <a href="/glossary/" class="nav-dropdown-item" role="menuitem">Glossary</a>
+          </div>
+        </div>
+        <a href="/faq/" class="nav-link">FAQ</a>
+        <a href="/about/" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-4xl mx-auto px-4 py-14">
+
+    <!-- Breadcrumb -->
+    <div class="mb-8">
+      <a href="/field-guides/" class="font-mono text-xs text-rust uppercase tracking-widest border-b-2 border-dotted border-rust hover:text-navy hover:border-navy transition-colors no-underline">← Back to Field Guides</a>
+    </div>
+
+    <!-- Hero -->
+    <div class="text-center mb-10">
+      <div class="flex items-center justify-center gap-3 mb-4 flex-wrap">
+        <span class="stamp text-rust">Prompting · #2</span>
+        <span class="stamp text-mustard">Field Guide</span>
+      </div>
+      <h1 class="font-display font-black text-navy leading-tight mb-4" style="font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: -0.02em;">
+        Bad Prompts vs<br /><span class="italic text-mustard">Good Prompts</span>
+      </h1>
+      <div class="retro-divider-double max-w-xs mx-auto"></div>
+      <p class="mt-6 text-charcoal leading-relaxed text-lg max-w-2xl mx-auto">Same task. Two ways to ask. Three real pairs that show what changes when you stop typing keywords and start writing prompts.</p>
+      <p class="font-mono text-rust text-xs tracking-widest uppercase mt-6">4 Min Read</p>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Intro -->
+    <div class="mb-14">
+      <p class="leading-relaxed mb-4">The Crash Course covers <a href="/crash-course/" class="text-rust border-b border-dotted border-rust hover:text-navy hover:border-navy no-underline">how to think about prompting</a>. This guide shows the same idea in practice. Three tasks a program manager runs into every week. For each one, the bad prompt is what most people actually type. The good prompt is what gets you something usable.</p>
+      <p class="leading-relaxed">The outputs below are real — the kind of thing you'd get from Claude or ChatGPT today, not cherry-picked. The bad outputs aren't bad because the model is broken. They're bad because the prompt didn't give the model enough to work with.</p>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Pair 1 -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-4">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Pair One</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-2">A Status Update for Your VP</h2>
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-6">No context, no draft</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Bad -->
+        <div class="bg-parchment retro-border p-5">
+          <span class="category-pill text-rust mb-3 inline-block">Bad Prompt</span>
+          <pre class="bg-cream border-2 border-navy p-3 font-mono text-xs leading-relaxed mt-2 mb-4">Write a status update for my project.</pre>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">What You Get Back</p>
+          <div class="bg-cream border-2 border-dashed border-navy p-3 text-sm leading-relaxed">
+            Here's a status update template you can fill in:<br /><br />
+            <strong>Project:</strong> [Project Name]<br />
+            <strong>Status:</strong> [On Track / At Risk / Off Track]<br />
+            <strong>Key Updates:</strong><br />
+            • [Update 1]<br />
+            • [Update 2]<br />
+            <strong>Blockers:</strong> [List any blockers]<br />
+            <strong>Next Steps:</strong> [What's coming up]
+          </div>
+        </div>
+
+        <!-- Good -->
+        <div class="bg-parchment retro-border-mustard p-5">
+          <span class="category-pill text-mustard mb-3 inline-block">Good Prompt</span>
+          <pre class="bg-cream border-2 border-navy p-3 font-mono text-xs leading-relaxed mt-2 mb-4">Act as my comms partner. I'm a senior PM at a B2B logistics company writing a Friday status update for my VP. My notes from this week:
+
+- Vendor contract finalized; kickoff Tuesday
+- Two engineers out sick; sprint slipped 3 days
+- Need her sign-off on the revised Q3 timeline
+
+Three short paragraphs covering: where we are, what's blocking, what I need from her. Direct, no fluff, under 150 words.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">What You Get Back</p>
+          <div class="bg-cream border-2 border-mustard p-3 text-sm leading-relaxed">
+            We finalized the vendor contract this week and kickoff lands Tuesday — on the timeline we agreed in our last 1:1. The team is in good shape going in.<br /><br />
+            Two engineers were out most of the week, which slipped the current sprint by three days. We're absorbing it without changing the milestone date, but it eats the buffer we had.<br /><br />
+            I'd like your sign-off on the revised Q3 timeline before Wednesday so we can communicate it to stakeholders by EOW. I'll send the one-pager Monday morning.
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-cream border-2 border-dashed border-navy p-4 mt-5 italic text-sm leading-relaxed">
+        <span class="font-mono not-italic text-xs text-rust uppercase tracking-widest font-bold mr-2">Why It Changed:</span>
+        Without a situation, the model can only give you a template — that's the safest answer to a question with no context. Your job is to give it the situation.
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Pair 2 -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-4">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Pair Two</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-2">Catching Someone Up on a Long Email Thread</h2>
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-6">The verb is the problem</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Bad -->
+        <div class="bg-parchment retro-border p-5">
+          <span class="category-pill text-rust mb-3 inline-block">Bad Prompt</span>
+          <pre class="bg-cream border-2 border-navy p-3 font-mono text-xs leading-relaxed mt-2 mb-4">Summarize this email thread.
+
+[15 emails pasted in]</pre>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">What You Get Back</p>
+          <div class="bg-cream border-2 border-dashed border-navy p-3 text-sm leading-relaxed">
+            On Monday, Sarah emailed the team to flag a delivery delay. James replied asking for the carrier's contact. On Tuesday, Sarah followed up with the carrier's information. James then forwarded the thread to Operations, who replied that they were investigating. On Wednesday, Sarah asked for an update…
+            <p class="text-charcoal/50 italic mt-2 text-xs">[continues for 11 more sentences]</p>
+          </div>
+        </div>
+
+        <!-- Good -->
+        <div class="bg-parchment retro-border-mustard p-5">
+          <span class="category-pill text-mustard mb-3 inline-block">Good Prompt</span>
+          <pre class="bg-cream border-2 border-navy p-3 font-mono text-xs leading-relaxed mt-2 mb-4">Summarize this thread for someone joining the project this week. Three bullets, under 20 words each:
+
+(1) what's been decided
+(2) what's still open
+(3) the immediate next step
+
+If anything is ambiguous, flag it.
+
+[15 emails pasted in]</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">What You Get Back</p>
+          <div class="bg-cream border-2 border-mustard p-3 text-sm leading-relaxed">
+            <strong>Decided:</strong> Operations owns the carrier escalation; root cause review due by Friday.<br /><br />
+            <strong>Still open:</strong> Whether to switch carriers for the rest of the quarter — Sarah and James disagree.<br /><br />
+            <strong>Next step:</strong> Carrier post-mortem Thursday at 2pm. James to send invite.<br /><br />
+            <em class="text-charcoal/70">Flag: cost impact wasn't quantified anywhere in the thread.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-cream border-2 border-dashed border-navy p-4 mt-5 italic text-sm leading-relaxed">
+        <span class="font-mono not-italic text-xs text-rust uppercase tracking-widest font-bold mr-2">Why It Changed:</span>
+        "Summarize" is too open. The model picks something — usually a chronological recap, because that's safe. Specify what kind of summary, for whom, in what shape.
+      </div>
+    </div>
+
+    <hr class="retro-divider" />
+
+    <!-- Pair 3 -->
+    <div class="mb-14">
+      <div class="flex items-center gap-4 mb-4">
+        <p class="font-mono text-xs text-rust uppercase tracking-widest whitespace-nowrap font-bold">Pair Three</p>
+        <div class="h-px bg-navy flex-1"></div>
+      </div>
+      <h2 class="font-display font-black text-navy text-3xl mb-2">Drafting Q4 OKRs for Your Team</h2>
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-6">When you can't front-load context</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Bad -->
+        <div class="bg-parchment retro-border p-5">
+          <span class="category-pill text-rust mb-3 inline-block">Bad Prompt</span>
+          <pre class="bg-cream border-2 border-navy p-3 font-mono text-xs leading-relaxed mt-2 mb-4">Help me write Q4 OKRs for my team.</pre>
+          <p class="font-mono text-xs text-rust uppercase tracking-widest mb-2">What You Get Back</p>
+          <div class="bg-cream border-2 border-dashed border-navy p-3 text-sm leading-relaxed">
+            Here's a sample OKR framework you can adapt:<br /><br />
+            <strong>Objective 1:</strong> Improve team productivity<br />
+            • KR: Increase output by 20%<br />
+            • KR: Reduce cycle time by 15%<br /><br />
+            <strong>Objective 2:</strong> Enhance team collaboration<br />
+            • KR: Hold weekly cross-functional syncs<br />
+            <p class="text-charcoal/50 italic mt-2 text-xs">[continues with generic placeholders]</p>
+          </div>
+        </div>
+
+        <!-- Good -->
+        <div class="bg-parchment retro-border-mustard p-5">
+          <span class="category-pill text-mustard mb-3 inline-block">Good Prompt</span>
+          <pre class="bg-cream border-2 border-navy p-3 font-mono text-xs leading-relaxed mt-2 mb-4">Before you help me draft Q4 OKRs, interview me one question at a time until you have everything you need: my team's role, current priorities, what we shipped last quarter, what's on fire, and what success looks like for Q4.
+
+Don't suggest anything until you've asked enough.</pre>
+          <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-2">What You Get Back</p>
+          <div class="bg-cream border-2 border-mustard p-3 text-sm leading-relaxed">
+            Got it. Let's start with the basics — what does your team do, and how big is it? (E.g. "8-person platform team owning the internal data tooling.")<br /><br />
+            <em class="text-charcoal/70">[Then it asks the next question after each answer. By question 5 or 6, it has the situation. The OKRs it drafts are about your team, not a template.]</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-cream border-2 border-dashed border-navy p-4 mt-5 italic text-sm leading-relaxed">
+        <span class="font-mono not-italic text-xs text-rust uppercase tracking-widest font-bold mr-2">Why It Changed:</span>
+        When you can't front-load all the context yourself, don't try. Make the model gather it — interview-style prompts work because the model knows what it needs better than you do.
+      </div>
+    </div>
+
+    <!-- The pattern callout -->
+    <div class="bg-navy text-cream p-8 retro-border-mustard mb-14">
+      <p class="font-mono text-xs text-mustard uppercase tracking-widest mb-3 font-bold">The Pattern</p>
+      <p class="font-display text-xl leading-relaxed italic mb-4">Every good prompt does the same three things:</p>
+      <ol class="space-y-3 text-base leading-relaxed">
+        <li class="flex gap-3"><span class="font-mono text-mustard font-bold shrink-0">1.</span><span>Gives the model your situation — who you are, what you're trying to do, who it's for.</span></li>
+        <li class="flex gap-3"><span class="font-mono text-mustard font-bold shrink-0">2.</span><span>Names the shape of the output — format, length, tone, constraints.</span></li>
+        <li class="flex gap-3"><span class="font-mono text-mustard font-bold shrink-0">3.</span><span>Or, when you can't do (1) and (2) yourself, asks the model to interview you first.</span></li>
+      </ol>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mb-4">
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <div class="h-px bg-navy flex-1 max-w-16"></div>
+        <span class="font-mono text-rust text-xs tracking-widest uppercase">Try It</span>
+        <div class="h-px bg-navy flex-1 max-w-16"></div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 mb-4">
+        <a href="/prompt-library/" class="cta-btn-primary">Browse the Prompt Library →</a>
+        <a href="/field-guides/" class="cta-btn-secondary">← All Field Guides</a>
+      </div>
+    </div>
+
+    <p class="text-center text-xs font-mono text-charcoal/60 uppercase tracking-widest mt-12">
+      Confused by a term? <a href="/glossary/" class="text-rust border-b-2 border-dotted border-rust hover:text-navy hover:border-navy transition-colors no-underline">See the Glossary →</a>
+    </p>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t-4 border-mustard mt-8">
+    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
+      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+    </div>
+  </footer>
+
+  <script src="/scripts.js"></script>
+</body>
+</html>
