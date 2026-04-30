@@ -53,112 +53,108 @@
     </div>
   </nav>
 
-  <div class="max-w-3xl mx-auto px-4 py-20 text-center">
-    <!-- Decorative top rule -->
-    <div class="flex items-center justify-center gap-4 mb-8">
-      <div class="h-px bg-navy flex-1 max-w-16"></div>
-      <span class="font-mono text-rust text-xs tracking-widest uppercase">Est. 2026</span>
-      <div class="h-px bg-navy flex-1 max-w-16"></div>
-    </div>
+  <div class="max-w-3xl mx-auto px-4 py-24 text-center">
+    <!-- Kicker -->
+    <p class="kicker reveal" data-delay="1">Est. 2026</p>
 
-    <h1 class="font-display font-black text-navy leading-none mb-4" style="font-size: clamp(3rem, 8vw, 6rem); letter-spacing: -0.02em;">
-      Shared<br /><span class="text-mustard italic">Intelligence</span>
+    <h1 class="font-display font-black text-navy leading-[0.95] mb-2 mt-7 reveal" data-delay="2" style="font-size: clamp(3.25rem, 9vw, 7rem); letter-spacing: -0.025em;">
+      Shared<br /><span class="gold-foil italic">Intelligence</span>
     </h1>
 
-    <div class="retro-divider-double max-w-xs mx-auto my-6"></div>
+    <div class="ornament max-w-md mx-auto mt-8 mb-7 reveal" data-delay="3">❦</div>
 
-    <p class="font-display font-bold text-navy text-xl mb-3 tracking-wide uppercase" style="letter-spacing: 0.1em;">
-      Practical AI Resources for Busy People
+    <p class="font-display text-navy text-xl mb-4 reveal" data-delay="3" style="font-variation-settings: 'SOFT' 30, 'opsz' 24, 'wght' 500; letter-spacing: 0.18em; text-transform: uppercase;">
+      Practical AI for Busy People
     </p>
 
-    <p class="font-body text-charcoal text-lg leading-relaxed mb-10 max-w-xl mx-auto">
-      A free guide to getting started with AI. Built for the everyday professional who wants to get results and use AI in their daily work.
+    <p class="font-body text-charcoal text-lg leading-relaxed mb-12 max-w-xl mx-auto reveal" data-delay="4">
+      A free, jargon-free guide to getting started with AI. Written for the everyday professional who wants to get results and use AI in their daily work.
     </p>
 
-    <div class="flex flex-wrap gap-4 justify-center">
+    <div class="flex flex-wrap gap-5 justify-center reveal" data-delay="5">
       <a href="/start-here/" class="cta-btn-primary">New? Start Here</a>
-      <a href="/crash-course/" class="cta-btn-secondary">Start the Crash Course</a>
+      <a href="/crash-course/" class="cta-btn-secondary">Begin the Crash Course</a>
     </div>
 
-    <hr class="retro-divider mt-16" />
+    <hr class="retro-divider mt-20" />
 
     <!-- Feature strip -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left mt-8">
-      <div class="bg-parchment retro-border p-5">
-        <div class="stamp text-rust mb-3">Free</div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-7 text-left mt-10">
+      <div class="bg-parchment retro-border p-6 reveal" data-delay="1">
+        <div class="stamp text-rust mb-4">Free</div>
         <h3 class="font-display font-bold text-navy text-lg mb-2">No Paywall.</h3>
-        <p class="text-sm leading-relaxed">Every resource here is completely free. No newsletter signup required.</p>
+        <p class="text-sm leading-relaxed">Every resource here is completely free. No newsletter signup. No referral codes.</p>
       </div>
-      <div class="bg-parchment retro-border-mustard p-5">
-        <div class="stamp text-mustard mb-3">Practical</div>
+      <div class="bg-parchment retro-border-mustard p-6 reveal" data-delay="2">
+        <div class="stamp text-mustard mb-4">Practical</div>
         <h3 class="font-display font-bold text-navy text-lg mb-2">Real-World Prompts</h3>
-        <p class="text-sm leading-relaxed">15 ready-to-use prompt templates. Updated regularly.</p>
+        <p class="text-sm leading-relaxed">Fifteen ready-to-use prompt templates, updated regularly and tested in the field.</p>
       </div>
-      <div class="bg-parchment retro-border p-5">
-        <div class="stamp text-rust mb-3">Plain English</div>
+      <div class="bg-parchment retro-border p-6 reveal" data-delay="3">
+        <div class="stamp text-rust mb-4">Plain English</div>
         <h3 class="font-display font-bold text-navy text-lg mb-2">No Jargon</h3>
-        <p class="text-sm leading-relaxed">Written for program managers, ops leaders, and everyday professionals.</p>
+        <p class="text-sm leading-relaxed">Written for program managers, ops leaders, and everyday professionals — not for engineers.</p>
       </div>
     </div>
 
     <!-- WHAT'S NEW / UPCOMING -->
-    <div class="mt-10 text-center">
-      <button id="changelog-toggle" type="button" class="font-mono text-xs text-navy uppercase tracking-widest border-b-2 border-dotted border-navy hover:text-rust hover:border-rust transition-colors">
+    <div class="mt-12 text-center">
+      <button id="changelog-toggle" type="button" class="font-mono text-xs text-navy uppercase tracking-[0.28em] border-b border-dotted border-navy hover:text-rust hover:border-rust transition-colors px-1 py-1">
         <span class="expand-icon mr-1">+</span> What's New &amp; Upcoming
       </button>
-      <div class="font-mono text-[0.65rem] text-charcoal/50 uppercase tracking-widest mt-2">Last updated Apr 26, 2026</div>
+      <div class="font-mono text-[0.6rem] text-charcoal/45 uppercase tracking-[0.32em] mt-3">Last updated · Apr 26, 2026</div>
     </div>
 
-    <section id="changelog-panel" class="hidden mt-8 text-left bg-parchment retro-border p-6">
+    <section id="changelog-panel" class="hidden mt-10 text-left bg-parchment retro-border p-7">
       <!-- HOMEPAGE SHOWS THE 3 MOST RECENT SHIPPED ENTRIES - full history lives in changelog.html -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <div class="flex items-center gap-3 mb-4">
+          <div class="flex items-center gap-3 mb-5">
             <span class="stamp text-rust">Shipped</span>
             <h3 class="font-display font-black text-navy text-xl">What's New</h3>
           </div>
-          <ul class="space-y-3">
+          <ul class="space-y-4">
             <li>
-              <div class="font-mono text-xs text-rust font-bold tracking-widest uppercase"><a href="/changelog/#apr-26-2026" class="hover:underline">Apr 26, 2026</a></div>
-              <p class="text-sm leading-relaxed">HTTPS enabled — the site now serves over a secure, encrypted connection.</p>
+              <div class="font-mono text-xs text-rust font-bold tracking-[0.22em] uppercase"><a href="/changelog/#apr-26-2026" class="hover:underline">Apr 26, 2026</a></div>
+              <p class="text-sm leading-relaxed mt-1">HTTPS enabled — the site now serves over a secure, encrypted connection.</p>
             </li>
             <li>
-              <div class="font-mono text-xs text-rust font-bold tracking-widest uppercase"><a href="/changelog/#apr-20-2026" class="hover:underline">Apr 20, 2026</a></div>
-              <p class="text-sm leading-relaxed">Field Guides added — first guide, Teach Claude Your Voice, is live in-browser and as a PDF download. Prompt Library, Tools, and Glossary now grouped under a new Resources dropdown.</p>
+              <div class="font-mono text-xs text-rust font-bold tracking-[0.22em] uppercase"><a href="/changelog/#apr-20-2026" class="hover:underline">Apr 20, 2026</a></div>
+              <p class="text-sm leading-relaxed mt-1">Field Guides added — first guide, Teach Claude Your Voice, is live in-browser and as a PDF download. Prompt Library, Tools, and Glossary now grouped under a new Resources dropdown.</p>
             </li>
             <li>
-              <div class="font-mono text-xs text-rust font-bold tracking-widest uppercase"><a href="/changelog/#apr-19-2026" class="hover:underline">Apr 19, 2026</a></div>
-              <p class="text-sm leading-relaxed">Shared Intelligence launches — Crash Course, Deep Dive, Prompt Library, Projects, Tools, Glossary, and FAQ all live.</p>
+              <div class="font-mono text-xs text-rust font-bold tracking-[0.22em] uppercase"><a href="/changelog/#apr-19-2026" class="hover:underline">Apr 19, 2026</a></div>
+              <p class="text-sm leading-relaxed mt-1">Shared Intelligence launches — Crash Course, Deep Dive, Prompt Library, Projects, Tools, Glossary, and FAQ all live.</p>
             </li>
           </ul>
         </div>
 
         <div>
-          <div class="flex items-center gap-3 mb-4">
+          <div class="flex items-center gap-3 mb-5">
             <span class="stamp text-mustard">Planned</span>
             <h3 class="font-display font-black text-navy text-xl">What's Upcoming</h3>
           </div>
-          <ul class="space-y-3 text-sm leading-relaxed">
-            <li class="flex gap-2"><span class="text-rust font-bold">›</span><span>A step-by-step walkthrough for building a professional website with Gamma and similar no-code tools</span></li>
-            <li class="flex gap-2"><span class="text-rust font-bold">›</span><span>A curated Resources section featuring trusted publications, researchers, and courses for deeper study</span></li>
+          <ul class="space-y-4 text-sm leading-relaxed">
+            <li class="flex gap-3"><span class="text-rust font-bold mt-0.5">›</span><span>A step-by-step walkthrough for building a professional website with Gamma and similar no-code tools.</span></li>
+            <li class="flex gap-3"><span class="text-rust font-bold mt-0.5">›</span><span>A curated Resources section featuring trusted publications, researchers, and courses for deeper study.</span></li>
           </ul>
         </div>
       </div>
 
       <!-- Link to full changelog -->
-      <div class="mt-6 pt-5 border-t-2 border-dashed border-navy text-center">
-        <a href="/changelog/" class="font-mono text-xs text-rust uppercase tracking-widest border-b-2 border-dotted border-rust hover:text-navy hover:border-navy transition-colors no-underline">See Full Changelog →</a>
+      <div class="mt-7 pt-6 border-t border-dashed border-navy/40 text-center">
+        <a href="/changelog/" class="font-mono text-xs text-rust uppercase tracking-[0.28em] border-b border-dotted border-rust hover:text-navy hover:border-navy transition-colors no-underline">See Full Changelog →</a>
       </div>
     </section>
   </div>
 
   <!-- FOOTER -->
-  <footer class="bg-navy border-t-4 border-mustard mt-8">
-    <div class="max-w-5xl mx-auto px-4 py-8 text-center">
-      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="text-mustard">Intelligence</span></p>
-      <p class="font-mono text-xs text-cream/50 uppercase tracking-widest">Practical AI Resources for Busy People</p>
-      <div class="retro-divider-double max-w-xs mx-auto mt-4 mb-4" style="border-color: rgba(245,240,232,0.2);"></div>
-      <p class="font-mono text-xs text-cream/40">Free. No tracking. No paywall.</p>
+  <footer class="bg-navy border-t-4 border-mustard mt-12">
+    <div class="max-w-5xl mx-auto px-4 py-10 text-center">
+      <p class="font-display font-bold text-cream text-lg mb-1">Shared <span class="gold-foil">Intelligence</span></p>
+      <p class="font-mono text-xs text-cream/55 uppercase tracking-[0.32em]">Practical AI Resources for Busy People</p>
+      <div class="retro-divider-double max-w-xs mx-auto mt-5 mb-5" style="filter: invert(1) hue-rotate(180deg); opacity: 0.25;"></div>
+      <p class="font-mono text-[0.65rem] text-cream/40 uppercase tracking-[0.32em]">Free · No Tracking · No Paywall</p>
     </div>
   </footer>
 
