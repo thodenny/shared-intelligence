@@ -197,3 +197,47 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', onScroll);
   update();
 })();
+
+// Mobile nav (hamburger + full-screen overlay)
+(function() {
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('navOverlay');
+  if (!toggle || !overlay) return;
+
+  const links = overlay.querySelectorAll('.nav-overlay-link');
+
+  function open() {
+    overlay.hidden = false;
+    requestAnimationFrame(() => overlay.setAttribute('data-open', 'true'));
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    document.body.classList.add('nav-open');
+  }
+
+  function close() {
+    overlay.removeAttribute('data-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    document.body.classList.remove('nav-open');
+    setTimeout(() => { overlay.hidden = true; }, 300);
+  }
+
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    expanded ? close() : open();
+  });
+
+  links.forEach((a) => a.addEventListener('click', close));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') close();
+  });
+
+  // Auto-close if viewport grows past breakpoint while open
+  const mq = window.matchMedia('(min-width: 701px)');
+  const onChange = (e) => {
+    if (e.matches && toggle.getAttribute('aria-expanded') === 'true') close();
+  };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
+})();

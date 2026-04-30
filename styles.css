@@ -494,3 +494,189 @@ pre {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* ============================================================
+   Mobile hamburger + overlay nav
+   ------------------------------------------------------------
+   Desktop is untouched: the toggle is display:none above 700px
+   and the overlay is forced to display:none !important above
+   700px so the existing inline links keep rendering exactly as
+   they did before.
+   ============================================================ */
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid rgba(212, 160, 23, 0.55);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.nav-toggle:hover { border-color: var(--mustard); background: rgba(212, 160, 23, 0.08); }
+.nav-toggle-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1.5px;
+  background: var(--paper);
+  transform-origin: center;
+  transition: transform 0.35s var(--ease), opacity 0.2s var(--ease), background 0.25s var(--ease);
+}
+.nav-toggle:hover .nav-toggle-bar { background: var(--mustard); }
+.nav-toggle-bar:nth-child(1) { transform: translate(-50%, -4px); }
+.nav-toggle-bar:nth-child(2) { transform: translate(-50%,  4px); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+  transform: translate(-50%, 0) rotate(45deg);
+  background: var(--mustard);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+  transform: translate(-50%, 0) rotate(-45deg);
+  background: var(--mustard);
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 900px 600px at 50% -10%, rgba(212, 160, 23, 0.14), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 50% 110%, rgba(185, 74, 44, 0.10), transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(27, 42, 74, 0.022) 79px 80px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 88px 28px 40px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s var(--ease);
+}
+.nav-overlay[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-overlay-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+  padding: 12px 0;
+  background: rgba(245, 240, 232, 0.55);
+  box-shadow: 5px 5px 0 var(--rust);
+}
+.nav-overlay-section-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--rust);
+  padding: 16px 18px 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px dashed var(--hair-strong);
+  margin-top: 6px;
+}
+.nav-overlay-section-label:first-child { border-top: 0; margin-top: 0; }
+.nav-overlay-section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hair-strong), transparent);
+  opacity: 0.6;
+}
+.nav-overlay-link {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 18px;
+  text-decoration: none;
+  color: var(--ink);
+  border-top: 1px dotted rgba(27, 42, 74, 0.22);
+  transform: translateY(8px);
+  opacity: 0;
+  transition: transform 0.45s var(--ease), opacity 0.45s var(--ease), color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.nav-overlay-link:first-of-type { border-top: 0; }
+.nav-overlay-link:hover {
+  color: var(--rust);
+  background: rgba(212, 160, 23, 0.08);
+}
+.nav-overlay[data-open="true"] .nav-overlay-link {
+  transform: translateY(0);
+  opacity: 1;
+}
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(1)  { transition-delay: 0.05s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(2)  { transition-delay: 0.09s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(3)  { transition-delay: 0.13s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(4)  { transition-delay: 0.17s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(5)  { transition-delay: 0.21s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(6)  { transition-delay: 0.25s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(7)  { transition-delay: 0.29s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(8)  { transition-delay: 0.33s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(9)  { transition-delay: 0.37s; }
+.nav-overlay[data-open="true"] .nav-overlay-link:nth-of-type(10) { transition-delay: 0.41s; }
+.nav-overlay-num {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--mustard);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.nav-overlay-label {
+  font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
+  font-variation-settings: "SOFT" 30, "WONK" 0, "opsz" 144, "wght" 700;
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+.nav-overlay-foot {
+  margin-top: 28px;
+  text-align: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.6;
+}
+.nav-overlay-foot .gold { color: var(--gold-lo); opacity: 1; }
+
+body.nav-open { overflow: hidden; }
+
+@media (max-width: 700px) {
+  /* Hide the inline desktop links and show the hamburger */
+  nav .flex.flex-wrap.gap-0.items-center { display: none; }
+  .nav-toggle { display: inline-flex; }
+}
+@media (min-width: 701px) {
+  .nav-overlay { display: none !important; }
+  .nav-toggle { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-overlay,
+  .nav-overlay-link,
+  .nav-toggle-bar { transition: none; }
+}
+
+/* Focus styles for keyboard users on the mobile nav controls */
+.nav-toggle:focus-visible,
+.nav-overlay-link:focus-visible {
+  outline: 2px solid var(--mustard);
+  outline-offset: 3px;
+}

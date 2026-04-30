@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=mobilenav" />
 </head>
 <body class="font-body text-charcoal min-h-screen">
 
@@ -52,8 +52,31 @@
         <a href="/faq/" class="nav-link">FAQ</a>
         <a href="/about/" class="nav-link">About</a>
       </div>
+      <button class="nav-toggle" id="navToggle" type="button"
+              aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Site menu" hidden>
+    <nav class="nav-overlay-links" aria-label="Primary mobile">
+      <a href="/" class="nav-overlay-link"><span class="nav-overlay-num">01</span><span class="nav-overlay-label">Home</span></a>
+      <a href="/crash-course/" class="nav-overlay-link"><span class="nav-overlay-num">02</span><span class="nav-overlay-label">Crash Course</span></a>
+      <a href="/deep-dive/" class="nav-overlay-link"><span class="nav-overlay-num">03</span><span class="nav-overlay-label">Deep Dive</span></a>
+      <a href="/projects/" class="nav-overlay-link"><span class="nav-overlay-num">04</span><span class="nav-overlay-label">Projects</span></a>
+      <a href="/faq/" class="nav-overlay-link"><span class="nav-overlay-num">05</span><span class="nav-overlay-label">FAQ</span></a>
+      <a href="/about/" class="nav-overlay-link"><span class="nav-overlay-num">06</span><span class="nav-overlay-label">About</span></a>
+      <div class="nav-overlay-section-label">Resources</div>
+      <a href="/prompt-library/" class="nav-overlay-link"><span class="nav-overlay-num">07</span><span class="nav-overlay-label">Prompt Library</span></a>
+      <a href="/field-guides/" class="nav-overlay-link"><span class="nav-overlay-num">08</span><span class="nav-overlay-label">Field Guides</span></a>
+      <a href="/tools/" class="nav-overlay-link"><span class="nav-overlay-num">09</span><span class="nav-overlay-label">Tools</span></a>
+      <a href="/glossary/" class="nav-overlay-link"><span class="nav-overlay-num">10</span><span class="nav-overlay-label">Glossary</span></a>
+    </nav>
+    <p class="nav-overlay-foot">Free <span class="gold">·</span> No Tracking <span class="gold">·</span> No Paywall</p>
+  </div>
 
   <div class="max-w-4xl mx-auto px-4 py-14">
 
@@ -258,6 +281,6 @@
     </div>
   </footer>
 
-  <script src="/scripts.js"></script>
+  <script src="/scripts.js?v=mobilenav"></script>
 </body>
 </html>
