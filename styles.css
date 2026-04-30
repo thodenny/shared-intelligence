@@ -514,10 +514,15 @@ pre {
   border-radius: 2px;
   cursor: pointer;
   position: relative;
+  z-index: 100;
   flex-shrink: 0;
   transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
 }
 .nav-toggle:hover { border-color: var(--mustard); background: rgba(212, 160, 23, 0.08); }
+.nav-toggle[aria-expanded="true"] {
+  background: var(--paper);
+  border-color: var(--mustard);
+}
 .nav-toggle-bar {
   position: absolute;
   left: 50%;

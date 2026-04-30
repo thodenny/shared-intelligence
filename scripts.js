@@ -229,6 +229,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   links.forEach((a) => a.addEventListener('click', close));
 
+  // Tap on empty overlay background dismisses (overlay is fullscreen, no "outside")
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') close();
   });
